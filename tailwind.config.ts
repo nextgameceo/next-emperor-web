@@ -1,42 +1,49 @@
 import type { Config } from "tailwindcss";
 
+/*
+ * ブランドカラー（ここを変えるとサイト全体の色が変わります）
+ * 背景はチャコールの単色。金・銀・星の色は公式ロゴから抽出しています。
+ *   金  … ロゴの「NEXT」
+ *   銀  … ロゴの「EMPEROR」（わずかにラベンダーがかったクローム）
+ *   水色 … ロゴの縁取り・星（金に次ぐ2番目の差し色）
+ */
+const BASE = "#1C1B20"; // 背景のチャコール（全セクション共通）
+
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        // ブランドカラー（ここを変えるとサイト全体の色が変わります）
-        ink: "#060A12", // ベース：ネイビーがかったブラック
-        night: "#0B1526", // ミッドナイトネイビー（パネル背景）
+        ink: BASE,
+        night: BASE,
         navy: {
-          DEFAULT: "#0E1B30",
-          deep: "#08111F",
-          light: "#16274A",
+          DEFAULT: BASE,
+          deep: BASE,
+          light: "#25242B",
         },
         charcoal: {
-          DEFAULT: "#0F1A2E",
-          light: "#15243F",
-          line: "#24344F", // 罫線
+          DEFAULT: "#25242B", // カード等のわずかに明るい面
+          light: "#2C2B33",
+          line: "#3A3842", // 罫線
         },
         gold: {
-          DEFAULT: "#C6A46A", // シャンパンゴールド
-          soft: "#E3C993",
-          deep: "#9E7E45",
-        },
-        paper: {
-          DEFAULT: "#F5F2EB", // 明るいセクションの背景（アイボリー）
-          line: "#E3DDD0",
-          ink: "#16202F", // 明るい背景上の文字色
-          muted: "#5C6371",
+          DEFAULT: "#DDB46E", // ロゴのゴールド（シャンパン寄り）
+          soft: "#F2DDB4",
+          deep: "#A97A3C",
         },
         silver: {
-          DEFAULT: "#D3D3DA",
-          deep: "#8C93A3",
+          DEFAULT: "#D6CCDC", // ロゴのクローム
+          deep: "#9A90A6",
+        },
+        ice: {
+          DEFAULT: "#7FD6F2", // 水色：ロゴの縁取りの色（金に次ぐ差し色）
+          soft: "#B6EDFB",
+          deep: "#3FA6D2",
         },
         ivory: {
-          DEFAULT: "#F4EFE4", // 文字：アイボリー
-          muted: "#B8BCC6",
-          dim: "#7F8696",
+          DEFAULT: "#F5F0E8", // 文字：アイボリー
+          muted: "#BFB9C4",
+          dim: "#8A8592",
         },
       },
       fontFamily: {
@@ -48,7 +55,7 @@ const config: Config = {
         luxe: "0.28em",
       },
       maxWidth: {
-        site: "1200px",
+        site: "1180px",
       },
     },
   },

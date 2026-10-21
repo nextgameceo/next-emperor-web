@@ -1,75 +1,86 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { siteConfig } from "@/config/site";
+import type { CSSProperties, ReactNode } from "react";
+import { Sparkle } from "./Decor";
+
+/** スクロール表示の遅延を指定するためのヘルパー（例：delay(0.2)） */
+export const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
 
 /** 横幅を揃えるラッパー */
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-site px-5 sm:px-8 ${className}`}>{children}</div>;
 }
 
-/** セクション共通の余白 */
+/** セクション共通の余白（上に細い金の罫線） */
 export function Section({
   children,
   id,
   className = "",
   labelledBy,
+  divider = true,
+  band = false,
 }: {
   children: ReactNode;
   id?: string;
   className?: string;
   labelledBy?: string;
+  divider?: boolean;
+  /** true でわずかに明るい帯にする（セクションの濃淡） */
+  band?: boolean;
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`relative py-20 sm:py-28 ${className}`}>
+    <section id={id} aria-labelledby={labelledBy} className={`relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
+      {divider && (
+        <span
+          aria-hidden
+          data-reveal="line"
+          className="absolute inset-x-0 top-0 mx-auto h-px w-[min(80%,900px)] origin-center bg-gradient-to-r from-transparent via-gold/40 to-transparent"
+        />
+      )}
       {children}
     </section>
   );
 }
 
-/** 英字の小見出し */
-export function Eyebrow({
-  children,
-  center = false,
-  light = false,
-}: {
-  children: ReactNode;
-  center?: boolean;
-  /** 明るい背景の上で使うとき true（濃い金色で表示） */
-  light?: boolean;
-}) {
+/** 英字ラベル（星つき） */
+export function Eyebrow({ children, center = false }: { children: ReactNode; center?: boolean }) {
   return (
-    <p className={`eyebrow flex items-center gap-3 ${center ? "justify-center" : ""} ${light ? "!text-gold-deep" : ""}`}>
-      {!center && <span className={`hairline ${light ? "!bg-gold-deep" : ""}`} aria-hidden />}
-      {children}
+    <p className={`eyebrow flex items-center gap-3 ${center ? "justify-center" : ""}`}>
+      <span className="hairline" aria-hidden />
+      <Sparkle className="h-2.5 w-2.5 text-ice" twinkle />
+      <span className="metal-gold">{children}</span>
+      {center && (
+        <>
+          <Sparkle className="h-2.5 w-2.5 text-ice" twinkle delay="1.6s" />
+          <span className="hairline-r" aria-hidden />
+        </>
+      )}
     </p>
   );
 }
 
-/** 英字ラベル＋見出し */
+/** 英字ラベル＋見出し（スクロールで表示） */
 export function SectionHeading({
   eyebrow,
   title,
   id,
   align = "left",
   as: Tag = "h2",
-  lead,
 }: {
   eyebrow: string;
   title: ReactNode;
   id?: string;
   align?: "left" | "center";
   as?: "h1" | "h2";
-  lead?: ReactNode;
 }) {
   const center = align === "center";
   return (
     <div className={center ? "text-center" : ""}>
-      <Eyebrow center={center}>{eyebrow}</Eyebrow>
-      <Tag id={id} className="heading-lg mt-4">
+      <div data-reveal>
+        <Eyebrow center={center}>{eyebrow}</Eyebrow>
+      </div>
+      <Tag id={id} className="heading-lg mt-6" data-reveal style={delay(0.12)}>
         {title}
       </Tag>
-      {lead && <p className={`body-text mt-5 ${center ? "mx-auto max-w-2xl" : "max-w-2xl"}`}>{lead}</p>}
     </div>
   );
 }
@@ -82,20 +93,21 @@ type ButtonProps = {
   className?: string;
 };
 
-/** ボタン（リンク）：primary＝金、outline＝白の縁 */
+/** ボタン（リンク）：primary＝金、outline＝銀の縁 */
 export function ButtonLink({ href, children, variant = "primary", external, className = "" }: ButtonProps) {
   const base =
-    "group inline-flex min-h-[3.25rem] items-center justify-center gap-5 px-8 text-sm tracking-[0.16em] transition-all duration-300";
-  const styles = variant === "primary" ? "btn-gold" : "btn-silver text-white hover:border-gold hover:text-gold-soft";
+    "group inline-flex min-h-[3.4rem] items-center justify-center gap-4 px-9 text-sm tracking-[0.18em] transition-all duration-300";
+  const styles = variant === "primary" ? "btn-gold" : "btn-silver text-ivory hover:text-gold-soft";
   const arrow = (
-    <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+    <span aria-hidden className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
       →
     </span>
   );
+  const label = <span className="relative z-10">{children}</span>;
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles} ${className}`}>
-        {children}
+        {label}
         {arrow}
         <span className="sr-only">（外部サイトが新しいタブで開きます）</span>
       </a>
@@ -103,31 +115,26 @@ export function ButtonLink({ href, children, variant = "primary", external, clas
   }
   return (
     <Link href={href} className={`${base} ${styles} ${className}`}>
-      {children}
+      {label}
       {arrow}
     </Link>
   );
 }
 
-/** 下層ページ上部のタイトル帯（写真＋ネイビーの暗幕） */
+/** 下層ページ上部のタイトル帯 */
 export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: string; lead?: string }) {
   return (
-    <div className="relative overflow-hidden border-b border-gold/30 bg-navy-deep pb-16 pt-36 sm:pb-20 sm:pt-44">
-      {siteConfig.heroImage && (
-        <Image
-          src={siteConfig.heroImage}
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-[70%_30%] opacity-40"
-          aria-hidden
-        />
-      )}
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/90 to-navy-deep/40" />
-      <Container className="relative">
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="heading-xl mt-5 text-white">{title}</h1>
-        {lead && <p className="body-text mt-6 max-w-2xl text-ivory/80">{lead}</p>}
+    <div className="relative border-b border-gold/20 pb-16 pt-36 sm:pb-24 sm:pt-48">
+      <Container>
+        <div className="fade-up">
+          <Eyebrow>{eyebrow}</Eyebrow>
+        </div>
+        <h1 className="heading-xl mt-6">
+          <span className="line-rise metal-silver" style={delay(0.15)}>
+            {title}
+          </span>
+        </h1>
+        {lead && <p className="body-text fade-up-delay mt-6 max-w-2xl">{lead}</p>}
       </Container>
     </div>
   );
@@ -136,7 +143,7 @@ export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: str
 /** 注意書き */
 export function Notice({ children }: { children: ReactNode }) {
   return (
-    <div className="border-l-2 border-gold/70 bg-navy px-5 py-4 text-sm leading-relaxed tracking-[0.04em] text-ivory-muted">
+    <div className="border-l border-gold/60 bg-charcoal px-5 py-4 text-sm leading-relaxed tracking-[0.04em] text-ivory-muted">
       {children}
     </div>
   );

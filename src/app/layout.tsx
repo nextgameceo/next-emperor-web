@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import RevealObserver from "@/components/RevealObserver";
+import BackgroundFX from "@/components/BackgroundFX";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: "#1C1B20",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -48,15 +50,19 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body>
+        {/* スクロール表示アニメーション用（描画前に js クラスを付与してちらつきを防ぐ） */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        <BackgroundFX />
         <Header />
-        <main id="main">{children}</main>
+        <main id="main" className="relative">{children}</main>
         <Footer />
+        <RevealObserver />
       </body>
     </html>
   );

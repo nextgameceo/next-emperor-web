@@ -182,7 +182,7 @@ export default function ContactForm({ configured }: { configured: boolean }) {
           <input
             {...fieldProps("agree")}
             type="checkbox"
-            className="mt-1 h-4 w-4 shrink-0 accent-[#C8B07A]"
+            className="mt-1 h-4 w-4 shrink-0 accent-[#7FD6F2]"
             checked={values.agree}
             onChange={(e) => set("agree", e.target.checked)}
           />

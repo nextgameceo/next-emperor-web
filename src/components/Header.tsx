@@ -32,9 +32,7 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled || open
-          ? "border-b border-gold/25 bg-navy-deep/95 backdrop-blur"
-          : "bg-gradient-to-b from-navy-deep/80 to-transparent"
+        scrolled || open ? "border-b border-gold/20 bg-ink/95 backdrop-blur" : "bg-transparent"
       }`}
     >
       <a
@@ -44,19 +42,25 @@ export default function Header() {
         本文へスキップ
       </a>
       <div className="mx-auto flex h-16 max-w-site items-center justify-between px-5 sm:h-20 sm:px-8">
-        <Link href="/" aria-label="NEXT EMPEROR ホーム" className="shrink-0">
+        <Link
+          href="/"
+          aria-label="NEXT EMPEROR ホーム"
+          className={`shrink-0 transition-all duration-700 ${
+            pathname === "/" && !scrolled && !open ? "pointer-events-none -translate-y-2 opacity-0" : "opacity-100"
+          }`}
+        >
           <Logo className="h-12 w-auto sm:h-16" priority />
         </Link>
 
-        <nav aria-label="メインナビゲーション" className="hidden items-center gap-10 lg:flex">
-          <ul className="flex items-center gap-8">
+        <nav aria-label="メインナビゲーション" className="fade-up hidden lg:block">
+          <ul className="flex items-center gap-9">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`font-display text-[0.8rem] tracking-[0.22em] transition-colors hover:text-gold ${
-                    isActive(item.href) ? "text-gold" : "text-ivory/85"
+                  className={`relative font-display text-[0.8rem] tracking-[0.22em] transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:origin-left after:bg-ice after:transition-transform after:duration-500 hover:text-gold hover:after:scale-x-100 ${
+                    isActive(item.href) ? "text-gold after:scale-x-100" : "text-ivory/85 after:scale-x-0"
                   }`}
                 >
                   {item.label}
@@ -64,9 +68,6 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <Link href="/business" className="btn-gold inline-flex items-center gap-4 px-6 py-3 text-xs tracking-[0.16em]">
-            企業の方はこちら <span aria-hidden>→</span>
-          </Link>
         </nav>
 
         <button

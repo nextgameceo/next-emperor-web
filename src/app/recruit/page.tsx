@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JobCard from "@/components/JobCard";
 import RecruitNotice from "@/components/RecruitNotice";
+import { ApplyFlow, FaqSection } from "@/components/Sections";
 import { Container, PageHero, Section } from "@/components/ui";
 import { getPublishedJobs } from "@/lib/data";
 
@@ -21,7 +22,7 @@ export default function RecruitPage() {
         title="求人情報"
         lead="今の経験を、もっと大きな未来につなげよう。新しい一歩を踏み出したい方へ、提携企業の求人情報をお届けします。"
       />
-      <Section>
+      <Section divider={false}>
         <Container>
           <RecruitNotice />
           {jobs.length > 0 ? (
@@ -45,6 +46,8 @@ export default function RecruitPage() {
           )}
         </Container>
       </Section>
+      <ApplyFlow />
+      <FaqSection />
     </>
   );
 }

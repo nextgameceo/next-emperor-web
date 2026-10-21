@@ -6,8 +6,8 @@
 
 /*
  * デザインの考え方
- * ネイビー × ブラック × シャンパンゴールド。写真を主役にし、
- * 明るいアイボリーのセクションを挟んでリズムをつくる。
+ * 背景はチャコールの単色。ロゴの「金（NEXT）× 銀（EMPEROR）」と星を差し色に。
+ * アニメーションは「静かに現れる・光がすっと走る」上品な動きに限定。
  */
 
 @layer base {
@@ -17,6 +17,7 @@
   }
   body {
     @apply bg-ink font-sans text-ivory antialiased;
+    isolation: isolate;
     font-feature-settings: "palt";
     line-height: 1.9;
   }
@@ -24,91 +25,320 @@
     @apply bg-gold text-ink;
   }
   :focus-visible {
-    outline: 1px solid theme("colors.gold.DEFAULT");
+    outline: 1px solid theme("colors.ice.DEFAULT");
     outline-offset: 3px;
   }
 }
 
 @layer components {
-  /* 金の文字（ゆるやかな地金の質感） */
+  /* ---- 金属の質感（文字） ---- */
   .metal-gold {
-    background: linear-gradient(180deg, #f0dcaa 0%, #c9a66a 55%, #a8864d 100%);
+    background: linear-gradient(110deg, #a97436 0%, #feeccd 22%, #e4b56b 40%, #a97436 60%, #f2d9a8 80%, #c8954f 100%);
+    background-size: 220% 100%;
+    background-position: 0% 50%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .metal-silver {
-    color: #ffffff;
+    background: linear-gradient(180deg, #ffffff 0%, #e6dcea 42%, #9a8fa8 68%, #efe8f2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  /* 英字の小見出し（例：ABOUT / SERVICE） */
   .eyebrow {
-    @apply font-display text-xs font-medium uppercase tracking-luxe text-gold sm:text-[0.8rem];
+    @apply font-display text-xs uppercase tracking-luxe text-gold sm:text-sm;
   }
   .hairline {
-    @apply h-px w-10 bg-gold/70;
+    @apply h-px w-12;
+    background: linear-gradient(90deg, transparent, theme("colors.ice.DEFAULT") 45%, theme("colors.gold.DEFAULT"));
   }
   .hairline-r {
-    @apply h-px w-10 bg-gold/70;
+    @apply h-px w-12;
+    background: linear-gradient(90deg, theme("colors.gold.DEFAULT"), theme("colors.ice.DEFAULT") 55%, transparent);
+  }
+  /* 水色の文字（ロゴの縁取りの色） */
+  .text-accent-ice {
+    color: theme("colors.ice.DEFAULT");
   }
 
   .heading-xl {
     @apply font-serif text-[1.9rem] font-medium leading-[1.5] tracking-[0.06em] sm:text-5xl sm:leading-[1.45];
   }
   .heading-lg {
-    @apply font-serif text-[1.6rem] font-medium leading-[1.6] tracking-[0.06em] sm:text-[2.2rem];
+    @apply font-serif text-2xl font-medium leading-[1.6] tracking-[0.06em] sm:text-[2.1rem];
   }
   .body-text {
     @apply text-[0.95rem] leading-[2.1] tracking-[0.04em] text-ivory-muted sm:text-base;
   }
 
-  /* ネイビーのパネル＋細い金の縁 */
+  /* ---- カード：細い金の縁取り（背景はほぼ単色） ---- */
   .card {
     position: relative;
-    border: 1px solid rgba(198, 164, 106, 0.38);
-    background: linear-gradient(160deg, #102038 0%, #0a1424 100%);
+    border: 1px solid transparent;
+    background:
+      linear-gradient(#232228, #232228) padding-box,
+      linear-gradient(140deg, rgba(242, 217, 168, 0.85), rgba(208, 192, 210, 0.14) 38%, rgba(127, 214, 242, 0.12) 62%, rgba(127, 214, 242, 0.7)) border-box;
+    transition: translate 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease;
   }
-  .corners {
+  .card:hover {
+    translate: 0 -4px;
+    box-shadow: 0 18px 40px -24px rgba(127, 214, 242, 0.35);
+  }
+  .corners::before,
+  .corners::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    transition: width 0.5s ease, height 0.5s ease;
+  }
+  .corners::before {
+    top: 7px;
+    left: 7px;
+    border-top: 1px solid theme("colors.gold.DEFAULT");
+    border-left: 1px solid theme("colors.gold.DEFAULT");
+  }
+  .corners::after {
+    right: 7px;
+    bottom: 7px;
+    border-right: 1px solid theme("colors.ice.DEFAULT");
+    border-bottom: 1px solid theme("colors.ice.DEFAULT");
+  }
+  .corners:hover::before,
+  .corners:hover::after {
+    width: 28px;
+    height: 28px;
   }
 
   /* ---- ボタン ---- */
   .btn-gold {
-    color: #fff;
-    background: linear-gradient(180deg, #d2b47c 0%, #b6955c 55%, #9c7c45 100%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    position: relative;
+    overflow: hidden;
+    color: #1c1b20;
+    background: linear-gradient(180deg, #f6e2b8 0%, #e0b56f 50%, #b8843f 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
   }
-  .btn-gold:hover {
-    background: linear-gradient(180deg, #dcc08b 0%, #c2a168 55%, #a7874f 100%);
+  /* ホバーで光がすっと走る */
+  .btn-gold::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.8s ease;
+  }
+  .btn-gold:hover::after {
+    transform: translateX(120%);
   }
   .btn-silver {
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    background: rgba(6, 10, 18, 0.25);
+    border: 1px solid rgba(214, 204, 220, 0.6);
+  }
+  .btn-silver:hover {
+    border-color: theme("colors.ice.DEFAULT");
+    color: theme("colors.ice.soft");
   }
 
   .field {
-    @apply w-full border border-charcoal-line bg-navy-deep px-4 py-3 text-ivory placeholder:text-ivory-dim transition-colors focus:border-gold focus:outline-none;
+    @apply w-full border border-charcoal-line bg-charcoal px-4 py-3 text-ivory placeholder:text-ivory-dim transition-colors focus:border-gold focus:outline-none;
   }
 }
 
-/* 控えめなフェードイン */
+/* =========================================================
+   アニメーション
+   ========================================================= */
 @media (prefers-reduced-motion: no-preference) {
+  /* --- ページ読み込み時（ヒーロー） --- */
   .fade-up {
-    animation: fadeUp 1.1s ease-out both;
+    animation: fadeUp 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
   .fade-up-delay {
-    animation: fadeUp 1.1s ease-out 0.25s both;
+    animation: fadeUp 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both;
   }
   .fade-up-delay-2 {
-    animation: fadeUp 1.1s ease-out 0.5s both;
+    animation: fadeUp 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.7s both;
   }
+  /* ロゴ：ふわっと拡大しながら現れ、その後ゆっくり浮遊 */
+  .logo-intro {
+    animation:
+      logoIn 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+      float 7s ease-in-out 1.6s infinite;
+  }
+  /* 見出しの1行ずつ、下からせり上がる */
+  .line-rise {
+    display: inline-block;
+    animation: lineRise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--d, 0s);
+  }
+  /* 金の文字に光がゆっくり流れる */
+  .shimmer {
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  /* 線が中央から伸びる */
+  .draw-x {
+    animation: drawX 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--d, 0s);
+  }
+  /* 星がゆっくり瞬く */
+  .twinkle {
+    animation: twinkle 3.2s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+  /* スクロール案内の線 */
+  .scroll-line {
+    animation: scrollLine 2.4s ease-in-out infinite;
+    transform-origin: top;
+  }
+
+  /* --- スクロールで現れる（JSが有効なときだけ隠す） --- */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+      box-shadow 0.5s ease;
+    transition-delay: var(--d, 0s), var(--d, 0s), 0s, 0s;
+  }
+  html.js [data-reveal="fade"] {
+    transform: none;
+  }
+  html.js [data-reveal="line"] {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
   @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes logoIn {
+    from { opacity: 0; transform: scale(0.94); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes lineRise {
+    from { opacity: 0; transform: translateY(0.6em); clip-path: inset(0 0 100% 0); }
+    to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes drawX {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.75); }
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); opacity: 1; }
+    60% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
+  }
+}
+
+/* =========================================================
+   背景演出（BackgroundFX）
+   ========================================================= */
+.bg-orb {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.bg-orb-gold {
+  top: -18vmax;
+  left: -12vmax;
+  width: 70vmax;
+  height: 70vmax;
+  background: radial-gradient(circle, rgba(221, 180, 110, 0.2) 0%, rgba(221, 180, 110, 0.07) 38%, transparent 68%);
+}
+.bg-orb-lavender {
+  top: 18vh;
+  right: -22vmax;
+  width: 75vmax;
+  height: 75vmax;
+  background: radial-gradient(circle, rgba(154, 143, 168, 0.24) 0%, rgba(154, 143, 168, 0.08) 40%, transparent 68%);
+}
+.bg-orb-ice {
+  bottom: -28vmax;
+  left: 10vw;
+  width: 60vmax;
+  height: 60vmax;
+  background: radial-gradient(circle, rgba(127, 214, 242, 0.15) 0%, rgba(127, 214, 242, 0.05) 40%, transparent 68%);
+}
+.bg-orb-gold-2 {
+  bottom: -20vmax;
+  right: -10vmax;
+  width: 50vmax;
+  height: 50vmax;
+  background: radial-gradient(circle, rgba(201, 149, 79, 0.12) 0%, transparent 65%);
+}
+.bg-orb-ice-2 {
+  top: 55vh;
+  left: -18vmax;
+  width: 48vmax;
+  height: 48vmax;
+  background: radial-gradient(circle, rgba(127, 214, 242, 0.1) 0%, transparent 65%);
+}
+.bg-vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(8, 7, 10, 0.55) 100%);
+}
+.bg-grain {
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* セクションの濃淡（帯） */
+.band {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(37, 36, 43, 0.55) 14%,
+    rgba(37, 36, 43, 0.55) 86%,
+    transparent 100%
+  );
+}
+
+/* ヒーローのロゴ背後のスポットライト */
+.hero-spot {
+  background: radial-gradient(closest-side, rgba(242, 217, 168, 0.16), rgba(221, 180, 110, 0.06) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bg-orb-gold { animation: drift1 38s ease-in-out infinite alternate; }
+  .bg-orb-lavender { animation: drift2 46s ease-in-out infinite alternate; }
+  .bg-orb-ice { animation: drift3 52s ease-in-out infinite alternate; }
+  .bg-orb-gold-2 { animation: drift2 60s ease-in-out infinite alternate-reverse; }
+  .bg-orb-ice-2 { animation: drift1 44s ease-in-out infinite alternate-reverse; }
+  .hero-spot { animation: breathe 8s ease-in-out infinite; }
+  @keyframes drift1 {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(14vw, 10vh) scale(1.15); }
+  }
+  @keyframes drift2 {
+    from { transform: translate(0, 0) scale(1.05); }
+    to { transform: translate(-16vw, 14vh) scale(0.95); }
+  }
+  @keyframes drift3 {
+    from { transform: translate(0, 0); }
+    to { transform: translate(18vw, -12vh); }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
   }
 }

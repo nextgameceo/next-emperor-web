@@ -39,12 +39,9 @@ export const siteConfig = {
   },
 
   /**
-   * メインビジュアル（夜の街から朝日が昇る都市風景の写真）
-   * public/images/hero.jpg などに置き、パスを入れてください。
-   * null の間は、写真の代わりに落ち着いた夜明けの街並みイラストが表示されます。
-   * ※写真は商用利用可のライセンスのものを使用してください。
+   * 予備の設定（現在のデザインは単色背景のため未使用）
    */
-  heroImage: "/images/hero.jpg" as string | null,
+  heroImage: null as string | null,
 
   /** 会社情報（値が空のものは会社概要ページに表示されません） */
   company: {
