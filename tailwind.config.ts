@@ -6,26 +6,37 @@ const config: Config = {
     extend: {
       colors: {
         // ブランドカラー（ここを変えるとサイト全体の色が変わります）
-        ink: "#08080A", // メイン：ブラック
-        night: "#0E0F14", // 夜空のような深いチャコール（パネル背景）
+        ink: "#060A12", // ベース：ネイビーがかったブラック
+        night: "#0B1526", // ミッドナイトネイビー（パネル背景）
+        navy: {
+          DEFAULT: "#0E1B30",
+          deep: "#08111F",
+          light: "#16274A",
+        },
         charcoal: {
-          DEFAULT: "#1A1A1E", // サブ：チャコールグレー
-          light: "#26262B",
-          line: "#2F2F36",
+          DEFAULT: "#0F1A2E",
+          light: "#15243F",
+          line: "#24344F", // 罫線
         },
         gold: {
-          DEFAULT: "#CDB177", // アクセント：シャンパンゴールド（ロゴの「NEXT」）
-          soft: "#E6D3A3",
-          deep: "#9C7B43",
+          DEFAULT: "#C6A46A", // シャンパンゴールド
+          soft: "#E3C993",
+          deep: "#9E7E45",
+        },
+        paper: {
+          DEFAULT: "#F5F2EB", // 明るいセクションの背景（アイボリー）
+          line: "#E3DDD0",
+          ink: "#16202F", // 明るい背景上の文字色
+          muted: "#5C6371",
         },
         silver: {
-          DEFAULT: "#D3D3DA", // ロゴの「EMPEROR」のクローム
-          deep: "#8C8E98",
+          DEFAULT: "#D3D3DA",
+          deep: "#8C93A3",
         },
         ivory: {
-          DEFAULT: "#F2ECDF", // 文字：アイボリー
-          muted: "#B9B3A6",
-          dim: "#86827A",
+          DEFAULT: "#F4EFE4", // 文字：アイボリー
+          muted: "#B8BCC6",
+          dim: "#7F8696",
         },
       },
       fontFamily: {
@@ -37,7 +48,7 @@ const config: Config = {
         luxe: "0.28em",
       },
       maxWidth: {
-        site: "1180px",
+        site: "1200px",
       },
     },
   },

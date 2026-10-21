@@ -32,7 +32,9 @@ export default function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled || open ? "border-b border-charcoal-line/70 bg-ink/95 backdrop-blur" : "bg-transparent"
+        scrolled || open
+          ? "border-b border-gold/25 bg-navy-deep/95 backdrop-blur"
+          : "bg-gradient-to-b from-navy-deep/80 to-transparent"
       }`}
     >
       <a
@@ -42,18 +44,12 @@ export default function Header() {
         本文へスキップ
       </a>
       <div className="mx-auto flex h-16 max-w-site items-center justify-between px-5 sm:h-20 sm:px-8">
-        <Link
-          href="/"
-          aria-label="NEXT EMPEROR ホーム"
-          className={`shrink-0 transition-opacity duration-500 ${
-            pathname === "/" && !scrolled && !open ? "pointer-events-none opacity-0" : "opacity-100"
-          }`}
-        >
+        <Link href="/" aria-label="NEXT EMPEROR ホーム" className="shrink-0">
           <Logo className="h-12 w-auto sm:h-16" priority />
         </Link>
 
-        <nav aria-label="メインナビゲーション" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
+        <nav aria-label="メインナビゲーション" className="hidden items-center gap-10 lg:flex">
+          <ul className="flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
@@ -68,6 +64,9 @@ export default function Header() {
               </li>
             ))}
           </ul>
+          <Link href="/business" className="btn-gold inline-flex items-center gap-4 px-6 py-3 text-xs tracking-[0.16em]">
+            企業の方はこちら <span aria-hidden>→</span>
+          </Link>
         </nav>
 
         <button

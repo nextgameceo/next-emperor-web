@@ -44,7 +44,7 @@ export const siteConfig = {
    * null の間は、写真の代わりに落ち着いた夜明けの街並みイラストが表示されます。
    * ※写真は商用利用可のライセンスのものを使用してください。
    */
-  heroImage: null as string | null,
+  heroImage: "/images/hero.jpg" as string | null,
 
   /** 会社情報（値が空のものは会社概要ページに表示されません） */
   company: {
