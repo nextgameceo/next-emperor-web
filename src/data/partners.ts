@@ -30,6 +30,7 @@ export const partners: Partner[] = [
     name: "株式会社トレンドライン",
     business: ["太陽光施工関連事業"],
     recruiting: ["施工スタッフ"],
-    approved: false,
+    logo: { src: "/images/partners/trendline.png", width: 290, height: 87 },
+    approved: true,
   },
 ];

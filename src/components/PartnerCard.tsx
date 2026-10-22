@@ -10,7 +10,7 @@ export default function PartnerCard({ partner }: { partner: Partner }) {
           alt={`${partner.name} ロゴ`}
           width={partner.logo.width}
           height={partner.logo.height}
-          className="mb-6 h-10 w-auto object-contain"
+          className="mb-6 h-12 w-auto object-contain object-left"
         />
       )}
       <h3 className="font-serif text-xl tracking-[0.06em]">{partner.name}</h3>
