@@ -3,11 +3,12 @@
  * ------------------------------------------------------------
  * ・/api/contact だけをここで処理し、それ以外はサイトの静的ファイル（out フォルダ）を返します。
  * ・お問い合わせメールは Resend（https://resend.com）で送信します。
+ * ・お問い合わせの送信先・送信元は、下の DEFAULT_TO / DEFAULT_FROM で設定しています。
  * ・必要な設定（Cloudflare の Worker → Settings → Variables and Secrets）
- *     RESEND_API_KEY      … Resend の API キー（「Secret」で登録）
- *     CONTACT_TO_EMAIL    … お問い合わせを受け取るメールアドレス
- *     CONTACT_FROM_EMAIL  … 送信元（例：NEXT EMPEROR <noreply@next-emperor.com>）
- *   3つそろうまでは送信成功を偽装せず、「送信先が未設定」と返します。
+ *     RESEND_API_KEY      … Resend の API キー（「Secret」で登録）※これだけ必須
+ *     CONTACT_TO_EMAIL    … （任意）送信先を一時的に変えたいときだけ登録
+ *     CONTACT_FROM_EMAIL  … （任意）送信元を変えたいときだけ登録
+ *   APIキーが登録されるまでは送信成功を偽装せず、「送信先が未設定」と返します。
  */
 import { validateContact, type ContactInput } from "../src/lib/contact";
 
@@ -17,6 +18,11 @@ type Env = {
   CONTACT_TO_EMAIL?: string;
   CONTACT_FROM_EMAIL?: string;
 };
+
+/** お問い合わせの送信先（複数ある場合は "a@x.com, b@y.com" のようにカンマ区切り） */
+const DEFAULT_TO = "nextgamecoo@gmail.com";
+/** 送信元（Resend で認証した next-emperor.com のアドレス） */
+const DEFAULT_FROM = "NEXT EMPEROR <noreply@next-emperor.com>";
 
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_PER_WINDOW = 5;
@@ -37,7 +43,7 @@ const json = (body: unknown, status = 200) =>
   });
 
 function isConfigured(env: Env) {
-  return Boolean(env.RESEND_API_KEY?.trim() && env.CONTACT_TO_EMAIL?.trim() && env.CONTACT_FROM_EMAIL?.trim());
+  return Boolean(env.RESEND_API_KEY?.trim());
 }
 
 async function handleContact(req: Request, env: Env): Promise<Response> {
@@ -118,8 +124,8 @@ async function handleContact(req: Request, env: Env): Promise<Response> {
       method: "POST",
       headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL,
-        to: env.CONTACT_TO_EMAIL!.split(",").map((s) => s.trim()),
+        from: env.CONTACT_FROM_EMAIL?.trim() || DEFAULT_FROM,
+        to: (env.CONTACT_TO_EMAIL?.trim() || DEFAULT_TO).split(",").map((s) => s.trim()),
         reply_to: input.email,
         subject: `【お問い合わせ】${input.type}｜${input.company} ${input.name}様`,
         text,

@@ -120,7 +120,7 @@ export default function ContactForm() {
       {!configured && (
         <div role="note" className="border border-[#8A5A4E] bg-[#2A1C18] px-5 py-4 text-sm leading-relaxed text-[#E8C9BF]">
           【管理者向け】メール送信先が未設定のため、現在このフォームからは送信できません。環境変数
-          RESEND_API_KEY / CONTACT_TO_EMAIL / CONTACT_FROM_EMAIL を設定してください。
+          RESEND_API_KEY（ResendのAPIキー）をCloudflareに設定してください。
         </div>
       )}
 
