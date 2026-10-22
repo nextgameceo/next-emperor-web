@@ -48,13 +48,13 @@ export const siteConfig = {
     legalName: "合同会社NEXT EMPEROR",
     englishName: "NEXT EMPEROR LLC",
     status: "設立準備中",
-    location: "愛知県名古屋市",
+    location: "愛知県名古屋市中区錦3丁目12－14",
     capital: "3,500,000円",
     // 代表者：正式な氏名を入力すると表示されます（例："代表社員　山田 太郎"）
-    representative: "",
+    representative: "RIKI",
     // 以下は確定後に入力してください
-    address: "",
-    tel: "",
+    address: "contact@next-emperor.com",
+    tel: "090-1234-5678",
     established: "",
     /**
      * 事業内容（大項目と、その具体的な内容）
