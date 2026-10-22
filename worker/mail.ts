@@ -92,7 +92,6 @@ export function autoReplyHtml(input: ContactInput, sentAt: string, logo = MAIL_B
     <tr><td style="padding:32px 28px 28px;background:#08080A;border-top:1px solid ${LINE};font-size:11px;line-height:1.9;color:${MUTED};text-align:center;">
       <img src="${logo}" width="180" alt="NEXT EMPEROR" style="display:block;margin:0 auto 14px;width:180px;max-width:60%;height:auto;border:0;">
       <div style="font-size:12px;letter-spacing:0.16em;color:${GOLD};margin-bottom:4px;">NEXT EMPEROR LLC</div>
-      ${esc(b.company)}<br>
       <a href="mailto:${b.email}" style="color:${ICE};text-decoration:none;">${b.email}</a>
       &nbsp;|&nbsp;
       <a href="${b.site}" style="color:${ICE};text-decoration:none;">next-emperor.com</a>
