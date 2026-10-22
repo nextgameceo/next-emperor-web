@@ -10,10 +10,13 @@ import { formatDate, getAllPosts, getPost } from "@/lib/blog";
 
 type Params = { slug: string };
 
-export const revalidate = 3600;
+export const dynamicParams = false;
+
 
 export function generateStaticParams(): Params[] {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  // 静的書き出しでは1件以上が必要なため、0件のときはダミー（404になるページ）を1つ返す
+  const list = getAllPosts().map((p) => ({ slug: p.slug }));
+  return list.length > 0 ? list : [{ slug: "none" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

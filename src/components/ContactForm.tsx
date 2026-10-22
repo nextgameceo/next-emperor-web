@@ -16,7 +16,9 @@ const initial: ContactInput = {
 
 type Status = "idle" | "sending" | "done" | "error";
 
-export default function ContactForm({ configured }: { configured: boolean }) {
+export default function ContactForm() {
+  // メール送信先が設定済みかを、サーバー（/api/contact）に確認する
+  const [configured, setConfigured] = useState(true);
   const [values, setValues] = useState<ContactInput>(initial);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -28,6 +30,10 @@ export default function ContactForm({ configured }: { configured: boolean }) {
 
   useEffect(() => {
     startedAt.current = Date.now();
+    fetch("/api/contact", { method: "GET" })
+      .then((r) => r.json())
+      .then((d: { configured?: boolean }) => setConfigured(d.configured !== false))
+      .catch(() => undefined);
   }, []);
 
   useEffect(() => {

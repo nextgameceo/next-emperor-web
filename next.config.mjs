@@ -1,29 +1,17 @@
-/** @type {import('next').NextConfig} */
+/**
+ * Cloudflare 用の設定
+ * サイトは「静的ファイル（out フォルダ）」として書き出し、
+ * お問い合わせの送信だけを worker/index.ts（Cloudflare Workers）で処理します。
+ * セキュリティ用のヘッダーは public/_headers で設定しています。
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
+  output: "export",
   reactStrictMode: true,
   poweredByHeader: false,
-  // ブログ記事（content/blog）をサーバーに同梱する
-  outputFileTracingIncludes: {
-    "/blog": ["./content/blog/**/*"],
-    "/blog/[slug]": ["./content/blog/**/*"],
-    "/blog/category/[name]": ["./content/blog/**/*"],
-    "/": ["./content/blog/**/*"],
-    "/sitemap.xml": ["./content/blog/**/*"],
-  },
   images: {
-    formats: ["image/avif", "image/webp"],
-  },
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-        ],
-      },
-    ];
+    // 静的書き出しでは画像の自動変換が使えないため、元画像をそのまま配信
+    unoptimized: true,
   },
 };
 

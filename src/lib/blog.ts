@@ -10,7 +10,7 @@ import { marked } from "marked";
  * 記事は content/blog/ フォルダの Markdown ファイル（.md）です。
  * ・ファイル名がURLになります（career-tips.md → /blog/career-tips）
  * ・ファイル名が「_」で始まるもの、draft: true のものは表示されません
- * ・日付が未来の記事は、その日付になるまで表示されません（予約投稿）
+ * ・日付が未来の記事は表示されません（その日付以降にサイトを更新すると公開されます）
  */
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");

@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
 };
 
-// 1時間ごとに更新（予約投稿の記事が日付になると表示されます）
-export const revalidate = 3600;
 
 export default function BlogPage() {
   return (

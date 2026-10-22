@@ -11,7 +11,9 @@ type Params = { slug: string };
 export const dynamicParams = false;
 
 export function generateStaticParams(): Params[] {
-  return getPublishedJobs().map((j) => ({ slug: j.slug }));
+  // 静的書き出しでは1件以上が必要なため、0件のときはダミー（404になるページ）を1つ返す
+  const list = getPublishedJobs().map((j) => ({ slug: j.slug }));
+  return list.length > 0 ? list : [{ slug: "none" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

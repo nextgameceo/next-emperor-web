@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "preview": "next build && wrangler dev",
+    "deploy": "next build && wrangler deploy",
     "lint": "next lint"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.151.3"
   }
 }

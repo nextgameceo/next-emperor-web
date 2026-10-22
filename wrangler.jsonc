@@ -1,0 +1,17 @@
+{
+  // Cloudflare Workers の設定
+  // ★ name は Cloudflare の管理画面に表示されている Worker（プロジェクト）名と同じにしてください
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "next-emperor-web",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // /api/ だけプログラムで処理し、それ以外は静的ファイルをそのまま返す
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": { "enabled": true }
+}

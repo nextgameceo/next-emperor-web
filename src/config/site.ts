@@ -11,17 +11,10 @@ export const siteConfig = {
   legalName: "合同会社NEXT EMPEROR",
   /**
    * サイトのURL（シェア画像・sitemap・canonical に使用）
-   * 独自ドメインを使う場合は、Vercel の環境変数 NEXT_PUBLIC_SITE_URL に設定してください。
-   * 未設定の場合は、Vercel の本番URL（〇〇.vercel.app）を自動で使います。
+   * ★公開するURL（ドメイン）が決まったら、ここを書き換えてください。
+   *   Cloudflare のビルド用環境変数 NEXT_PUBLIC_SITE_URL を設定した場合は、そちらが優先されます。
    */
-  url: (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000")
-  ).replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://next-emperor.com").replace(/\/$/, ""),
   title: "NEXT EMPEROR｜夜職から昼職へ。新しいキャリアの可能性を。",
   description:
     "NEXT EMPERORは、夜職から昼職への新しい挑戦を応援します。採用マーケティング、人材集客、法人営業支援を通じて、人と企業の可能性を広げます。",

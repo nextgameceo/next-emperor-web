@@ -6,10 +6,13 @@ import { getAllPosts, getCategories } from "@/lib/blog";
 
 type Params = { name: string };
 
-export const revalidate = 3600;
+export const dynamicParams = false;
+
 
 export function generateStaticParams(): Params[] {
-  return getCategories().map((name) => ({ name }));
+  // 静的書き出しでは1件以上が必要なため、0件のときはダミー（404になるページ）を1つ返す
+  const list = getCategories().map((name) => ({ name }));
+  return list.length > 0 ? list : [{ name: "none" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

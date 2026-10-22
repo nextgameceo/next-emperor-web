@@ -102,8 +102,6 @@ const businessPoints = [
   "提携・パートナーシップのご相談",
 ];
 
-// ブログの新着を反映するため1時間ごとに更新
-export const revalidate = 3600;
 
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 3);

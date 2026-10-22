@@ -27,7 +27,7 @@ next-emperor/
 
 1. Node.js 20以上をインストール
 2. このフォルダで `npm install`
-3. `npm run dev` → http://localhost:3000
+3. `npm run dev` → http://localhost:3000（Cloudflare と同じ環境で確認する場合は `npm run preview`）
 
 ## ロゴ・メインビジュアルの差し替え
 
@@ -47,19 +47,35 @@ next-emperor/
 
 求人の `applyUrl` に提携企業の公式応募フォームURL（https://〜）を入力。詳細ページのボタンが新しいタブでそのURLを開きます。
 
+## 公開（Cloudflare Workers）
+
+このサイトは「静的ファイル（out フォルダ）」＋「お問い合わせ送信用の小さなプログラム（worker/index.ts）」で動きます。
+Cloudflare の無料プランで運用できます。
+
+- Cloudflare の Worker 設定 → Build
+  - Build command：`npm run build`
+  - Deploy command：`npx wrangler deploy`
+- `wrangler.jsonc` の `name` は、Cloudflare の Worker 名と同じにしてください。
+- GitHub の main に反映されると、自動で再公開されます。
+
 ## お問い合わせフォーム（Resend）
 
-1. resend.com でアカウント作成 → 送信ドメインを認証 → APIキー発行
-2. `.env.local`（ローカル）または Vercel の Environment Variables に
-   `RESEND_API_KEY` / `CONTACT_TO_EMAIL` / `CONTACT_FROM_EMAIL` を設定
-3. 未設定の間はフォームに「送信先が未設定」と表示され、送信成功は表示されません
+Cloudflare の Worker → Settings → Variables and Secrets に、次の3つを登録します。
 
-## Vercelへのデプロイ
+- `RESEND_API_KEY`（Secret として登録）
+- `CONTACT_TO_EMAIL`（受け取るアドレス）
+- `CONTACT_FROM_EMAIL`（例：`NEXT EMPEROR <noreply@next-emperor.com>`。Resend で認証済みのドメイン）
 
-1. このフォルダをGitHubにアップ（新規リポジトリ）
-2. vercel.com → Add New → Project → リポジトリを選択 → Deploy
-3. Settings → Environment Variables に上記3つと `NEXT_PUBLIC_SITE_URL`（本番URL）を設定 → Redeploy
-4. Settings → Domains で独自ドメインを接続
+3つそろうまでは、フォームに「送信先が未設定」と表示され、送信成功は表示されません。
+
+## サイトのURL
+
+`src/config/site.ts` の `url`（初期値 `https://next-emperor.com`）が、シェア画像・サイトマップに使われます。
+
+## ブログ
+
+`content/blog/` に Markdown ファイルを追加します（書き方は `_template.md`）。
+未来の日付の記事は、その日付以降にサイトが更新（再公開）されたタイミングで表示されます。
 
 ## 公開前チェック
 

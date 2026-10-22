@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import { Container, Notice, PageHero, Section } from "@/components/ui";
-import { isMailConfigured } from "@/lib/mail-config";
 
 export const metadata: Metadata = {
   title: "お問い合わせ",
@@ -9,9 +8,6 @@ export const metadata: Metadata = {
     "NEXT EMPERORへの法人のお問い合わせ。採用マーケティング、人材集客、営業代行・営業支援のご相談はこちらから。",
   alternates: { canonical: "/contact" },
 };
-
-// 環境変数の設定状況を毎回確認する
-export const dynamic = "force-dynamic";
 
 export default function ContactPage() {
   return (
@@ -28,7 +24,7 @@ export default function ContactPage() {
               こちらは法人のお客様向けのお問い合わせフォームです。求人への応募は、各求人ページから掲載企業の公式応募フォームへ直接お進みください。
             </Notice>
           </div>
-          <ContactForm configured={isMailConfigured()} />
+          <ContactForm />
         </Container>
       </Section>
     </>
