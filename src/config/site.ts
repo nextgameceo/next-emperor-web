@@ -55,10 +55,10 @@ export const siteConfig = {
     status: "設立準備中",
     location: "愛知県名古屋市",
     capital: "4,000,000円",
-    representative: "RIKI",
+    representative: "代表社員　石原 利輝",
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
-    address: "",
+    address: "〒451-0052 愛知県名古屋市西区栄生2丁目3 レジデンス ルイーダ303号室",
     tel: "052-000-0000", // 例："052-000-0000"
     established: "",
     /**
