@@ -7,7 +7,7 @@ import type { Config } from "tailwindcss";
  *   銀  … ロゴの「EMPEROR」（わずかにラベンダーがかったクローム）
  *   水色 … ロゴの縁取り・星（金に次ぐ2番目の差し色）
  */
-const BASE = "#1C1B20"; // 背景のチャコール（全セクション共通）
+const BASE = "#121214"; // 背景のチャコール（全セクション共通）
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
