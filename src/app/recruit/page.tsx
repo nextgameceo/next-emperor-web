@@ -18,8 +18,8 @@ export default function RecruitPage() {
   return (
     <>
       <PageHero
-        eyebrow="Recruit"
-        title="求人情報"
+        eyebrow="求人情報"
+        title="Recruit"
         lead="今の経験を、もっと大きな未来につなげよう。新しい一歩を踏み出したい方へ、提携企業の求人情報をお届けします。"
       />
       <Section divider={false}>

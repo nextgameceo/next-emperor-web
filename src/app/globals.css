@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -47,8 +47,14 @@
     color: transparent;
   }
 
+  /* 英字のタイトル・ラベルはすべて大文字 */
+  .font-display {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
   .eyebrow {
-    @apply font-display text-xs uppercase tracking-luxe text-gold sm:text-sm;
+    @apply font-sans text-xs uppercase tracking-[0.2em] text-gold sm:text-[0.85rem];
   }
   .hairline {
     @apply h-px w-12;
@@ -65,6 +71,13 @@
 
   .heading-xl {
     @apply font-serif text-[1.9rem] font-medium leading-[1.5] tracking-[0.06em] sm:text-5xl sm:leading-[1.45];
+  }
+  /* 英語の大見出し（大文字・Oxanium） */
+  .heading-en {
+    @apply font-display text-[1.9rem] font-medium uppercase leading-[1.2] tracking-[0.06em] sm:text-[3rem];
+  }
+  .heading-en-xl {
+    @apply font-display text-[2.6rem] font-medium uppercase leading-[1.1] tracking-[0.06em] sm:text-[4.4rem];
   }
   .heading-lg {
     @apply font-serif text-2xl font-medium leading-[1.6] tracking-[0.06em] sm:text-[2.1rem];

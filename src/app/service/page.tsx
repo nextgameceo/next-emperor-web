@@ -37,7 +37,7 @@ const services = [
 export default function ServicePage() {
   return (
     <>
-      <PageHero eyebrow="Service" title="事業内容" lead="2つの事業で、人と企業の未来を支える。" />
+      <PageHero eyebrow="事業内容" title="Service" lead="2つの事業で、人と企業の未来を支える。" />
 
       {services.map((s, i) => (
         <Section key={s.no} labelledBy={`svc-${s.no}`} className={i > 0 ? "border-t border-charcoal-line" : ""}>
@@ -45,12 +45,13 @@ export default function ServicePage() {
             <div className="grid gap-12 lg:grid-cols-[4fr_8fr] lg:gap-20">
               <div>
                 <p className="font-display text-7xl leading-none"><span className="metal-gold">{s.no}</span></p>
-                <p className="eyebrow mt-4">{s.en}</p>
+                <p className="eyebrow mt-4">{s.title}</p>
               </div>
               <div>
-                <h2 id={`svc-${s.no}`} className="heading-lg">
-                  {s.title}
+                <h2 id={`svc-${s.no}`} className="heading-en">
+                  {s.en}
                 </h2>
+                <p className="mt-2 text-sm tracking-[0.06em] text-gold-soft">{s.title}</p>
                 <p className="body-text mt-6">{s.lead}</p>
                 <div className="mt-10 grid gap-6 md:grid-cols-2">
                   {s.forPeople && (

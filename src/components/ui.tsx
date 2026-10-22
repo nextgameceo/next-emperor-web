@@ -78,7 +78,7 @@ export function SectionHeading({
       <div data-reveal>
         <Eyebrow center={center}>{eyebrow}</Eyebrow>
       </div>
-      <Tag id={id} className="heading-lg mt-6" data-reveal style={delay(0.12)}>
+      <Tag id={id} className="heading-en mt-5" data-reveal style={delay(0.12)}>
         {title}
       </Tag>
     </div>
@@ -129,7 +129,7 @@ export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: str
         <div className="fade-up">
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
-        <h1 className="heading-xl mt-6">
+        <h1 className="heading-en-xl mt-5">
           <span className="line-rise metal-silver" style={delay(0.15)}>
             {title}
           </span>

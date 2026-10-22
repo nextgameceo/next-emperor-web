@@ -15,8 +15,8 @@ export default function PartnerPage() {
   return (
     <>
       <PageHero
-        eyebrow="Partner"
-        title="提携企業"
+        eyebrow="提携企業"
+        title="Partners"
         lead="新しい挑戦を受け入れ、人の可能性を信じる企業とともに。"
       />
       <Section>

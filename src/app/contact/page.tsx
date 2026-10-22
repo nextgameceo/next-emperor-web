@@ -17,8 +17,8 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Contact"
-        title="お問い合わせ"
+        eyebrow="お問い合わせ"
+        title="Contact"
         lead="採用マーケティング、人材集客、営業支援に関するご相談・ご依頼は、こちらのフォームよりお問い合わせください。"
       />
       <Section>

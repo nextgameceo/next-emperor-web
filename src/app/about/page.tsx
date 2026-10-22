@@ -25,15 +25,15 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About"
-        title="会社概要"
+        eyebrow="会社概要"
+        title="About Us"
         lead="夜の経験を、明日の可能性へ。NEXT EMPERORは、人と企業の新しい出会いを支える会社です。"
       />
 
       <Section labelledBy="message-title">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
-            <SectionHeading eyebrow="Message" id="message-title" title={<>経験に、誇りを。<br />未来に、選択肢を。</>} />
+            <SectionHeading eyebrow="経験に、誇りを。未来に、選択肢を。" id="message-title" title={<><span className="metal-silver">Pride in Your Past.</span><br /><span className="metal-gold">Choice for Your Future.</span></>} />
             <div className="body-text space-y-6">
               <p>
                 接客で磨いた気配り、初対面の人と信頼関係を築く力、数字に向き合ってきた営業力。夜の仕事で培われたこれらの力は、昼の仕事でも大きな強みになります。
@@ -66,7 +66,7 @@ export default function AboutPage() {
 
       <Section labelledBy="profile-title" className="border-t border-charcoal-line">
         <Container>
-          <SectionHeading eyebrow="Company Profile" id="profile-title" title="会社情報" />
+          <SectionHeading eyebrow="会社情報" id="profile-title" title="Company Profile" />
           <dl className="mt-12 border-t border-charcoal-line">
             {rows.map((r) => (
               <div key={r.k} className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[200px_1fr] sm:gap-8">

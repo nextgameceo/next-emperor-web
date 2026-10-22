@@ -56,26 +56,32 @@ const stance = [
 const strengths = [
   {
     title: "接客力",
+    en: "Hospitality",
     body: "初対面の相手に合わせて話し方や距離感を変えられる力は、営業・販売・受付など、人と接するあらゆる仕事で求められます。",
   },
   {
     title: "コミュニケーション力",
+    en: "Communication",
     body: "相手の話を聞き、空気を読み、会話を途切れさせない。チームで働く職場でも、お客様対応でも活きる力です。",
   },
   {
     title: "営業力・目標達成力",
+    en: "Sales Drive",
     body: "指名や売上と向き合ってきた経験は、数字を追う営業職にそのままつながります。目標に向かって行動し続ける力は大きな強みです。",
   },
   {
     title: "気配り・観察力",
+    en: "Attention to Detail",
     body: "グラスの空き具合や表情の変化に気づく細やかさは、どんな職場でも信頼につながる、目に見えにくい大切な力です。",
   },
   {
     title: "第一印象・身だしなみ",
+    en: "First Impression",
     body: "人に見られることを意識してきた経験は、清潔感や立ち居振る舞いとして、企業の顔となる仕事で評価されます。",
   },
   {
     title: "切り替えの強さ",
+    en: "Resilience",
     body: "うまくいかない日があっても、次のお客様には笑顔で向き合う。その気持ちの切り替えは、どんな仕事でも続ける力になります。",
   },
 ];
@@ -149,11 +155,12 @@ export default function HomePage() {
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <div>
               <div data-reveal>
-                <Eyebrow>About</Eyebrow>
+                <Eyebrow>NEXT EMPERORとは</Eyebrow>
               </div>
-              <h2 id="about-title" className="heading-lg mt-6" data-reveal style={delay(0.12)}>
-                <span className="metal-silver">NEXT EMPEROR</span>
-                <span className="text-ivory">とは</span>
+              <h2 id="about-title" className="heading-en mt-5" data-reveal style={delay(0.12)}>
+                <span className="metal-silver">What is</span>
+                <br />
+                <span className="metal-gold">NEXT EMPEROR</span>
               </h2>
               <p className="mt-6 font-serif text-lg leading-[2] tracking-[0.06em] text-gold-soft" data-reveal style={delay(0.24)}>
                 夜で磨いた力を、
@@ -220,11 +227,11 @@ export default function HomePage() {
         <Container>
           <SectionHeading
             align="center"
-            eyebrow="Our Promise"
+            eyebrow="私たちが大切にしていること"
             id="stance-title"
             title={
               <>
-                私たちが、<span className="metal-gold">大切にしていること。</span>
+                Our <span className="metal-gold">Promise</span>
               </>
             }
           />
@@ -248,13 +255,13 @@ export default function HomePage() {
       <Section labelledBy="strength-title">
         <Container>
           <SectionHeading
-            eyebrow="Your Strength"
+            eyebrow="夜の経験は、昼の仕事で活きる"
             id="strength-title"
             title={
               <>
-                夜の経験は、
-                <br className="sm:hidden" />
-                <span className="metal-gold">昼の仕事で活きる。</span>
+                Your Night is
+                <br />
+                <span className="metal-gold">Your Strength</span>
               </>
             }
           />
@@ -271,7 +278,8 @@ export default function HomePage() {
                   </span>
                   <span className="h-px flex-1 bg-gradient-to-r from-gold/60 via-ice/40 to-transparent" aria-hidden />
                 </div>
-                <h3 className="mt-5 font-serif text-xl tracking-[0.06em] text-ivory">{s.title}</h3>
+                <h3 className="mt-5 font-display text-lg tracking-[0.1em] text-ivory">{s.en}</h3>
+                <p className="mt-1 text-sm text-gold-soft">{s.title}</p>
                 <p className="mt-3 text-sm leading-[2] text-ivory-muted">{s.body}</p>
               </li>
             ))}
@@ -283,13 +291,11 @@ export default function HomePage() {
       <Section labelledBy="service-title" band>
         <Container>
           <SectionHeading
-            eyebrow="Service"
+            eyebrow="2つの事業で、人と企業の未来を支える"
             id="service-title"
             title={
               <>
-                2つの事業で、
-                <br className="sm:hidden" />
-                <span className="metal-gold">人と企業の未来を支える。</span>
+                Our <span className="metal-gold">Service</span>
               </>
             }
           />
@@ -300,10 +306,11 @@ export default function HomePage() {
                   <p className="font-display text-7xl leading-none">
                     <span className="metal-gold">{s.no}</span>
                   </p>
-                  <p className="eyebrow !text-ice">{s.en}</p>
+                  <Sparkle className="mb-2 h-4 w-4 text-ice" twinkle />
                 </div>
                 <span className="mt-8 block h-px w-full bg-gradient-to-r from-gold/60 via-ice/40 to-transparent" aria-hidden />
-                <h3 className="mt-8 font-serif text-xl tracking-[0.06em] sm:text-2xl">{s.title}</h3>
+                <h3 className="mt-8 font-display text-2xl font-medium tracking-[0.08em] text-ivory sm:text-[1.75rem]">{s.en}</h3>
+                <p className="mt-2 text-sm tracking-[0.06em] text-gold-soft">{s.title}</p>
                 <div className="body-text mt-6 space-y-3">
                   {s.body.map((b) => (
                     <p key={b}>{b}</p>
@@ -333,12 +340,12 @@ export default function HomePage() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <div data-reveal>
-              <Eyebrow center>Recruit</Eyebrow>
+              <Eyebrow center>今の経験を、もっと大きな未来につなげよう</Eyebrow>
             </div>
-            <h2 id="recruit-title" className="heading-lg mt-6" data-reveal style={delay(0.12)}>
-              今の経験を、
+            <h2 id="recruit-title" className="heading-en mt-5" data-reveal style={delay(0.12)}>
+              <span className="metal-silver">Turn Your Experience</span>
               <br />
-              <span className="metal-gold">もっと大きな未来につなげよう。</span>
+              <span className="metal-gold">Into Your Future</span>
             </h2>
             <div className="mt-10 space-y-2 font-serif text-[1.05rem] tracking-[0.08em] text-ivory/85">
               <p data-reveal style={delay(0.2)}>新しい仕事に挑戦したい。</p>
@@ -354,9 +361,10 @@ export default function HomePage() {
           </div>
 
           <div className="card corners mx-auto mt-14 max-w-3xl p-8 sm:p-12" data-reveal>
-            <p className="text-center font-serif text-lg tracking-[0.08em] text-ivory">
-              こんな方に、<span className="metal-gold">見てほしい。</span>
+            <p className="text-center font-display text-2xl font-medium tracking-[0.1em]">
+              <span className="metal-gold">For You</span>
             </p>
+            <p className="mt-2 text-center text-sm text-ivory-muted">こんな方に、見てほしい。</p>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {forYou.map((t, i) => (
                 <li key={t} className="flex items-start gap-3 text-sm leading-[1.9] text-ivory/90" data-reveal style={delay(i * 0.1)}>
@@ -388,7 +396,15 @@ export default function HomePage() {
       {/* ===== PARTNER ===== */}
       <Section labelledBy="partner-title" band>
         <Container>
-          <SectionHeading eyebrow="Partner" id="partner-title" title="提携企業" />
+          <SectionHeading
+            eyebrow="提携企業"
+            id="partner-title"
+            title={
+              <>
+                Our <span className="metal-gold">Partners</span>
+              </>
+            }
+          />
           <p className="body-text mt-6 max-w-3xl" data-reveal style={delay(0.2)}>
             NEXT EMPERORは、新しい挑戦を受け入れ、人の可能性を信じる企業と提携しています。
             提携企業の求人には、各企業の公式応募フォームから直接ご応募いただけます。
@@ -419,10 +435,9 @@ export default function HomePage() {
       <Section labelledBy="business-title">
         <Container>
           <div className="card corners mx-auto max-w-4xl px-7 py-16 text-center sm:px-16 sm:py-20" data-reveal>
-            <Eyebrow center>For Business</Eyebrow>
-            <h2 id="business-title" className="heading-lg mt-6">
-              <span className="metal-silver">企業の成長を、</span>
-              <span className="metal-gold">ともに。</span>
+            <Eyebrow center>企業の成長を、ともに</Eyebrow>
+            <h2 id="business-title" className="heading-en mt-5">
+              <span className="metal-silver">Grow</span> <span className="metal-gold">Together</span>
             </h2>
             <div className="body-text mt-8 space-y-2">
               <p>NEXT EMPERORは、企業の採用マーケティング、集客、営業活動を支援します。</p>

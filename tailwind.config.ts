@@ -48,7 +48,8 @@ const config: Config = {
       },
       fontFamily: {
         // 英数字は Oxanium、日本語は Noto（英数字だけ先頭のフォントが使われます）
-        serif: ['"Oxanium"', '"Noto Serif JP"', '"Hiragino Mincho ProN"', '"Yu Mincho"', "serif"],
+        // 見出しも含め、日本語はすべてゴシック体（Noto Sans JP）
+        serif: ['"Oxanium"', '"Noto Sans JP"', '"Hiragino Kaku Gothic ProN"', '"Yu Gothic"', "sans-serif"],
         sans: ['"Oxanium"', '"Noto Sans JP"', '"Hiragino Kaku Gothic ProN"', '"Yu Gothic"', "sans-serif"],
         display: ['"Oxanium"', '"Noto Sans JP"', "sans-serif"],
       },

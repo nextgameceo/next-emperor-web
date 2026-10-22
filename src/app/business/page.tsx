@@ -49,14 +49,14 @@ export default function BusinessPage() {
   return (
     <>
       <PageHero
-        eyebrow="For Business"
-        title="企業の成長を、ともに。"
+        eyebrow="法人向けサービス"
+        title="For Business"
         lead="NEXT EMPERORは、企業の採用マーケティング、集客、営業活動を支援します。新しい人材との出会いやビジネス機会の創出をサポートします。"
       />
 
       <Section labelledBy="issues-title">
         <Container>
-          <SectionHeading eyebrow="Issues" id="issues-title" title="こんな課題はありませんか。" />
+          <SectionHeading eyebrow="こんな課題はありませんか" id="issues-title" title={<>Your <span className="metal-gold">Challenges</span></>} />
           <ul className="mt-12 grid gap-px bg-charcoal-line sm:grid-cols-2">
             {issues.map((t) => (
               <li key={t} className="flex items-center gap-5 bg-ink px-7 py-7 text-ivory/90">
@@ -70,7 +70,7 @@ export default function BusinessPage() {
 
       <Section labelledBy="menu-title" className="border-t border-charcoal-line bg-charcoal/30">
         <Container>
-          <SectionHeading eyebrow="Our Service" id="menu-title" title="支援内容" />
+          <SectionHeading eyebrow="支援内容" id="menu-title" title={<>What <span className="metal-gold">We Do</span></>} />
           <div className="mt-14 grid gap-6 md:grid-cols-2">
             {menus.map((m) => (
               <article key={m.title} className="card corners p-8 sm:p-10">
@@ -85,7 +85,7 @@ export default function BusinessPage() {
 
       <Section labelledBy="flow-title" className="border-t border-charcoal-line">
         <Container>
-          <SectionHeading eyebrow="Flow" id="flow-title" title="ご相談の流れ" />
+          <SectionHeading eyebrow="ご相談の流れ" id="flow-title" title={<>How It <span className="metal-gold">Works</span></>} />
           <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s) => (
               <li key={s.no} className="border-t border-gold/40 pt-6">

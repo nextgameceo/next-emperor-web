@@ -63,7 +63,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero eyebrow="Privacy Policy" title="プライバシーポリシー" />
+      <PageHero eyebrow="プライバシーポリシー" title="Privacy Policy" />
       <Section>
         <Container className="max-w-3xl">
           <div className="space-y-12">
