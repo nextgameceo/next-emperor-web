@@ -61,7 +61,7 @@ export const siteConfig = {
     englishName: "NEXT EMPEROR LLC",
     status: "設立準備中",
     location: "愛知県名古屋市",
-    capital: "3,500,000円",
+    capital: "4,000,000円",
     representative: "RIKI",
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
