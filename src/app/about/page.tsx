@@ -77,11 +77,24 @@ export default function AboutPage() {
             <div className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[200px_1fr] sm:gap-8">
               <dt className="text-sm tracking-[0.12em] text-gold">事業内容</dt>
               <dd>
-                <ul className="space-y-1 text-ivory/90">
-                  {c.business.map((b) => (
-                    <li key={b}>{b}</li>
+                <ol className="space-y-6">
+                  {c.business.map((b, i) => (
+                    <li key={b.title}>
+                      <p className="flex items-baseline gap-3 font-serif tracking-[0.05em] text-ivory">
+                        <span className="font-display text-lg text-ice">{String(i + 1).padStart(2, "0")}</span>
+                        {b.title}
+                      </p>
+                      <ul className="mt-2 space-y-1 pl-9 text-sm leading-[1.9] text-ivory-muted">
+                        {b.items.map((it) => (
+                          <li key={it} className="relative before:absolute before:-left-4 before:top-[0.85em] before:h-px before:w-2 before:bg-gold/70">
+                            {it}
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
                   ))}
-                </ul>
+                  {c.businessNote && <li className="pl-9 text-sm text-ivory-muted">{c.businessNote}</li>}
+                </ol>
               </dd>
             </div>
           </dl>
