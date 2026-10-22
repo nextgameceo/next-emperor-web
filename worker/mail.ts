@@ -10,7 +10,6 @@ export const MAIL_BRAND = {
   site: "https://next-emperor.com",
   logo: "https://next-emperor.com/images/logo-arch.png",
   company: "合同会社NEXT EMPEROR",
-  address: "〒451-0052 愛知県名古屋市西区栄生2丁目3 レジデンス ルイーダ303号室",
   email: "contact@next-emperor.com",
 };
 
@@ -69,10 +68,7 @@ export function autoReplyHtml(input: ContactInput, sentAt: string, logo = MAIL_B
 <tr><td align="center" style="padding:28px 12px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:${PANEL};border:1px solid ${LINE};font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,sans-serif;">
     <tr><td style="height:4px;line-height:4px;font-size:0;background:${GOLD};background-image:linear-gradient(90deg,${GOLD},#F3DFA8,${ICE});">&nbsp;</td></tr>
-    <tr><td align="center" style="padding:36px 28px 8px;">
-      <img src="${logo}" width="210" alt="NEXT EMPEROR" style="display:block;width:210px;max-width:70%;height:auto;border:0;">
-    </td></tr>
-    <tr><td style="padding:24px 28px 0;">
+    <tr><td style="padding:36px 28px 0;">
       <div style="font-size:11px;letter-spacing:0.24em;color:${ICE};">THANK YOU</div>
       <h1 style="margin:10px 0 0;font-size:22px;line-height:1.5;font-weight:700;color:#FFFFFF;">お問い合わせを<br>受け付けました</h1>
     </td></tr>
@@ -93,9 +89,10 @@ export function autoReplyHtml(input: ContactInput, sentAt: string, logo = MAIL_B
       ※ このメールに返信いただくと、担当者（${esc(b.email)}）に届きます。<br>
       ※ お心当たりのない場合は、お手数ですが本メールを破棄してください。
     </td></tr>
-    <tr><td style="padding:24px 28px;background:#08080A;border-top:1px solid ${LINE};font-size:11px;line-height:1.9;color:${MUTED};text-align:center;">
-      <div style="font-size:12px;letter-spacing:0.16em;color:${GOLD};margin-bottom:6px;">NEXT EMPEROR LLC</div>
-      ${esc(b.company)}<br>${esc(b.address)}<br>
+    <tr><td style="padding:32px 28px 28px;background:#08080A;border-top:1px solid ${LINE};font-size:11px;line-height:1.9;color:${MUTED};text-align:center;">
+      <img src="${logo}" width="180" alt="NEXT EMPEROR" style="display:block;margin:0 auto 14px;width:180px;max-width:60%;height:auto;border:0;">
+      <div style="font-size:12px;letter-spacing:0.16em;color:${GOLD};margin-bottom:4px;">NEXT EMPEROR LLC</div>
+      ${esc(b.company)}<br>
       <a href="mailto:${b.email}" style="color:${ICE};text-decoration:none;">${b.email}</a>
       &nbsp;|&nbsp;
       <a href="${b.site}" style="color:${ICE};text-decoration:none;">next-emperor.com</a>
