@@ -49,13 +49,13 @@ export default function AboutPage() {
 
           <div className="mt-20 grid gap-6 sm:grid-cols-2">
             <div className="card corners p-9 sm:p-12">
-              <p className="font-display text-3xl italic"><span className="metal-gold">Mission</span></p>
+              <p className="font-display text-3xl"><span className="metal-gold">Mission</span></p>
               <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
                 夜職で培った接客力、営業力、コミュニケーション能力を活かし、新しいキャリアの可能性を広げる。
               </p>
             </div>
             <div className="card corners p-9 sm:p-12">
-              <p className="font-display text-3xl italic"><span className="metal-gold">Vision</span></p>
+              <p className="font-display text-3xl"><span className="metal-gold">Vision</span></p>
               <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
                 誰もが過去の経験に誇りを持ち、自分らしい未来へ挑戦できる社会をつくる。
               </p>

@@ -203,7 +203,7 @@ export default function HomePage() {
               },
             ].map((m, i) => (
               <div key={m.en} className="card corners p-9 sm:p-12" data-reveal style={delay(i * 0.15)}>
-                <p className="flex items-center gap-3 font-display text-3xl italic">
+                <p className="flex items-center gap-3 font-display text-3xl">
                   <Sparkle className={`h-3.5 w-3.5 ${i ? "text-ice" : "text-gold"}`} twinkle delay={`${i * 0.8}s`} />
                   <span className="metal-gold">{m.en}</span>
                 </p>
@@ -232,7 +232,7 @@ export default function HomePage() {
             {stance.map((s, i) => (
               <li key={s.en} className="card px-7 py-10 text-center" data-reveal style={delay(i * 0.12)}>
                 <p className="font-display text-sm tracking-luxe text-ice">0{i + 1}</p>
-                <p className="mt-3 font-display text-[2rem] italic leading-none">
+                <p className="mt-3 font-display text-[2rem] leading-none">
                   <span className="metal-gold">{s.en}</span>
                 </p>
                 <Sparkle className="mx-auto mt-5 h-2.5 w-2.5 text-ice/70" twinkle delay={`${i * 0.5}s`} />

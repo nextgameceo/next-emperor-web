@@ -7,7 +7,7 @@ import type { Config } from "tailwindcss";
  *   銀  … ロゴの「EMPEROR」（わずかにラベンダーがかったクローム）
  *   水色 … ロゴの縁取り・星（金に次ぐ2番目の差し色）
  */
-const BASE = "#000000"; // 背景のチャコール（全セクション共通）
+const BASE = "#1C1B20"; // 背景のチャコール（全セクション共通）
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
@@ -47,9 +47,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['"Noto Serif JP"', '"Hiragino Mincho ProN"', '"Yu Mincho"', "serif"],
-        sans: ['"Noto Sans JP"', '"Hiragino Kaku Gothic ProN"', '"Yu Gothic"', "sans-serif"],
-        display: ['"Cormorant Garamond"', '"Noto Serif JP"', "serif"],
+        // 英数字は Oxanium、日本語は Noto（英数字だけ先頭のフォントが使われます）
+        serif: ['"Oxanium"', '"Noto Serif JP"', '"Hiragino Mincho ProN"', '"Yu Mincho"', "serif"],
+        sans: ['"Oxanium"', '"Noto Sans JP"', '"Hiragino Kaku Gothic ProN"', '"Yu Gothic"', "sans-serif"],
+        display: ['"Oxanium"', '"Noto Sans JP"', "sans-serif"],
       },
       letterSpacing: {
         luxe: "0.28em",
