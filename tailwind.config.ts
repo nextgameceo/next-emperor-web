@@ -2,12 +2,12 @@ import type { Config } from "tailwindcss";
 
 /*
  * ブランドカラー（ここを変えるとサイト全体の色が変わります）
- * 背景はチャコールの単色。金・銀・星の色は公式ロゴから抽出しています。
+ * 背景は黒。金・銀・星の色は公式ロゴから抽出しています。
  *   金  … ロゴの「NEXT」
  *   銀  … ロゴの「EMPEROR」（わずかにラベンダーがかったクローム）
  *   水色 … ロゴの縁取り・星（金に次ぐ2番目の差し色）
  */
-const BASE = "#000000"; // 背景のチャコール（全セクション共通）
+const BASE = "#000000"; // 背景の黒（全セクション共通）
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
@@ -19,12 +19,12 @@ const config: Config = {
         navy: {
           DEFAULT: BASE,
           deep: BASE,
-          light: "#25242B",
+          light: "#15151A",
         },
         charcoal: {
-          DEFAULT: "#25242B", // カード等のわずかに明るい面
-          light: "#2C2B33",
-          line: "#3A3842", // 罫線
+          DEFAULT: "#111114", // カード等のわずかに明るい面
+          light: "#18181D",
+          line: "#2A2930", // 罫線
         },
         gold: {
           DEFAULT: "#DDB46E", // ロゴのゴールド（シャンパン寄り）

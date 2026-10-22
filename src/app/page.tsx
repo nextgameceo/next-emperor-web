@@ -2,6 +2,8 @@ import Link from "next/link";
 import JobCard from "@/components/JobCard";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
+import PostCard from "@/components/PostCard";
+import { getAllPosts } from "@/lib/blog";
 import { Ornament, Sparkle } from "@/components/Decor";
 import { ApplyFlow, FaqSection } from "@/components/Sections";
 import { ButtonLink, Container, Eyebrow, Section, SectionHeading, delay } from "@/components/ui";
@@ -100,7 +102,11 @@ const businessPoints = [
   "提携・パートナーシップのご相談",
 ];
 
+// ブログの新着を反映するため1時間ごとに更新
+export const revalidate = 3600;
+
 export default function HomePage() {
+  const posts = getAllPosts().slice(0, 3);
   const jobs = getPublishedJobs().slice(0, 3);
   const partners = getApprovedPartners();
 
@@ -427,6 +433,37 @@ export default function HomePage() {
           )}
         </Container>
       </Section>
+
+      {/* ===== BLOG ===== */}
+      {posts.length > 0 && (
+        <Section labelledBy="blog-title">
+          <Container>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <SectionHeading
+                eyebrow="ブログ・お知らせ"
+                id="blog-title"
+                title={
+                  <>
+                    Latest <span className="metal-gold">News</span>
+                  </>
+                }
+              />
+              <div data-reveal>
+                <ButtonLink href="/blog" variant="outline">
+                  すべての記事を見る
+                </ButtonLink>
+              </div>
+            </div>
+            <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {posts.map((p, i) => (
+                <li key={p.slug} data-reveal style={delay(i * 0.12)}>
+                  <PostCard post={p} />
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      )}
 
       {/* ===== FAQ ===== */}
       <FaqSection />

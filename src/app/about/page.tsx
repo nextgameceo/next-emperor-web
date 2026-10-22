@@ -20,6 +20,7 @@ export default function AboutPage() {
     { k: "資本金", v: c.capital },
     { k: "所在地", v: c.address || c.location },
     { k: "電話番号", v: c.tel },
+    { k: "メール", v: c.email },
   ].filter((r) => r.v);
 
   return (
@@ -84,6 +85,7 @@ export default function AboutPage() {
                         <span className="font-display text-lg text-ice">{String(i + 1).padStart(2, "0")}</span>
                         {b.title}
                       </p>
+                      {b.items.length > 0 && (
                       <ul className="mt-2 space-y-1 pl-9 text-sm leading-[1.9] text-ivory-muted">
                         {b.items.map((it) => (
                           <li key={it} className="relative before:absolute before:-left-4 before:top-[0.85em] before:h-px before:w-2 before:bg-gold/70">
@@ -91,6 +93,7 @@ export default function AboutPage() {
                           </li>
                         ))}
                       </ul>
+                      )}
                     </li>
                   ))}
                   {c.businessNote && <li className="pl-9 text-sm text-ivory-muted">{c.businessNote}</li>}

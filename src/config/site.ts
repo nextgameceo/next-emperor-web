@@ -9,7 +9,19 @@
 export const siteConfig = {
   name: "NEXT EMPEROR",
   legalName: "合同会社NEXT EMPEROR",
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com").replace(/\/$/, ""),
+  /**
+   * サイトのURL（シェア画像・sitemap・canonical に使用）
+   * 独自ドメインを使う場合は、Vercel の環境変数 NEXT_PUBLIC_SITE_URL に設定してください。
+   * 未設定の場合は、Vercel の本番URL（〇〇.vercel.app）を自動で使います。
+   */
+  url: (
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000")
+  ).replace(/\/$/, ""),
   title: "NEXT EMPEROR｜夜職から昼職へ。新しいキャリアの可能性を。",
   description:
     "NEXT EMPERORは、夜職から昼職への新しい挑戦を応援します。採用マーケティング、人材集客、法人営業支援を通じて、人と企業の可能性を広げます。",
@@ -50,11 +62,11 @@ export const siteConfig = {
     status: "設立準備中",
     location: "愛知県名古屋市",
     capital: "3,500,000円",
-    // 代表者：正式な氏名を入力すると表示されます（例："代表社員　山田 太郎"）
     representative: "RIKI",
-    // 以下は確定後に入力してください
-    address: "contact@next-emperor.com",
-    tel: "090-1234-5678",
+    email: "contact@next-emperor.com",
+    // 以下は確定後に入力してください（空欄の項目は表示されません）
+    address: "",
+    tel: "", // 例："052-000-0000"
     established: "",
     /**
      * 事業内容（大項目と、その具体的な内容）
@@ -93,9 +105,13 @@ export const siteConfig = {
           "営業に関する研修・アドバイス",
         ],
       },
+      {
+        title: "広告業及び広告代理店業",
+        items: [],
+      },
     ] as { title: string; items: string[] }[],
     /** 事業内容の最後に添える一文（不要なら空欄に） */
-    businessNote: "前各号に附帯関連する一切の事業",
+    businessNote: "上記に付随した一切の事業",
   },
 };
 
@@ -105,6 +121,7 @@ export const navItems = [
   { label: "SERVICE", href: "/service" },
   { label: "RECRUIT", href: "/recruit" },
   { label: "PARTNER", href: "/partner" },
+  { label: "BLOG", href: "/blog" },
   { label: "CONTACT", href: "/contact" },
 ] as const;
 
@@ -114,6 +131,7 @@ export const footerItems = [
   { label: "求人情報", href: "/recruit" },
   { label: "提携企業", href: "/partner" },
   { label: "法人向けサービス", href: "/business" },
+  { label: "ブログ", href: "/blog" },
   { label: "お問い合わせ", href: "/contact" },
   { label: "プライバシーポリシー", href: "/privacy" },
 ] as const;
