@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import RecruitNotice from "@/components/RecruitNotice";
 import { ButtonLink, Container, PageHero, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
-import { getJobBySlug, getPartnerName, getPublishedJobs, isSafeExternalUrl } from "@/lib/data";
+import { getJobBySlug, getJobCompany, getPublishedJobs, isSafeExternalUrl } from "@/lib/data";
 
 type Params = { slug: string };
 
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const job = getJobBySlug(slug);
   if (!job) return {};
-  const company = getPartnerName(job.partnerId);
+  const company = getJobCompany(job);
   return {
     title: `${job.title}（${company}）`,
     description: `${company}の求人「${job.title}」。${job.location ? `勤務地：${job.location}。` : ""}夜職から昼職への挑戦を応援します。`,
@@ -33,9 +33,10 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
   const job = getJobBySlug(slug);
   if (!job) notFound();
 
-  const company = getPartnerName(job.partnerId);
+  const company = getJobCompany(job);
+  const hidden = Boolean(job.companyLabel?.trim());
   const rows = [
-    { k: "企業名", v: company },
+    { k: hidden ? "業種" : "企業名", v: company },
     { k: "仕事内容", v: job.description },
     { k: "勤務地", v: job.location },
     { k: "雇用形態", v: job.employmentType },
@@ -47,8 +48,8 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
   const canApply = isSafeExternalUrl(job.applyUrl);
 
-  // Google しごと検索向けの構造化データ（入力済みの項目のみ）
-  const jsonLd = {
+  // Google しごと検索向けの構造化データ（入力済み・社名公開の求人のみ）
+  const jsonLd = hidden || !job.location ? null : {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
@@ -64,7 +65,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
       <PageHero eyebrow={company} title={job.title} />
       <Section>
         <Container className="max-w-4xl">
@@ -78,6 +79,15 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
             </ol>
           </nav>
 
+          {job.industry && (
+            <section className="mb-14" data-reveal>
+              <p className="eyebrow">ABOUT THE INDUSTRY</p>
+              <h2 className="heading-en mt-3 text-2xl">業種について</h2>
+              <p className="body-text mt-6 whitespace-pre-line">{job.industry}</p>
+            </section>
+          )}
+
+          <h2 className="mb-6 text-sm tracking-[0.16em] text-ice">募集内容</h2>
           <dl className="border-t border-charcoal-line">
             {rows.map((r) => (
               <div key={r.k} className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[160px_1fr] sm:gap-8">
@@ -87,19 +97,58 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
             ))}
           </dl>
 
+          {(!job.salary || !job.location) && (
+            <p className="mt-6 text-xs leading-relaxed text-ivory-dim">
+              ※ 給与・勤務地などの詳しい条件は、確定しだい掲載します。最新の条件は応募先にてご確認ください。
+            </p>
+          )}
+
+          {job.appeal && job.appeal.length > 0 && (
+            <section className="mt-14" data-reveal>
+              <p className="eyebrow">FOR YOU</p>
+              <h2 className="heading-en mt-3 text-2xl">こんな方にぴったり</h2>
+              <ul className="mt-6 space-y-3">
+                {job.appeal.map((a) => (
+                  <li key={a} className="flex gap-3 leading-[1.9] text-ivory/90">
+                    <span aria-hidden className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rotate-45 bg-gold" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {job.closing && (
+            <section className="card corners mt-14 px-7 py-12 text-center sm:px-12" data-reveal>
+              <p className="eyebrow">MESSAGE</p>
+              <p className="mt-6 whitespace-pre-line text-lg leading-[2.1] tracking-[0.04em] text-ivory sm:text-xl">
+                {job.closing}
+              </p>
+            </section>
+          )}
+
           <div className="mt-12 space-y-8">
             <RecruitNotice />
-            {canApply && (
+            {canApply ? (
               <div className="flex flex-col gap-4 sm:flex-row">
                 <ButtonLink href={job.applyUrl} external>
-                  {company}の応募フォームへ
+                  応募先へ進む
                 </ButtonLink>
                 <ButtonLink href="/recruit" variant="outline">
                   求人一覧へ戻る
                 </ButtonLink>
               </div>
+            ) : (
+              <div className="space-y-4">
+                <p className="border border-ice/40 px-5 py-4 text-sm leading-relaxed text-ice">
+                  現在、応募受付の準備中です。受付開始までしばらくお待ちください。
+                </p>
+                <ButtonLink href="/recruit" variant="outline">
+                  求人一覧へ戻る
+                </ButtonLink>
+              </div>
             )}
-            <p className="text-xs text-ivory-dim">外部サイト（掲載企業の公式応募フォーム）へ移動します。</p>
+            {canApply && <p className="text-xs text-ivory-dim">外部サイト（掲載企業の公式応募先）へ移動します。</p>}
           </div>
         </Container>
       </Section>

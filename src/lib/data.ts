@@ -1,9 +1,14 @@
 import { jobs, type Job } from "@/data/jobs";
 import { partners, type Partner } from "@/data/partners";
 
-/** 公開中かつ応募URLが設定されている求人のみ */
+/** 公開中の求人（応募先が未設定のものは「応募受付の準備中」として表示） */
 export function getPublishedJobs(): Job[] {
-  return jobs.filter((j) => j.status === "published" && j.applyUrl.trim() !== "");
+  return jobs.filter((j) => j.status === "published");
+}
+
+/** 求人に表示する会社名（companyLabel があればそちらを優先） */
+export function getJobCompany(job: Job): string {
+  return job.companyLabel?.trim() || getPartnerName(job.partnerId);
 }
 
 export function getJobBySlug(slug: string): Job | undefined {
@@ -23,7 +28,7 @@ export function getPartnerName(partnerId: string): string {
 export function isSafeExternalUrl(url: string): boolean {
   try {
     const u = new URL(url);
-    return u.protocol === "https:" || u.protocol === "http:";
+    return u.protocol === "https:" || u.protocol === "http:" || u.protocol === "mailto:";
   } catch {
     return false;
   }

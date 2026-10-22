@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Job } from "@/data/jobs";
-import { getPartnerName } from "@/lib/data";
+import { getJobCompany } from "@/lib/data";
 
 export default function JobCard({ job }: { job: Job }) {
   const meta = [
@@ -11,7 +11,7 @@ export default function JobCard({ job }: { job: Job }) {
 
   return (
     <article className="card corners group relative flex h-full flex-col p-7 transition-colors hover:border-gold/60 sm:p-8">
-      <p className="text-xs tracking-[0.12em] text-gold">{getPartnerName(job.partnerId)}</p>
+      <p className="text-xs tracking-[0.12em] text-gold">{getJobCompany(job)}</p>
       <h3 className="mt-3 font-serif text-xl tracking-[0.06em]">
         <Link href={`/recruit/${job.slug}`} className="after:absolute after:inset-0">
           {job.title}
