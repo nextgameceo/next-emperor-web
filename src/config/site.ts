@@ -66,7 +66,7 @@ export const siteConfig = {
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
     address: "",
-    tel: "", // 例："052-000-0000"
+    tel: "052-000-0000", // 例："052-000-0000"
     established: "",
     /**
      * 事業内容（大項目と、その具体的な内容）
