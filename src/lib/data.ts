@@ -33,3 +33,39 @@ export function isSafeExternalUrl(url: string): boolean {
     return false;
   }
 }
+
+/** 応募時に掲載企業へ伝わる「流入元」の目印 */
+export const REFERRAL_LABEL = "NEXT EMPEROR";
+
+/**
+ * 応募先リンクに「NEXT EMPEROR経由」の目印を自動で付ける
+ * ・メール（mailto:）… 件名に【NEXT EMPEROR経由】と求人名を入れる
+ * ・LINE公式アカウント（line.me/R/oaMessage/...）… 最初のメッセージ文を自動入力
+ * ・Webフォーム … URLに ?ref=next-emperor（＋アクセス解析用のutm）を付ける
+ *   ※Googleフォームの「事前入力URL」をそのまま applyUrl に入れれば、流入元欄も自動入力されます
+ */
+export function buildApplyHref(job: Job): string {
+  const raw = job.applyUrl.trim();
+  if (!isSafeExternalUrl(raw)) return "";
+  const msg = `${REFERRAL_LABEL}の求人「${job.title}」を見て応募します。`;
+  try {
+    const u = new URL(raw);
+    if (u.protocol === "mailto:") {
+      if (!u.searchParams.has("subject")) u.searchParams.set("subject", `【${REFERRAL_LABEL}経由】${job.title} 応募`);
+      if (!u.searchParams.has("body")) u.searchParams.set("body", `${msg}\n\nお名前：\nご連絡先：\n`);
+      return u.toString().replace(/\+/g, "%20");
+    }
+    if (u.hostname === "line.me" && u.pathname.includes("/oaMessage/")) {
+      return raw.includes("?") ? raw : `${raw.replace(/\/?$/, "/")}?${encodeURIComponent(msg)}`;
+    }
+    if (!u.searchParams.has("ref")) u.searchParams.set("ref", "next-emperor");
+    if (!u.searchParams.has("utm_source")) {
+      u.searchParams.set("utm_source", "next-emperor");
+      u.searchParams.set("utm_medium", "referral");
+      u.searchParams.set("utm_campaign", job.slug);
+    }
+    return u.toString();
+  } catch {
+    return "";
+  }
+}

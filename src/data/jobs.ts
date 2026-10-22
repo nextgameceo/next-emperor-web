@@ -9,6 +9,8 @@
  * ・applyUrl には掲載企業の「応募フォーム」「LINE」などのURLを入れます。
  *   メールで受け付ける場合は "mailto:xxx@example.com" と書きます。
  *   空欄の間は「応募受付の準備中」と表示され、応募ボタンは出ません。
+ *   ※応募ボタンには「NEXT EMPEROR経由」の目印が自動で付きます（メール件名・LINEの最初の文・URLの ?ref=next-emperor）。
+ *   ※LINE公式アカウントの場合は https://line.me/R/oaMessage/@アカウントID/ の形で入れると、最初のメッセージが自動入力されます。
  * ・companyLabel を入れると、会社名の代わりにその表記を表示します（会社名を伏せる場合）。
  */
 

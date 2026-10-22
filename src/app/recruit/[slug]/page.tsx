@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import RecruitNotice from "@/components/RecruitNotice";
 import { ButtonLink, Container, PageHero, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
-import { getJobBySlug, getJobCompany, getPublishedJobs, isSafeExternalUrl } from "@/lib/data";
+import { REFERRAL_LABEL, buildApplyHref, getJobBySlug, getJobCompany, getPublishedJobs } from "@/lib/data";
 
 type Params = { slug: string };
 
@@ -46,7 +46,8 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
     { k: "福利厚生", v: job.benefits.join("\n") },
   ].filter((r) => r.v);
 
-  const canApply = isSafeExternalUrl(job.applyUrl);
+  const applyHref = buildApplyHref(job);
+  const canApply = applyHref !== "";
 
   // Google しごと検索向けの構造化データ（入力済み・社名公開の求人のみ）
   const jsonLd = hidden || !job.location ? null : {
@@ -130,13 +131,22 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
           <div className="mt-12 space-y-8">
             <RecruitNotice />
             {canApply ? (
+              <div className="space-y-6">
+              <div className="border border-gold/40 px-5 py-5 text-sm leading-[1.9] text-ivory/90">
+                <p className="text-xs tracking-[0.16em] text-gold">応募のときのお願い</p>
+                <p className="mt-2">
+                  応募の際は「<span className="text-gold">{REFERRAL_LABEL}の求人を見た</span>」とお伝えください。
+                  下のボタンから進むと、応募先にこのことが伝わるよう自動で設定されています。
+                </p>
+              </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <ButtonLink href={job.applyUrl} external>
+                <ButtonLink href={applyHref} external>
                   応募先へ進む
                 </ButtonLink>
                 <ButtonLink href="/recruit" variant="outline">
                   求人一覧へ戻る
                 </ButtonLink>
+              </div>
               </div>
             ) : (
               <div className="space-y-4">
