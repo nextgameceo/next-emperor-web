@@ -29,14 +29,20 @@ export function esc(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/** 背景色（Gmailアプリのダークモードで色が反転されないよう、グラデーション画像としても指定） */
+const bg = (c: string) => `background-color:${c};background-image:linear-gradient(${c},${c});`;
+/** 文字色をGmailアプリの自動反転から守るための入れ子（Gmail iOS 以外では何も起きません） */
+const keep = (html: string) => `<div class="gs"><div class="gd">${html}</div></div>`;
+
 const nl2br = (s: string) => esc(s).replace(/\r?\n/g, "<br>");
 
 function row(label: string, value: string) {
   return `
   <tr>
-    <td style="padding:14px 0;border-bottom:1px solid ${LINE};">
-      <div style="font-size:11px;letter-spacing:0.14em;color:${GOLD};margin-bottom:6px;">${esc(label)}</div>
-      <div style="font-size:14px;line-height:1.8;color:${TEXT};word-break:break-word;">${value}</div>
+    <td style="padding:14px 0 0;">
+      ${keep(`<div style="font-size:11px;letter-spacing:0.14em;color:${GOLD};margin-bottom:6px;">${esc(label)}</div>
+      <div style="font-size:14px;line-height:1.8;color:${TEXT};word-break:break-word;">${value}</div>`)}
+      <div style="height:1px;line-height:1px;font-size:0;margin-top:14px;${bg(LINE)}">&nbsp;</div>
     </td>
   </tr>`;
 }
@@ -64,34 +70,44 @@ function shell(o: Shell): string {
 <meta name="color-scheme" content="dark">
 <meta name="supported-color-schemes" content="dark">
 <title>${esc(o.title)}</title>
+<style>
+  :root { color-scheme: dark; supported-color-schemes: dark; }
+  u + .body .gs { background:#000; mix-blend-mode:screen; }
+  u + .body .gd { background:#000; mix-blend-mode:difference; }
+</style>
 </head>
-<body style="margin:0;padding:0;background:#000000;">
+<body class="body" style="margin:0;padding:0;${bg("#000000")}">
 <div style="display:none;max-height:0;overflow:hidden;">${esc(o.preheader)}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#000000;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="${bg("#000000")}">
 <tr><td align="center" style="padding:28px 12px;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:${PANEL};border:1px solid ${LINE};font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;${bg(PANEL)}border:1px solid ${LINE};font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,sans-serif;">
     <tr><td style="height:4px;line-height:4px;font-size:0;background:${GOLD};background-image:linear-gradient(90deg,${GOLD},#F3DFA8,${ICE});">&nbsp;</td></tr>
     <tr><td style="padding:36px 28px 0;">
-      <div style="font-size:11px;letter-spacing:0.24em;color:${ICE};">${esc(o.eyebrow)}</div>
-      <h1 style="margin:10px 0 0;font-size:22px;line-height:1.5;font-weight:700;color:#FFFFFF;">${o.heading}</h1>
+      ${keep(`<div style="font-size:11px;letter-spacing:0.24em;color:${ICE};">${esc(o.eyebrow)}</div>
+      <h1 style="margin:10px 0 0;font-size:22px;line-height:1.5;font-weight:700;color:#FFFFFF;">${o.heading}</h1>`)}
     </td></tr>
-    <tr><td style="padding:20px 28px 0;font-size:14px;line-height:1.9;color:${TEXT};">${o.intro}</td></tr>
+    <tr><td style="padding:20px 28px 0;font-size:14px;line-height:1.9;color:${TEXT};">${keep(o.intro)}</td></tr>
     <tr><td style="padding:28px 28px 0;">
-      <div style="font-size:11px;letter-spacing:0.24em;color:${GOLD};padding-bottom:6px;border-bottom:1px solid ${GOLD};">${esc(o.sectionLabel)}</div>
+      ${keep(`<div style="font-size:11px;letter-spacing:0.24em;color:${GOLD};padding-bottom:8px;">${esc(o.sectionLabel)}</div>`)}
+      <div style="height:1px;line-height:1px;font-size:0;${bg(GOLD)}">&nbsp;</div>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${o.rows}</table>
     </td></tr>
     <tr><td align="center" style="padding:32px 28px 8px;">
-      <a href="${o.button.href}" style="display:inline-block;padding:14px 34px;border-radius:999px;background:${GOLD};color:#111111;font-size:14px;font-weight:700;letter-spacing:0.12em;text-decoration:none;">${esc(o.button.label)}</a>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="padding:1px;border-radius:999px;${bg(GOLD)}">
+          <a href="${o.button.href}" style="display:block;padding:14px 34px;border-radius:999px;${bg("#16130D")}color:${GOLD};font-size:14px;font-weight:700;letter-spacing:0.12em;text-decoration:none;">${keep(`<span style="color:${GOLD};">${esc(o.button.label)}</span>`)}</a>
+        </td>
+      </tr></table>
     </td></tr>
     <tr><td style="padding:24px 28px 32px;font-size:12px;line-height:1.9;color:${MUTED};">
-      ${o.notes.map((n) => `※ ${n}`).join("<br>\n      ")}
+      ${keep(o.notes.map((n) => `※ ${n}`).join("<br>\n      "))}
     </td></tr>
-    <tr><td style="padding:32px 28px 28px;background:#08080A;border-top:1px solid ${LINE};font-size:11px;line-height:1.9;color:${MUTED};text-align:center;">
+    <tr><td style="padding:32px 28px 28px;${bg("#08080A")}border-top:1px solid ${LINE};font-size:11px;line-height:1.9;color:${MUTED};text-align:center;">
       <img src="${o.logo}" width="180" alt="NEXT EMPEROR" style="display:block;margin:0 auto 14px;width:180px;max-width:60%;height:auto;border:0;">
-      <div style="font-size:12px;letter-spacing:0.16em;color:${GOLD};margin-bottom:4px;">NEXT EMPEROR LLC</div>
+      ${keep(`<div style="font-size:12px;letter-spacing:0.16em;color:${GOLD};margin-bottom:4px;">NEXT EMPEROR LLC</div>
       <a href="mailto:${b.email}" style="color:${ICE};text-decoration:none;">${b.email}</a>
       &nbsp;|&nbsp;
-      <a href="${b.site}" style="color:${ICE};text-decoration:none;">next-emperor.com</a>
+      <a href="${b.site}" style="color:${ICE};text-decoration:none;">next-emperor.com</a>`)}
     </td></tr>
   </table>
 </td></tr>
