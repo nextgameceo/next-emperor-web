@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const c = siteConfig.company;
   // 値が入っている項目だけを表示（未確定情報は表示しない）
+  // 所在地の表示（郵便番号と住所を2段に分ける）
+  const addressLines = (c.address || "").replace(/^(〒\d{3}-\d{4})\s*/, "$1\n");
   // 地図の検索に使う住所（郵便番号と階数を除く）
   const mapQuery = (c.address || "").replace(/^〒\d{3}-\d{4}\s*/, "").replace(/\s*\d+階.*$/, "");
   const rows = [
@@ -20,7 +22,7 @@ export default function AboutPage() {
     { k: "代表者", v: c.representative },
     { k: "設立", v: c.established || c.status },
     { k: "資本金", v: c.capital },
-    { k: "所在地", v: c.address || c.location },
+    { k: "所在地", v: addressLines || c.location },
     { k: "電話番号", v: c.tel },
     { k: "メール", v: c.email },
   ].filter((r) => r.v);
@@ -74,7 +76,7 @@ export default function AboutPage() {
             {rows.map((r) => (
               <div key={r.k} className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[200px_1fr] sm:gap-8">
                 <dt className="text-sm tracking-[0.12em] text-gold">{r.k}</dt>
-                <dd className="text-ivory/90">{r.v}</dd>
+                <dd className="whitespace-pre-line text-ivory/90">{r.v}</dd>
               </div>
             ))}
             <div className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[200px_1fr] sm:gap-8">
@@ -112,7 +114,7 @@ export default function AboutPage() {
               <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:items-start">
                 <div>
                   <p className="text-sm tracking-[0.12em] text-gold">所在地</p>
-                  <p className="mt-2 leading-[2] text-ivory/90">{c.address}</p>
+                  <p className="mt-2 whitespace-pre-line leading-[2] text-ivory/90">{addressLines}</p>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
                     target="_blank"
