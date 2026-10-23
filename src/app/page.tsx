@@ -1,13 +1,11 @@
 import Link from "next/link";
-import JobCard from "@/components/JobCard";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
-import PostCard from "@/components/PostCard";
-import { getAllPosts } from "@/lib/blog";
+import { formatDate, getAllPosts } from "@/lib/blog";
 import { Ornament, Sparkle } from "@/components/Decor";
 import { ApplyFlow, FaqSection } from "@/components/Sections";
 import { ButtonLink, Container, Eyebrow, Section, SectionHeading, delay } from "@/components/ui";
-import { getApprovedPartners, getOpenJobs } from "@/lib/data";
+import { getApprovedPartners } from "@/lib/data";
 
 const services = [
   {
@@ -104,8 +102,7 @@ const businessPoints = [
 
 
 export default function HomePage() {
-  const posts = getAllPosts().slice(0, 3);
-  const jobs = getOpenJobs().slice(0, 3);
+  const posts = getAllPosts().slice(0, 4);
   const partners = getApprovedPartners();
 
   return (
@@ -382,15 +379,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {jobs.length > 0 && (
-            <ul className="mt-16 grid gap-6 text-left md:grid-cols-2 lg:grid-cols-3">
-              {jobs.map((job) => (
-                <li key={job.slug}>
-                  <JobCard job={job} />
-                </li>
-              ))}
-            </ul>
-          )}
         </Container>
       </Section>
 
@@ -446,19 +434,43 @@ export default function HomePage() {
                   </>
                 }
               />
-              <div data-reveal>
+              <div className="hidden sm:block" data-reveal>
                 <ButtonLink href="/news" variant="outline">
                   すべての記事を見る
                 </ButtonLink>
               </div>
             </div>
-            <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* 最新ニュース：日付・カテゴリ・タイトルだけのシンプルな一覧 */}
+            <ul className="mt-12 border-t border-charcoal-line">
               {posts.map((p, i) => (
-                <li key={p.slug} data-reveal style={delay(i * 0.12)}>
-                  <PostCard post={p} />
+                <li key={p.slug} className="border-b border-charcoal-line" data-reveal style={delay(i * 0.08)}>
+                  <Link
+                    href={`/news/${p.slug}`}
+                    className="group flex flex-col gap-2 py-6 transition-colors sm:flex-row sm:items-center sm:gap-8 sm:py-7"
+                  >
+                    <span className="flex shrink-0 items-center gap-4 sm:w-56">
+                      <time dateTime={p.date} className="font-display text-sm tracking-[0.14em] text-ivory-dim">
+                        {formatDate(p.date)}
+                      </time>
+                      <span className="text-xs tracking-[0.12em] text-ice">{p.category}</span>
+                    </span>
+                    <span className="flex flex-1 items-center justify-between gap-6">
+                      <span className="leading-[1.8] tracking-[0.04em] text-ivory transition-colors group-hover:text-gold">
+                        {p.title}
+                      </span>
+                      <span aria-hidden className="shrink-0 text-gold transition-transform duration-300 group-hover:translate-x-1">
+                        →
+                      </span>
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
+            <div className="mt-10 text-center sm:hidden">
+              <Link href="/news" className="inline-flex items-center gap-3 text-sm tracking-[0.16em] text-gold">
+                すべての記事を見る <span aria-hidden>→</span>
+              </Link>
+            </div>
           </Container>
         </Section>
       )}
