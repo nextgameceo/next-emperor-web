@@ -21,6 +21,12 @@ export type Job = {
   title: string; // 求人タイトル
   partnerId: string; // 企業（partners.ts の id）
   companyLabel?: string; // 会社名の代わりに表示する表記（会社名を伏せる場合）
+  career?: {
+    en: string; // 職種の英語表記（例："SALES"）
+    name: string; // 職種名（例："営業"）
+    catch: string; // ひとことキャッチ
+    skills: string[]; // 夜職の経験が活きる力（3つ程度）
+  }; // リクルートページの「職種紹介」に表示する内容
   industry?: string; // 業種の説明
   description: string; // 仕事内容（改行可）
   appeal?: string[]; // こんな方におすすめ
@@ -42,6 +48,12 @@ export const jobs: Job[] = [
     title: "太陽光設備の営業スタッフ（訪問販売）",
     partnerId: "one",
     companyLabel: "太陽光発電関連企業",
+    career: {
+      en: "SALES",
+      name: "営業（訪問販売）",
+      catch: "会話の力で、成果をつかむ仕事。",
+      skills: ["初対面でも打ち解ける会話力", "相手の本音を読み取る観察力", "目標に向かってやり切る力"],
+    },
     industry:
       "太陽光パネルや蓄電池など、住宅向けのエネルギー設備を扱う業界です。電気代の値上がりや脱炭素の流れを受けて、「自宅で電気をつくる・ためる」ことへの関心は年々高まっています。\nこの仕事では、ご家庭を訪問し、電気代の悩みをお聞きしながら、設備の仕組みやメリットをわかりやすくお伝えし、導入をご提案します。",
     description:
@@ -69,6 +81,12 @@ export const jobs: Job[] = [
     title: "太陽光パネルの施工スタッフ（職人）",
     partnerId: "trendline",
     companyLabel: "太陽光発電関連企業",
+    career: {
+      en: "INSTALLER",
+      name: "太陽光パネル施工職人",
+      catch: "自分の手で、形に残る仕事。",
+      skills: ["忙しい現場を回してきた段取り力", "仲間と動くチームワーク", "長時間働いてきたタフさ"],
+    },
     industry:
       "住宅や建物の屋根に、太陽光パネルを取り付ける施工の仕事です。再生可能エネルギーの普及にともない、設置工事のニーズは続いています。\n一つひとつの現場で技術を身につけていく、まさに「手に職がつく」仕事です。",
     description:

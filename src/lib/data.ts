@@ -6,6 +6,11 @@ export function getPublishedJobs(): Job[] {
   return jobs.filter((j) => j.status === "published");
 }
 
+/** 応募受付中の求人（応募先が設定済みのもの） */
+export function getOpenJobs(): Job[] {
+  return getPublishedJobs().filter((j) => isSafeExternalUrl(j.applyUrl.trim()));
+}
+
 /** 求人に表示する会社名（companyLabel があればそちらを優先） */
 export function getJobCompany(job: Job): string {
   return job.companyLabel?.trim() || getPartnerName(job.partnerId);

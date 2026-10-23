@@ -7,7 +7,7 @@ import { getAllPosts } from "@/lib/blog";
 import { Ornament, Sparkle } from "@/components/Decor";
 import { ApplyFlow, FaqSection } from "@/components/Sections";
 import { ButtonLink, Container, Eyebrow, Section, SectionHeading, delay } from "@/components/ui";
-import { getApprovedPartners, getPublishedJobs } from "@/lib/data";
+import { getApprovedPartners, getOpenJobs } from "@/lib/data";
 
 const services = [
   {
@@ -105,7 +105,7 @@ const businessPoints = [
 
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 3);
-  const jobs = getPublishedJobs().slice(0, 3);
+  const jobs = getOpenJobs().slice(0, 3);
   const partners = getApprovedPartners();
 
   return (
@@ -378,7 +378,7 @@ export default function HomePage() {
               ))}
             </ul>
             <div className="mt-10 text-center">
-              <ButtonLink href="/recruit">求人情報を見る</ButtonLink>
+              <ButtonLink href="/recruit">昼職の選択肢を見る</ButtonLink>
             </div>
           </div>
 
