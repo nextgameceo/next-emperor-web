@@ -57,10 +57,16 @@ export default function BusinessPage() {
       <Section labelledBy="issues-title">
         <Container>
           <SectionHeading eyebrow="こんな課題はありませんか" id="issues-title" title={<>Your <span className="metal-gold">Challenges</span></>} />
-          <ul className="mt-12 grid gap-px bg-charcoal-line sm:grid-cols-2">
-            {issues.map((t) => (
-              <li key={t} className="flex items-center gap-5 bg-ink px-7 py-7 text-ivory/90">
-                <span aria-hidden className="h-px w-6 shrink-0 bg-gold" />
+          <ul className="mt-14 grid border-t border-ivory/10 sm:grid-cols-2">
+            {issues.map((t, i) => (
+              <li
+                key={t}
+                className="group relative flex items-center gap-6 border-b border-ivory/10 py-8 text-[1.05rem] tracking-[0.04em] text-ivory sm:px-8 sm:[&:nth-child(odd)]:border-r"
+                data-reveal
+                style={{ "--d": `${i * 0.1}s` } as React.CSSProperties}
+              >
+                <span aria-hidden className="absolute left-0 top-[-1px] h-px w-0 bg-gold transition-all duration-700 group-hover:w-full" />
+                <span className="font-display text-xs tracking-[0.2em] text-ice">{String(i + 1).padStart(2, "0")}</span>
                 {t}
               </li>
             ))}
@@ -68,7 +74,7 @@ export default function BusinessPage() {
         </Container>
       </Section>
 
-      <Section labelledBy="menu-title" className="border-t border-charcoal-line bg-charcoal/30">
+      <Section labelledBy="menu-title" band>
         <Container>
           <SectionHeading eyebrow="支援内容" id="menu-title" title={<>What <span className="metal-gold">We Do</span></>} />
           <div className="mt-14 grid gap-6 md:grid-cols-2">

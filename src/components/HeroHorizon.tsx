@@ -11,7 +11,7 @@ import { useEffect, useRef } from "react";
  */
 type Star = { x: number; y: number; z: number; r: number; tw: number; sp: number };
 
-export default function HeroHorizon() {
+export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "page" }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export default function HeroHorizon() {
     const planet = () => {
       const mobile = w < 768;
       const R = mobile ? w * 2.6 : Math.max(w, h) * 1.5;
-      const cx = w * (mobile ? 0.62 : 0.8);
-      const top = h * (mobile ? 0.8 : 0.68); // 地平線のいちばん高い位置
+      const cx = w * (mobile ? 0.62 : variant === "page" ? 0.84 : 0.8);
+      const top = variant === "page" ? h * (mobile ? 0.9 : 0.84) : h * (mobile ? 0.8 : 0.68); // 地平線のいちばん高い位置
       return { R, cx, cy: top + R };
     };
 
@@ -163,7 +163,7 @@ export default function HeroHorizon() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
     };
-  }, []);
+  }, [variant]);
 
   return <canvas ref={ref} aria-hidden className="absolute inset-0 h-full w-full" />;
 }

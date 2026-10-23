@@ -136,7 +136,7 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
         <div className="space-y-4 pt-2">
           <button
             type="submit"
-            className="inline-flex min-h-[3.4rem] w-full items-center justify-center gap-3 bg-[#06C755] px-10 text-sm font-semibold tracking-[0.16em] text-white transition-opacity hover:opacity-90 sm:w-auto"
+            data-magnetic className="inline-flex h-[3.6rem] w-full items-center justify-center gap-3 rounded-full bg-[#06C755] px-10 text-sm font-semibold tracking-[0.16em] text-white shadow-[0_14px_30px_-14px_rgba(6,199,85,0.7)] transition-[opacity,transform] duration-500 hover:opacity-90 sm:w-auto"
           >
             LINEを開く <span aria-hidden>→</span>
           </button>

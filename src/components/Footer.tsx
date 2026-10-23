@@ -1,35 +1,111 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { Ornament } from "./Decor";
-import { footerItems, siteConfig } from "@/config/site";
+import { ButtonLink } from "./ui";
+import { siteConfig } from "@/config/site";
+
+/** フッターのリンク（3つのまとまり） */
+const groups = [
+  {
+    title: "Company",
+    items: [
+      { label: "会社概要", href: "/about" },
+      { label: "事業内容", href: "/service" },
+      { label: "提携企業", href: "/partner" },
+      { label: "ニュース", href: "/news" },
+    ],
+  },
+  {
+    title: "Career",
+    items: [
+      { label: "求人情報", href: "/recruit" },
+      { label: "法人向けサービス", href: "/business" },
+    ],
+  },
+  {
+    title: "Contact",
+    items: [
+      { label: "お問い合わせ", href: "/contact" },
+      { label: "プライバシーポリシー", href: "/privacy" },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-gold/20">
-      <div className="mx-auto max-w-site px-5 pb-10 pt-20 sm:px-8 sm:pt-24">
-        <div className="text-center" data-reveal>
-          <Link href="/" aria-label="NEXT EMPEROR ホーム" className="inline-block">
-            <Logo className="mx-auto h-auto w-[260px] sm:w-[320px]" sizes="320px" />
-          </Link>
-          <Ornament className="mt-8" />
-          <p className="mt-6 font-serif text-sm tracking-[0.14em] text-ivory/80">夜の経験を、明日の可能性へ。</p>
+    <footer className="theme-dark relative overflow-hidden bg-black">
+      {/* 縦の罫線（PC） */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
+        <div className="mx-auto h-full max-w-site border-x border-white/[0.07]" />
+      </div>
+
+      {/* 上段：締めのメッセージ */}
+      <div className="relative border-b border-white/[0.08]">
+        <div className="mx-auto max-w-site px-5 py-20 sm:px-8 sm:py-28 lg:px-20">
+          <p className="flex items-center gap-3 text-xs tracking-[0.2em] text-gold sm:text-[0.8rem]" data-reveal>
+            <span aria-hidden className="h-[5px] w-[5px] rotate-45 bg-gold" />
+            夜の経験を、明日の可能性へ。
+          </p>
+          <div className="mt-8 flex flex-col gap-12 xl:flex-row xl:items-end xl:justify-between">
+            <p className="font-display text-[2.6rem] font-medium uppercase leading-[1.05] tracking-[0.04em] text-ivory sm:text-[4.2rem] lg:text-[4.4rem]" data-reveal="mask">
+              From Night
+              <br />
+              <span className="metal-gold">To Tomorrow.</span>
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6" data-reveal>
+              <ButtonLink href="/recruit">お仕事を探す</ButtonLink>
+              <ButtonLink href="/contact" variant="outline">
+                法人のお問い合わせ
+              </ButtonLink>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <nav aria-label="フッターナビゲーション" className="mt-14" data-reveal>
-          <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm tracking-[0.08em]">
-            {footerItems.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="text-ivory-muted transition-colors hover:text-gold">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      {/* 中段：ロゴとリンク */}
+      <div className="relative mx-auto grid max-w-site gap-14 px-5 py-16 sm:px-8 lg:grid-cols-[1.2fr_2fr] lg:px-20">
+        <div>
+          <Link href="/" aria-label="NEXT EMPEROR ホーム" className="inline-block">
+            <Logo className="h-auto w-[200px]" sizes="200px" />
+          </Link>
+          <p className="mt-6 text-xs leading-[2] tracking-[0.08em] text-ivory/50">
+            {siteConfig.legalName}
+            <br />
+            <a href={`mailto:${siteConfig.company.email}`} className="transition-colors hover:text-gold">
+              {siteConfig.company.email}
+            </a>
+          </p>
+        </div>
+        <nav aria-label="フッターナビゲーション" className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          {groups.map((g) => (
+            <div key={g.title}>
+              <p className="font-display text-[0.68rem] uppercase tracking-[0.28em] text-ice">{g.title}</p>
+              <ul className="mt-5 space-y-3 text-sm tracking-[0.06em]">
+                {g.items.map((it) => (
+                  <li key={it.href}>
+                    <Link href={it.href} className="text-ivory/70 transition-colors hover:text-gold">
+                      {it.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
+      </div>
 
-        <div className="mt-16 flex flex-col items-center gap-2 border-t border-charcoal-line pt-8 text-xs tracking-[0.1em] text-ivory-dim sm:flex-row sm:justify-between">
-          <p>{siteConfig.legalName}</p>
-          <p>Copyright © NEXT EMPEROR. All Rights Reserved.</p>
+      {/* 下段：大きな社名とコピーライト */}
+      <div className="relative border-t border-white/[0.08]">
+        <div className="mx-auto max-w-site px-5 sm:px-8 lg:px-20">
+          <p
+            aria-hidden
+            className="select-none whitespace-nowrap pt-8 text-center font-display text-[10.8vw] font-semibold uppercase leading-[0.9] tracking-[0.02em] text-white/[0.05] lg:text-[9.6rem]"
+          >
+            Next Emperor
+          </p>
+          <div className="flex flex-col items-center gap-2 py-8 text-[0.7rem] tracking-[0.12em] text-ivory/40 sm:flex-row sm:justify-between">
+            <p>{siteConfig.legalName}</p>
+            <p>© {new Date().getFullYear()} NEXT EMPEROR LLC. All Rights Reserved.</p>
+          </div>
         </div>
       </div>
     </footer>
