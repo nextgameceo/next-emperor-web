@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PostMeta } from "@/lib/blog";
 import { formatDate } from "@/lib/blog";
-import { Sparkle } from "./Decor";
 
 /** ブログ記事カード */
 export default function PostCard({ post }: { post: PostMeta }) {
   return (
     <article className="card corners group relative flex h-full flex-col overflow-hidden">
-      <div className="relative aspect-[1200/630] w-full overflow-hidden border-b border-charcoal-line bg-black">
-        {post.cover ? (
+      {/* 記事に cover（画像）を設定したときだけ、画像を表示 */}
+      {post.cover && (
+        <div className="relative aspect-[1200/630] w-full overflow-hidden border-b border-charcoal-line bg-black">
           <Image
             src={post.cover}
             alt=""
@@ -17,13 +17,8 @@ export default function PostCard({ post }: { post: PostMeta }) {
             sizes="(max-width: 768px) 100vw, 380px"
             className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
           />
-        ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-            <Sparkle className="h-4 w-4 text-gold" />
-            <span className="font-display text-sm tracking-[0.3em] text-silver/70">NEXT EMPEROR</span>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
       <div className="flex flex-1 flex-col p-7">
         <div className="flex items-center gap-3 text-xs">
           <time dateTime={post.date} className="font-display tracking-[0.14em] text-ivory-dim">
