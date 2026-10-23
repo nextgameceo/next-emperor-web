@@ -98,7 +98,7 @@ export default function Footer() {
         <div className="mx-auto max-w-site px-5 sm:px-8 lg:px-20">
           <p
             aria-hidden
-            className="select-none whitespace-nowrap pt-8 text-center font-display text-[13.5vw] font-semibold uppercase leading-[0.9] tracking-[0.02em] text-white/[0.05] lg:text-[9.6rem]"
+            className="select-none whitespace-nowrap pt-8 text-center font-display text-[10.8vw] font-semibold uppercase leading-[0.9] tracking-[0.02em] text-white/[0.05] lg:text-[9.6rem]"
           >
             Next Emperor
           </p>
