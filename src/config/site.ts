@@ -58,7 +58,7 @@ export const siteConfig = {
     representative: "代表社員　石原 利輝",
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
-    address: "〒451-0052 愛知県名古屋市西区栄生2丁目3 レジデンス ルイーダ303号室",
+    address: "〒460-0002 愛知県名古屋市中区丸の内3丁目19番23号 FPSビル9階",
     tel: "052-000-0000", // 例："052-000-0000"
     established: "",
     /**
