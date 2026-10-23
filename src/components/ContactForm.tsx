@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { track } from "@/lib/analytics";
 import { inquiryTypes, validateContact, type ContactErrors, type ContactInput } from "@/lib/contact";
 
 const initial: ContactInput = {
@@ -65,6 +66,7 @@ export default function ContactForm() {
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
+        track("generate_lead", { form: "contact", inquiry_type: values.type });
         setStatus("done");
         return;
       }

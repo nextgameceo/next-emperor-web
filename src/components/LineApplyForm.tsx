@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { track } from "@/lib/analytics";
 
 /**
  * LINEで応募フォーム
@@ -11,6 +12,7 @@ import { useState, type FormEvent } from "react";
 type Props = {
   lineId: string; // 例："@030cihhe"
   jobTitle: string;
+  jobSlug: string; // 計測用（求人ごとの集計に使用）
   friendUrl?: string; // 友だち追加用のURL（任意）
 };
 
@@ -25,7 +27,7 @@ type Values = {
 
 const initial: Values = { name: "", age: "", area: "", time: "", career: "", note: "" };
 
-export default function LineApplyForm({ lineId, jobTitle, friendUrl }: Props) {
+export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: Props) {
   const [v, setV] = useState<Values>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof Values, string>>>({});
   const [opened, setOpened] = useState(false);
@@ -59,7 +61,11 @@ export default function LineApplyForm({ lineId, jobTitle, friendUrl }: Props) {
     ].join("\n");
     const url = `https://line.me/R/oaMessage/${encodeURIComponent(lineId)}/?${encodeURIComponent(text)}`;
     setOpened(true);
-    window.location.href = url;
+    // コンバージョン計測（求人名のみ。入力内容は送らない）
+    track("line_apply_click", { job_slug: jobSlug, job_title: jobTitle });
+    window.setTimeout(() => {
+      window.location.href = url;
+    }, 250);
   }
 
   const Label = ({ k, children, required }: { k: keyof Values; children: string; required?: boolean }) => (

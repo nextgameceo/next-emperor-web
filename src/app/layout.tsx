@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "@fontsource/oxanium/300.css";
 import "@fontsource/oxanium/400.css";
 import "@fontsource/oxanium/500.css";
@@ -9,6 +10,7 @@ import Footer from "@/components/Footer";
 import RevealObserver from "@/components/RevealObserver";
 import BackgroundFX from "@/components/BackgroundFX";
 import { siteConfig } from "@/config/site";
+import { GA_ID } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -67,6 +69,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main" className="relative">{children}</main>
         <Footer />
         <RevealObserver />
+        {/* Google アナリティクス */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+        </Script>
       </body>
     </html>
   );

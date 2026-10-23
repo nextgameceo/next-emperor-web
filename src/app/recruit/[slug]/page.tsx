@@ -134,7 +134,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
             <RecruitNotice />
             {job.applyLineId ? (
               <div className="space-y-6">
-                <LineApplyForm lineId={job.applyLineId} jobTitle={job.title} friendUrl={canApply ? applyHref : undefined} />
+                <LineApplyForm lineId={job.applyLineId} jobTitle={job.title} jobSlug={job.slug} friendUrl={canApply ? applyHref : undefined} />
                 <ButtonLink href="/recruit" variant="outline">
                   求人一覧へ戻る
                 </ButtonLink>
