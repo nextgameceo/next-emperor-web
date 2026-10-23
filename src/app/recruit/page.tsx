@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ApplyCounter from "@/components/ApplyCounter";
 import { Sparkle } from "@/components/Decor";
 import JobCard from "@/components/JobCard";
 import RecruitNotice from "@/components/RecruitNotice";
@@ -45,8 +46,17 @@ export default function RecruitPage() {
         lead="夜の仕事で磨いてきた力は、昼の世界でも必ず活きる。NEXT EMPERORは、あなたの経験が輝く「昼職の選択肢」をご紹介します。"
       />
 
+      {/* ===== LIVE COUNT ===== */}
+      <section className="relative pb-4 pt-10 sm:pt-14" aria-label="LINE応募フォームの送信数">
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            <ApplyCounter />
+          </div>
+        </Container>
+      </section>
+
       {/* ===== WHY ===== */}
-      <Section divider={false} labelledBy="why-title">
+      <Section labelledBy="why-title">
         <Container>
           <SectionHeading
             eyebrow="夜の経験は、昼の武器になる"

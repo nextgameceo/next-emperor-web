@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/analytics";
+import { recordApplyClick } from "@/lib/applyCount";
 
 /**
  * LINEで応募フォーム
@@ -63,6 +64,7 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
     setOpened(true);
     // コンバージョン計測（求人名のみ。入力内容は送らない）
     track("line_apply_click", { job_slug: jobSlug, job_title: jobTitle });
+    recordApplyClick(jobSlug);
     window.setTimeout(() => {
       window.location.href = url;
     }, 250);

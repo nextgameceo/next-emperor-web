@@ -15,5 +15,10 @@
   },
   // 管理画面で設定した環境変数を、GitHubからの更新時に消さない
   "keep_vars": true,
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // LINE応募フォームの送信数カウンター（worker/counter.ts）
+  "durable_objects": {
+    "bindings": [{ "name": "COUNTER", "class_name": "ApplyCounter" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ApplyCounter"] }]
 }

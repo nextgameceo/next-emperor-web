@@ -13,12 +13,19 @@
  */
 import { validateContact, type ContactInput } from "../src/lib/contact";
 import { MAIL_BRAND, adminNoticeHtml, autoReplyHtml } from "./mail";
+import { jobs } from "../src/data/jobs";
+
+export { ApplyCounter } from "./counter";
 
 type Env = {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   RESEND_API_KEY?: string;
   CONTACT_TO_EMAIL?: string;
   CONTACT_FROM_EMAIL?: string;
+  COUNTER?: {
+    idFromName(name: string): unknown;
+    get(id: unknown): { fetch(input: string, init?: RequestInit): Promise<Response> };
+  };
 };
 
 /** お問い合わせの送信先（複数ある場合は "a@x.com, b@y.com" のようにカンマ区切り） */
@@ -176,10 +183,49 @@ async function handleContact(req: Request, env: Env): Promise<Response> {
   return json({ ok: true });
 }
 
+/** LINE応募フォームの送信数（GET：取得 / POST：1回加算） */
+async function handleApplyCount(req: Request, env: Env): Promise<Response> {
+  if (!env.COUNTER) return json({ total: 0, counts: {}, available: false });
+  const stub = env.COUNTER.get(env.COUNTER.idFromName("global"));
+
+  if (req.method === "GET") {
+    const res = await stub.fetch("https://counter/");
+    return new Response(res.body, {
+      headers: { "content-type": "application/json; charset=utf-8", "cache-control": "public, max-age=30" },
+    });
+  }
+  if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
+
+  const origin = req.headers.get("origin");
+  if (!origin || new URL(origin).host !== new URL(req.url).host) return json({ error: "forbidden" }, 403);
+
+  let slug = "";
+  try {
+    slug = String(((await req.json()) as { slug?: unknown }).slug ?? "");
+  } catch {
+    return json({ error: "bad request" }, 400);
+  }
+  if (!jobs.some((j) => j.slug === slug && j.status === "published")) return json({ error: "unknown job" }, 400);
+
+  // 同じ回線・同じ求人・同じ日（日本時間）の重複を除くための判定キー（元の情報には戻せない形に変換）
+  const ip = req.headers.get("cf-connecting-ip") ?? "unknown";
+  const day = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${ip}|${slug}|${day}`));
+  const key = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+
+  const res = await stub.fetch("https://counter/", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ slug, key }),
+  });
+  return new Response(res.body, { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
+}
+
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
     if (url.pathname === "/api/contact") return handleContact(req, env);
+    if (url.pathname === "/api/apply-count") return handleApplyCount(req, env);
     return env.ASSETS.fetch(req);
   },
 };
