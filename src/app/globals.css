@@ -363,27 +363,40 @@
 }
 
 /* ---- 白背景セクション用の調整 ---- */
-/* 白い面：ごく淡い金と水色の光をのせて、のっぺりさせない */
+/*
+ * セクションごとの色（上から順に、5色をくり返します）
+ *   1. ホワイト   2. アイボリー（暖）   3. ミスト（水色寄り）
+ *   4. シャンパン   5. ラベンダーミスト（銀寄り）
+ * --tint は背景色、--glow-a / --glow-b は左上・右下にのせる淡い光の色（R G B）
+ */
 .theme-light {
+  --tint: 255 255 255;
+  --glow-a: 221 180 110;
+  --glow-b: 127 214 242;
+  background-color: rgb(var(--tint));
   background-image:
-    radial-gradient(60% 50% at 0% 0%, rgba(221, 180, 110, 0.09), transparent 70%),
-    radial-gradient(55% 45% at 100% 100%, rgba(127, 214, 242, 0.08), transparent 70%);
+    radial-gradient(60% 50% at 0% 0%, rgb(var(--glow-a) / 0.1), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgb(var(--glow-b) / 0.09), transparent 70%);
 }
-/* 帯（薄いベージュ）：細かなドット模様を、中央に向かってふんわり */
+main > section.theme-light:nth-of-type(5n + 1) { --tint: 255 255 255; --glow-a: 221 180 110; --glow-b: 127 214 242; }
+main > section.theme-light:nth-of-type(5n + 2) { --tint: 250 247 241; --glow-a: 221 180 110; --glow-b: 232 205 150; }
+main > section.theme-light:nth-of-type(5n + 3) { --tint: 243 247 249; --glow-a: 127 214 242; --glow-b: 154 143 168; }
+main > section.theme-light:nth-of-type(5n + 4) { --tint: 248 243 234; --glow-a: 201 149 79; --glow-b: 127 214 242; }
+main > section.theme-light:nth-of-type(5n + 5) { --tint: 246 244 249; --glow-a: 154 143 168; --glow-b: 221 180 110; }
+
+/* 帯：細かなドット模様を、中央に向かってふんわり */
 .theme-light.band,
 .theme-light .band {
-  background-color: #f7f4ee;
-  background-image:
-    radial-gradient(rgba(146, 104, 40, 0.13) 1px, transparent 1.2px),
-    linear-gradient(180deg, #f7f4ee, #f3efe7);
-  background-size: 22px 22px, 100% 100%;
+  background-color: rgb(var(--tint));
+  background-image: radial-gradient(rgb(var(--glow-a) / 0.32) 1px, transparent 1.2px);
+  background-size: 22px 22px;
 }
 .theme-light.band::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(70% 60% at 50% 50%, rgba(247, 244, 238, 0.95), rgba(247, 244, 238, 0.55) 60%, transparent 100%);
+  background: radial-gradient(70% 60% at 50% 50%, rgb(var(--tint) / 0.96), rgb(var(--tint) / 0.6) 60%, transparent 100%);
 }
 .theme-light.band > * {
   position: relative;
