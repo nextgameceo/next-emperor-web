@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: post.title,
     description: post.excerpt || siteConfig.description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: `/news/${post.slug}` },
     openGraph: {
       type: "article",
       title: post.title,
@@ -54,7 +54,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     image: post.cover ? `${siteConfig.url}${post.cover}` : `${siteConfig.url}/opengraph-image.png`,
     author: { "@type": "Organization", name: siteConfig.legalName },
     publisher: { "@type": "Organization", name: siteConfig.legalName },
-    mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
+    mainEntityOfPage: `${siteConfig.url}/news/${post.slug}`,
   };
 
   return (
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
               <ol className="flex flex-wrap gap-2 font-display">
                 <li><Link href="/" className="hover:text-gold">HOME</Link></li>
                 <li aria-hidden>/</li>
-                <li><Link href="/blog" className="hover:text-gold">BLOG</Link></li>
+                <li><Link href="/news" className="hover:text-gold">NEWS</Link></li>
               </ol>
             </nav>
             <div className="fade-up flex flex-wrap items-center gap-3 text-xs">
@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
                 {formatDate(post.date)}
               </time>
               <Link
-                href={`/blog/category/${encodeURIComponent(post.category)}`}
+                href={`/news/category/${encodeURIComponent(post.category)}`}
                 className="border border-ice/50 px-2 py-0.5 tracking-[0.1em] text-ice hover:bg-ice/10"
               >
                 {post.category}
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             <Ornament className="mt-16" />
             <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <ButtonLink href="/recruit">求人情報を見る</ButtonLink>
-              <ButtonLink href="/blog" variant="outline">
+              <ButtonLink href="/news" variant="outline">
                 記事一覧へ戻る
               </ButtonLink>
             </div>

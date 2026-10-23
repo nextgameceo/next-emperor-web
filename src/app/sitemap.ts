@@ -8,7 +8,7 @@ import { getAllPosts } from "@/lib/blog";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
   const now = new Date();
-  const pages = ["", "/about", "/service", "/recruit", "/partner", "/business", "/blog", "/contact", "/privacy"];
+  const pages = ["", "/about", "/service", "/recruit", "/partner", "/business", "/news", "/contact", "/privacy"];
 
   return [
     ...pages.map((p) => ({
@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     })),
     ...getAllPosts().map((p) => ({
-      url: `${base}/blog/${p.slug}`,
+      url: `${base}/news/${p.slug}`,
       lastModified: new Date(p.date),
       changeFrequency: "monthly" as const,
       priority: 0.6,

@@ -1,0 +1,2 @@
+/blog /news 301
+/blog/* /news/:splat 301

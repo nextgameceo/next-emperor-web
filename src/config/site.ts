@@ -114,7 +114,7 @@ export const navItems = [
   { label: "SERVICE", href: "/service" },
   { label: "RECRUIT", href: "/recruit" },
   { label: "PARTNER", href: "/partner" },
-  { label: "BLOG", href: "/blog" },
+  { label: "NEWS", href: "/news" },
   { label: "CONTACT", href: "/contact" },
 ] as const;
 
@@ -124,7 +124,7 @@ export const footerItems = [
   { label: "求人情報", href: "/recruit" },
   { label: "提携企業", href: "/partner" },
   { label: "法人向けサービス", href: "/business" },
-  { label: "ブログ", href: "/blog" },
+  { label: "ニュース", href: "/news" },
   { label: "お問い合わせ", href: "/contact" },
   { label: "プライバシーポリシー", href: "/privacy" },
 ] as const;

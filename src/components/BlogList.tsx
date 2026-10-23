@@ -3,7 +3,7 @@ import PostCard from "./PostCard";
 import { delay } from "./ui";
 import type { PostMeta } from "@/lib/blog";
 
-/** カテゴリ切り替え＋記事一覧（/blog と /blog/category/[name] で共通） */
+/** カテゴリ切り替え＋記事一覧（/news と /news/category/[name] で共通） */
 export default function BlogList({
   posts,
   categories,
@@ -24,14 +24,14 @@ export default function BlogList({
         <nav aria-label="カテゴリ" data-reveal>
           <ul className="flex flex-wrap gap-3">
             <li>
-              <Link href="/blog" className={tab(!current)} aria-current={!current ? "page" : undefined}>
+              <Link href="/news" className={tab(!current)} aria-current={!current ? "page" : undefined}>
                 <span className="font-display">ALL</span>
               </Link>
             </li>
             {categories.map((c) => (
               <li key={c}>
                 <Link
-                  href={`/blog/category/${encodeURIComponent(c)}`}
+                  href={`/news/category/${encodeURIComponent(c)}`}
                   className={tab(current === c)}
                   aria-current={current === c ? "page" : undefined}
                 >

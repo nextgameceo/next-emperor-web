@@ -72,7 +72,7 @@ Cloudflare の Worker → Settings → Variables and Secrets に、次の3つを
 
 `src/config/site.ts` の `url`（初期値 `https://next-emperor.com`）が、シェア画像・サイトマップに使われます。
 
-## ブログ
+## ニュース（URL は /news）
 
 `content/blog/` に Markdown ファイルを追加します（書き方は `_template.md`）。
 未来の日付の記事は、その日付以降にサイトが更新（再公開）されたタイミングで表示されます。

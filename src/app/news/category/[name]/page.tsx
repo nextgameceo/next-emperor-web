@@ -18,8 +18,8 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const name = decodeURIComponent((await params).name);
   return {
-    title: `${name}｜ブログ`,
-    alternates: { canonical: `/blog/category/${encodeURIComponent(name)}` },
+    title: `${name}｜ニュース`,
+    alternates: { canonical: `/news/category/${encodeURIComponent(name)}` },
   };
 }
 
@@ -31,7 +31,7 @@ export default async function BlogCategoryPage({ params }: { params: Promise<Par
 
   return (
     <>
-      <PageHero eyebrow={`カテゴリ：${name}`} title="Blog" />
+      <PageHero eyebrow={`カテゴリ：${name}`} title="News" />
       <Section divider={false}>
         <Container>
           <BlogList posts={posts} categories={categories} current={name} />

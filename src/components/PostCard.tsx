@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { PostMeta } from "@/lib/blog";
 import { formatDate } from "@/lib/blog";
 
-/** ブログ記事カード */
+/** ニュース記事カード */
 export default function PostCard({ post }: { post: PostMeta }) {
   return (
     <article className="card corners group relative flex h-full flex-col overflow-hidden">
@@ -27,7 +27,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
           <span className="border border-ice/50 px-2 py-0.5 tracking-[0.1em] text-ice">{post.category}</span>
         </div>
         <h3 className="mt-4 text-lg font-medium leading-[1.7] tracking-[0.04em] text-ivory transition-colors group-hover:text-gold-soft">
-          <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0">
+          <Link href={`/news/${post.slug}`} className="after:absolute after:inset-0">
             {post.title}
           </Link>
         </h3>

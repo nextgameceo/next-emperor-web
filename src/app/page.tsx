@@ -432,13 +432,13 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* ===== BLOG ===== */}
+      {/* ===== NEWS ===== */}
       {posts.length > 0 && (
         <Section labelledBy="blog-title">
           <Container>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <SectionHeading
-                eyebrow="ブログ・お知らせ"
+                eyebrow="ニュース・お知らせ"
                 id="blog-title"
                 title={
                   <>
@@ -447,7 +447,7 @@ export default function HomePage() {
                 }
               />
               <div data-reveal>
-                <ButtonLink href="/blog" variant="outline">
+                <ButtonLink href="/news" variant="outline">
                   すべての記事を見る
                 </ButtonLink>
               </div>
