@@ -47,7 +47,7 @@ export default function RecruitPage() {
       />
 
       {/* ===== LIVE COUNT ===== */}
-      <section className="theme-light relative pb-4 pt-14 sm:pt-20" aria-label="LINE応募フォームの送信数">
+      <section className="theme-light relative pb-2 pt-12 sm:pt-16" aria-label="LINE応募フォームからの応募数">
         <Container>
           <div className="mx-auto max-w-3xl">
             <ApplyCounter />

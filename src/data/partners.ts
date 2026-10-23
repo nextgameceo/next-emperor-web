@@ -4,6 +4,7 @@
  * ・approved を true にした企業だけがサイトに表示されます。
  *   提携関係・事業内容・社名・ロゴの掲載について、各企業の承認を得てから true にしてください。
  * ・logo は public/images/partners/ に画像を置いてパスを指定（任意）。
+ *   白背景に置くため、文字が白いロゴの場合は logoOnLight に黒文字版も指定してください。
  * ・url は企業の公式サイト（任意）。
  */
 
@@ -14,6 +15,7 @@ export type Partner = {
   recruiting: string[]; // 採用している職種
   url?: string;
   logo?: { src: string; width: number; height: number };
+  logoOnLight?: string; // 白背景用のロゴ（文字が黒いもの）。あればこちらを表示
   approved: boolean; // 掲載承認済みか
 };
 
@@ -31,6 +33,7 @@ export const partners: Partner[] = [
     business: ["太陽光施工関連事業"],
     recruiting: ["施工スタッフ"],
     logo: { src: "/images/partners/trendline.png", width: 290, height: 87 },
+    logoOnLight: "/images/partners/trendline-onlight.png",
     approved: true,
   },
 ];

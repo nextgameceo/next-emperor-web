@@ -4,78 +4,104 @@ import { useEffect, useRef, useState } from "react";
 import { fetchApplyTotal } from "@/lib/applyCount";
 
 /**
- * LINE応募フォームの送信数（総合計）をカウンター風に表示
- * ・数値は /api/apply-count から読み込みます（30秒ごとに最新化）。
+ * LINE応募フォームからの応募数（総合計）
+ * ・数値は /api/apply-count から読み込みます。
+ * ・画面に入ると、数字が1桁ずつ縦に回転して止まります（スロットのような動き）。
  * ・SHOW_FROM 未満のあいだは表示しません（0 のときから表示する設定）。
  */
 const SHOW_FROM = 0;
-const MIN_DIGITS = 4;
+const STRIP = Array.from({ length: 20 }, (_, i) => i % 10); // 0〜9 を2周分
+
+function RollingDigit({ digit, active, index }: { digit: number; active: boolean; index: number }) {
+  // 2周目の位置で止めることで、しっかり回って見えるようにする
+  const pos = active ? 10 + digit : 0;
+  return (
+    <span className="relative inline-block h-[1em] overflow-hidden align-top" aria-hidden>
+      <span
+        className="block transition-transform duration-[1900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+        style={{ transform: `translateY(-${pos}em)`, transitionDelay: `${index * 140}ms` }}
+      >
+        {STRIP.map((n, i) => (
+          <span key={i} className="metal-gold shimmer block h-[1em] px-[0.02em] leading-[1em]">
+            {n}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
 
 export default function ApplyCounter() {
   const [total, setTotal] = useState<number | null>(null);
-  const [shown, setShown] = useState(0);
+  const [active, setActive] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const started = useRef(false);
 
   useEffect(() => {
     fetchApplyTotal().then(setTotal);
   }, []);
 
-  // 画面に入ったら 0 からカウントアップ
   useEffect(() => {
     if (total === null || !ref.current) return;
-    const el = ref.current;
-    const run = () => {
-      if (started.current) return;
-      started.current = true;
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce || total === 0) return setShown(total);
-      const dur = 1600;
-      const t0 = performance.now();
-      const tick = (t: number) => {
-        const p = Math.min(1, (t - t0) / dur);
-        setShown(Math.round(total * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-    const io = new IntersectionObserver((es) => es.some((e) => e.isIntersecting) && run(), { threshold: 0.4 });
-    io.observe(el);
+    const io = new IntersectionObserver(
+      (es) => {
+        if (es.some((e) => e.isIntersecting)) {
+          setActive(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(ref.current);
     return () => io.disconnect();
   }, [total]);
 
   if (total === null || total < SHOW_FROM) return null;
 
-  const digits = String(shown).padStart(Math.max(MIN_DIGITS, String(total).length), "0").split("");
+  const digits = String(total).split("").map(Number);
 
   return (
-    <div ref={ref} className="theme-dark card corners relative overflow-hidden px-6 py-12 text-center sm:px-12 sm:py-14">
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(221,180,110,0.10),transparent_65%)]" />
-      <p className="relative flex items-center justify-center gap-3 font-display text-xs tracking-[0.3em] text-ice">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ice opacity-60" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-ice" />
-        </span>
-        LIVE COUNT
-      </p>
-      <p className="relative mt-3 text-sm tracking-[0.12em] text-ivory/85">LINE応募フォームの送信数</p>
+    <div ref={ref} className="relative py-10 sm:py-12">
+      {/* 上下の細いライン（画面に入ると中央から伸びる） */}
+      <span
+        aria-hidden
+        className={`absolute inset-x-0 top-0 h-px origin-center bg-gradient-to-r from-transparent via-gold/70 to-transparent transition-transform duration-[1400ms] ease-out ${active ? "scale-x-100" : "scale-x-0"}`}
+      />
+      <span
+        aria-hidden
+        className={`absolute inset-x-0 bottom-0 h-px origin-center bg-gradient-to-r from-transparent via-ice/60 to-transparent transition-transform delay-300 duration-[1400ms] ease-out ${active ? "scale-x-100" : "scale-x-0"}`}
+      />
 
-      <div className="relative mt-8 flex items-end justify-center gap-2 sm:gap-3" aria-hidden>
-        {digits.map((d, i) => (
-          <span
-            key={i}
-            className="relative flex h-[4.6rem] w-[3.3rem] items-center justify-center overflow-hidden border border-gold/35 bg-gradient-to-b from-[#16151a] to-[#0a0a0c] font-display text-[2.9rem] font-semibold leading-none shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:h-24 sm:w-[4.4rem] sm:text-[3.9rem]"
-          >
-            <span className="metal-gold">{d}</span>
-            <span className="absolute inset-x-0 top-1/2 h-px bg-black/70" />
+      <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:text-left">
+        <div className={`transition-all duration-1000 ${active ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+          <p className="flex items-center justify-center gap-2.5 font-display text-[0.68rem] tracking-[0.32em] text-ice sm:justify-start">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ice opacity-70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-ice" />
+            </span>
+            Live Count
+          </p>
+          <p className="mt-3 font-display text-xl tracking-[0.14em] text-ivory sm:text-2xl">Applications</p>
+          <p className="mt-1 text-sm tracking-[0.12em] text-ivory-muted">LINE応募フォームからの応募</p>
+        </div>
+
+        <p className="flex items-baseline gap-2">
+          <span className="sr-only">{total}件</span>
+          <span className="font-display text-[4.8rem] font-light leading-none tabular-nums sm:text-[6.4rem]">
+            {digits.map((d, i) => (
+              <RollingDigit key={`${digits.length}-${i}`} digit={d} active={active} index={i} />
+            ))}
           </span>
-        ))}
-        <span className="mb-2 ml-1 text-sm tracking-[0.1em] text-gold sm:text-base">件</span>
+          <span
+            aria-hidden
+            className={`font-display text-sm tracking-[0.2em] text-gold transition-opacity delay-700 duration-700 ${active ? "opacity-100" : "opacity-0"}`}
+          >
+            件
+          </span>
+        </p>
       </div>
-      <p className="sr-only">LINE応募フォームの送信数：{total}件</p>
 
-      <p className="relative mx-auto mt-8 max-w-md text-[0.72rem] leading-relaxed text-ivory-dim">
-        ※ 求人ページの応募フォームから、応募窓口のLINEを開いた回数です（同じ方・同じ日の重複は除きます）。実際の応募数とは異なる場合があります。
+      <p className="mt-6 text-center text-[0.7rem] leading-relaxed text-ivory-dim sm:text-right">
+        ※ 応募フォームからLINEを開いた数（同日の重複を除く）
       </p>
     </div>
   );

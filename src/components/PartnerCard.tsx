@@ -2,24 +2,26 @@ import Image from "next/image";
 import type { Partner } from "@/data/partners";
 
 /**
- * 提携企業カード（ロゴのみ表示）
- * ロゴが未登録の企業は、代わりに社名を表示します。
- * url を設定すると、カード全体が公式サイトへのリンクになります。
+ * 提携企業（ロゴのみ表示）
+ * ・枠やカードは付けず、ロゴだけを並べます。
+ * ・白背景用のロゴ（logoOnLight）があればそちらを使います。
+ * ・ロゴが未登録の企業は、代わりに社名を表示します。
+ * ・url を設定すると、ロゴが公式サイトへのリンクになります。
  */
 export default function PartnerCard({ partner }: { partner: Partner }) {
   const inner = partner.logo ? (
     <Image
-      src={partner.logo.src}
+      src={partner.logoOnLight ?? partner.logo.src}
       alt={partner.name}
       width={partner.logo.width}
       height={partner.logo.height}
-      className="h-14 w-auto max-w-full object-contain sm:h-16"
+      className="h-12 w-auto max-w-full object-contain sm:h-14"
     />
   ) : (
     <span className="text-lg tracking-[0.06em] text-ivory">{partner.name}</span>
   );
 
-  const cls = "theme-dark card corners flex h-40 items-center justify-center px-8 sm:h-44";
+  const cls = "flex h-24 items-center justify-center transition-opacity duration-300 hover:opacity-70 sm:justify-start";
 
   if (partner.url) {
     return (
