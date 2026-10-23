@@ -21,7 +21,7 @@ export default function ContactPage() {
         <Container className="max-w-3xl">
           <div className="mb-12">
             <Notice>
-              こちらは法人のお客様向けのお問い合わせフォームです。求人への応募は、各求人ページから掲載企業の公式応募フォームへ直接お進みください。
+              こちらは法人のお客様向けのお問い合わせフォームです。求人への応募は、各求人ページの応募窓口へ直接お進みください。
             </Notice>
           </div>
           <ContactForm />

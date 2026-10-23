@@ -18,15 +18,15 @@ export const applySteps = [
   },
   {
     no: "03",
-    title: "企業へ直接応募する",
+    title: "応募窓口へ直接応募する",
     en: "Apply",
-    body: "詳細ページのボタンから、掲載企業の公式応募フォームへ進み、ご本人が直接お申し込みいただきます。",
+    body: "詳細ページから、各求人の応募窓口（掲載企業の応募フォームや、提携する人材紹介会社の公式LINEなど）へ進み、ご本人が直接お申し込みいただきます。",
   },
   {
     no: "04",
     title: "企業による選考",
     en: "Selection",
-    body: "面接・採用の判断・雇用契約は、各掲載企業が行います。選考の連絡は応募先の企業から届きます。",
+    body: "面接・採用の判断・雇用契約は、各掲載企業が行います。選考に関するご連絡は、応募窓口から届きます。",
   },
 ];
 
@@ -45,7 +45,7 @@ export function ApplyFlow({ divider = true }: { divider?: boolean }) {
           }
         />
         <p className="body-text mx-auto mt-6 max-w-2xl text-center" data-reveal style={delay(0.2)}>
-          応募は、とてもシンプルです。気になる求人を見つけたら、掲載企業の応募フォームへ直接お申し込みください。
+          応募は、とてもシンプルです。気になる求人を見つけたら、各求人の応募窓口へ直接お申し込みください。
           NEXT EMPERORを経由して個人情報を提出する必要はありません。
         </p>
         <ol className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

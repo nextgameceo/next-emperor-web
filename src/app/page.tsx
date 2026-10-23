@@ -411,7 +411,7 @@ export default function HomePage() {
           />
           <p className="body-text mt-6 max-w-3xl" data-reveal style={delay(0.2)}>
             NEXT EMPERORは、新しい挑戦を受け入れ、人の可能性を信じる企業と提携しています。
-            提携企業の求人には、各企業の公式応募フォームから直接ご応募いただけます。
+            提携企業の求人には、各求人の応募窓口から直接ご応募いただけます。
           </p>
           {partners.length > 0 ? (
             <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

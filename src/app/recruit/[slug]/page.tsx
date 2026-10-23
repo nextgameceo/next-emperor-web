@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import LineApplyForm from "@/components/LineApplyForm";
 import RecruitNotice from "@/components/RecruitNotice";
 import { ButtonLink, Container, PageHero, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
@@ -131,7 +132,14 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
           <div className="mt-12 space-y-8">
             <RecruitNotice />
-            {canApply ? (
+            {job.applyLineId ? (
+              <div className="space-y-6">
+                <LineApplyForm lineId={job.applyLineId} jobTitle={job.title} friendUrl={canApply ? applyHref : undefined} />
+                <ButtonLink href="/recruit" variant="outline">
+                  求人一覧へ戻る
+                </ButtonLink>
+              </div>
+            ) : canApply ? (
               <div className="space-y-6">
               <div className="border border-gold/40 px-5 py-5 text-sm leading-[1.9] text-ivory/90">
                 <p className="text-xs tracking-[0.16em] text-gold">応募のときのお願い</p>
@@ -161,7 +169,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
                 </ButtonLink>
               </div>
             )}
-            {canApply && <p className="text-xs text-ivory-dim">外部サイト（掲載企業の公式応募先）へ移動します。</p>}
+            {canApply && !job.applyLineId && <p className="text-xs text-ivory-dim">外部サイト（応募窓口）へ移動します。</p>}
           </div>
         </Container>
       </Section>

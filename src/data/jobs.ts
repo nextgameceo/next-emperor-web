@@ -11,6 +11,8 @@
  *   空欄の間は「応募受付の準備中」と表示され、応募ボタンは出ません。
  *   ※応募ボタンには「NEXT EMPEROR経由」の目印が自動で付きます（メール件名・LINEの最初の文・URLの ?ref=next-emperor）。
  *   ※LINE公式アカウントの場合は https://line.me/R/oaMessage/@アカウントID/ の形で入れると、最初のメッセージが自動入力されます。
+ * ・applyLineId に応募窓口のLINEのベーシックID（@から始まるID）を入れると、
+ *   入力内容をメッセージに入れた状態でLINEを開く「LINEで応募」フォームが表示されます（内容は当社サーバーを通りません）。
  * ・companyLabel を入れると、会社名の代わりにその表記を表示します（会社名を伏せる場合）。
  */
 
@@ -38,6 +40,7 @@ export type Job = {
   holidays: string; // 休日
   benefits: string[]; // 福利厚生
   applyUrl: string; // 応募先URL（掲載企業の応募フォーム・LINE・mailto: など）
+  applyLineId?: string; // 応募窓口のLINE公式アカウントのベーシックID（例："@030cihhe"）。入れると「LINEで応募」フォームが表示されます
   status: JobStatus; // 公開状態
   updatedAt?: string; // 最終更新日（例："2026-11-01"）
 };
@@ -73,6 +76,7 @@ export const jobs: Job[] = [
     holidays: "",
     benefits: [],
     applyUrl: "https://lin.ee/O7Zx1HB",
+    applyLineId: "@030cihhe",
     status: "published",
     updatedAt: "2026-10-23",
   },
@@ -106,6 +110,7 @@ export const jobs: Job[] = [
     holidays: "",
     benefits: [],
     applyUrl: "https://lin.ee/O7Zx1HB",
+    applyLineId: "@030cihhe",
     status: "published",
     updatedAt: "2026-10-23",
   },
