@@ -45,9 +45,7 @@ export default function Header() {
         <Link
           href="/"
           aria-label="NEXT EMPEROR ホーム"
-          className={`shrink-0 transition-all duration-700 ${
-            pathname === "/" && !scrolled && !open ? "pointer-events-none -translate-y-2 opacity-0" : "opacity-100"
-          }`}
+className="shrink-0"
         >
           <Logo className="h-12 w-auto sm:h-16" priority />
         </Link>

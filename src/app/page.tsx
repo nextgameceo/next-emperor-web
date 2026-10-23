@@ -109,7 +109,7 @@ export default function HomePage() {
   return (
     <>
       {/* ===== HERO ===== */}
-      <Hero />
+      <Hero latest={posts[0] ? { slug: posts[0].slug, title: posts[0].title, date: posts[0].date } : null} />
 
       {/* ===== ABOUT ===== */}
       <Section labelledBy="about-title">

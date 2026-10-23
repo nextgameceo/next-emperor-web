@@ -1,80 +1,104 @@
-import Logo from "./Logo";
-import { Sparkle } from "./Decor";
-import { ButtonLink, Container, delay } from "./ui";
+import Link from "next/link";
+import HeroHorizon from "./HeroHorizon";
+import { Container, delay } from "./ui";
 
-/** 下部を流れる英字（夜の仕事で磨かれる力） */
-const words = ["Hospitality", "Communication", "Sales Drive", "Attention to Detail", "First Impression", "Resilience"];
+type Latest = { slug: string; title: string; date: string } | null;
+
+/** 下段の入口（求職者・企業・提携企業） */
+const entries = [
+  { no: "01", en: "For Talent", title: "求職者の方へ", text: "夜の経験が活きる、昼職の選択肢を見る", href: "/recruit" },
+  { no: "02", en: "For Business", title: "企業の方へ", text: "採用マーケティング・営業支援を相談する", href: "/business" },
+  { no: "03", en: "Partners", title: "提携企業", text: "人の可能性を信じる企業とともに", href: "/partner" },
+];
 
 /**
  * トップページのヒーロー
- * PC：左にキャッチコピー、右にロゴ（回転する光の輪）
- * スマホ：ロゴ → キャッチコピー → ボタンの縦並び
+ * ・背景：夜空と、地平線から昇る夜明けの光（HeroHorizon）
+ * ・細い罫線で区切ったグリッドに、大きなキャッチコピーと入口を配置
  */
-export default function Hero() {
+export default function Hero({ latest }: { latest: Latest }) {
   return (
-    <section aria-labelledby="hero-title" className="edge-gold relative flex min-h-[100svh] flex-col overflow-hidden">
-      {/* 背景の光 */}
-      <div aria-hidden className="hero-spot pointer-events-none absolute right-[-10%] top-[6%] h-[min(120vw,900px)] w-[min(120vw,900px)] lg:right-[-4%]" />
-      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0" />
+    <section aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
+      <HeroHorizon />
 
-      <Container className="relative flex flex-1 items-center pb-10 pt-20 sm:pt-28 lg:pb-16 lg:pt-32">
-        <div className="grid w-full items-center gap-6 lg:grid-cols-[1.05fr_1fr] lg:gap-6">
-          {/* ロゴ（スマホでは上、PCでは右） */}
-          <div className="relative mx-auto w-[min(80vw,560px)] lg:order-2 lg:w-full">
-            <div aria-hidden className="hero-ring hero-ring-gold absolute left-1/2 top-1/2 aspect-square w-[108%] -translate-x-1/2 -translate-y-1/2" />
-            <div aria-hidden className="hero-ring hero-ring-ice absolute left-1/2 top-1/2 aspect-square w-[88%] -translate-x-1/2 -translate-y-1/2" />
-            <div className="logo-intro relative py-[9%] lg:py-[14%]">
-              <Logo className="h-auto w-full" priority sizes="(max-width: 1024px) 86vw, 560px" />
-            </div>
-          </div>
+      {/* 縦の罫線（PC） */}
+      <Container className="pointer-events-none absolute inset-0 hidden lg:block" >
+        <div aria-hidden className="h-full border-x border-white/[0.07]" />
+      </Container>
 
-          {/* キャッチコピー */}
-          <div className="text-center lg:order-1 lg:text-left">
-            <p className="fade-up flex items-center justify-center gap-3 font-display text-[0.7rem] tracking-[0.34em] text-ice lg:justify-start">
-              <span className="hidden h-px w-10 bg-gradient-to-r from-transparent to-ice lg:block" />
-              <Sparkle className="h-2.5 w-2.5 text-gold" twinkle />
-              From Night to Tomorrow
-            </p>
-            <h1
-              id="hero-title"
-              className="mt-5 font-serif text-[2.15rem] font-medium leading-[1.45] tracking-[0.08em] sm:text-[3.2rem] lg:text-[3.9rem] lg:leading-[1.38]"
+      <Container className="relative flex flex-1 flex-col justify-center pb-10 pt-28 sm:pt-32">
+        <div className="lg:px-12">
+          {/* 最新ニュース */}
+          {latest && (
+            <Link
+              href={`/news/${latest.slug}`}
+              className="fade-up group inline-flex max-w-full items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-[0.72rem] tracking-[0.06em] text-ivory/80 backdrop-blur transition-colors hover:border-gold/60 hover:text-ivory sm:text-xs"
             >
-              <span className="line-rise metal-silver" style={delay(0.4)}>
-                夜の経験を、
-              </span>
-              <br />
-              <span className="line-rise" style={delay(0.7)}>
-                <span className="metal-gold shimmer">明日の可能性へ。</span>
-              </span>
-            </h1>
-            <span aria-hidden className="draw-x mx-auto mt-8 block h-px w-24 origin-left bg-gradient-to-r from-gold via-gold/60 to-transparent lg:mx-0" style={delay(1)} />
-            <p className="fade-up-delay-2 mx-auto mt-7 max-w-md text-[0.9rem] leading-[2.1] tracking-[0.04em] text-ivory/80 sm:text-base lg:mx-0">
-              今までの経験は、あなたの強みになる。
-              <br />
-              夜職から昼職へ、新しいキャリアへの第一歩を。
-              <br />
-              NEXT EMPERORがあなたの挑戦を応援します。
+              <span className="rounded-full bg-gold px-2.5 py-0.5 font-display text-[0.62rem] font-semibold tracking-[0.16em] text-black">NEWS</span>
+              <span className="truncate">{latest.title}</span>
+              <span aria-hidden className="text-gold transition-transform group-hover:translate-x-0.5">→</span>
+            </Link>
+          )}
+
+          <h1
+            id="hero-title"
+            className="mt-9 text-[2.5rem] font-medium leading-[1.3] tracking-[0.04em] text-ivory sm:text-[4rem] lg:text-[5.4rem] lg:leading-[1.18]"
+          >
+            <span className="line-rise block" style={delay(0.25)}>
+              夜の経験を、
+            </span>
+            <span className="line-rise block" style={delay(0.5)}>
+              <span className="metal-gold">明日の可能性へ。</span>
+            </span>
+          </h1>
+
+          <div className="fade-up-delay-2 mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(0,30rem)_auto] lg:items-end lg:justify-between">
+            <p className="max-w-[30rem] text-[0.92rem] leading-[2.05] tracking-[0.04em] text-ivory/70 sm:text-base">
+              今までの経験は、あなたの強みになる。夜職から昼職へ、新しいキャリアへの第一歩を。NEXT EMPERORが、あなたの挑戦を応援します。
             </p>
-            <div className="fade-up-delay-2 mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-              <ButtonLink href="/recruit">お仕事を探す</ButtonLink>
-              <ButtonLink href="/business" variant="outline">
-                企業の方はこちら
-              </ButtonLink>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+              <Link
+                href="/recruit"
+                className="group inline-flex h-14 items-center justify-between gap-10 bg-gold px-7 text-sm font-medium tracking-[0.14em] text-black transition-colors hover:bg-gold-soft"
+              >
+                お仕事を探す
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+              <Link
+                href="/business"
+                className="group inline-flex h-14 items-center gap-3 text-sm tracking-[0.14em] text-ivory/85 transition-colors hover:text-gold"
+              >
+                <span className="border-b border-white/30 pb-1 transition-colors group-hover:border-gold">企業の方はこちら</span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
             </div>
           </div>
         </div>
       </Container>
 
-      {/* 流れる英字の帯 */}
-      <div className="relative border-t border-gold/15 py-4" aria-hidden>
-        <div className="hero-marquee flex w-max gap-10 whitespace-nowrap font-display text-xs tracking-[0.36em] text-silver/55 sm:text-sm">
-          {[...words, ...words, ...words, ...words].map((w, i) => (
-            <span key={i} className="flex items-center gap-10">
-              {w}
-              <Sparkle className="h-2 w-2 text-gold/70" />
-            </span>
-          ))}
-        </div>
+      {/* 下段：入口（罫線で区切ったセル） */}
+      <div className="relative border-t border-white/[0.08] bg-black/30 backdrop-blur-[2px]">
+        <Container>
+          <ul className="-mx-5 grid grid-cols-3 divide-x divide-white/[0.08] sm:mx-0 lg:border-x lg:border-white/[0.07]">
+            {entries.map((e, i) => (
+              <li key={e.no} className="fade-up-delay-2" style={delay(0.2 + i * 0.1)}>
+                <Link href={e.href} className="group flex h-full flex-col gap-1.5 px-3 py-4 transition-colors hover:bg-white/[0.03] sm:gap-2 sm:px-6 sm:py-7 lg:px-8">
+                  <span className="flex items-center justify-between font-display text-[0.55rem] tracking-[0.2em] text-ice sm:text-[0.65rem] sm:tracking-[0.28em]">
+                    <span>
+                      {e.no}
+                      <span className="hidden sm:inline"> / {e.en}</span>
+                    </span>
+                    <span aria-hidden className="text-gold opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
+                      →
+                    </span>
+                  </span>
+                  <span className="text-[0.8rem] tracking-[0.04em] text-ivory sm:text-base sm:tracking-[0.08em]">{e.title}</span>
+                  <span className="hidden text-xs leading-relaxed tracking-[0.04em] text-ivory/55 sm:block">{e.text}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
       </div>
     </section>
   );
