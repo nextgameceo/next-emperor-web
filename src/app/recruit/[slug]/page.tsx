@@ -48,6 +48,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
   const applyHref = buildApplyHref(job);
   const canApply = applyHref !== "";
+  const isLine = /^https:\/\/(lin\.ee|line\.me)\//.test(applyHref);
 
   // Google しごと検索向けの構造化データ（入力済み・社名公開の求人のみ）
   const jsonLd = hidden || !job.location ? null : {
@@ -136,12 +137,14 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
                 <p className="text-xs tracking-[0.16em] text-gold">応募のときのお願い</p>
                 <p className="mt-2">
                   応募の際は「<span className="text-gold">{REFERRAL_LABEL}の求人を見た</span>」とお伝えください。
-                  下のボタンから進むと、応募先にこのことが伝わるよう自動で設定されています。
+                  {isLine
+                    ? "LINEで友だち追加したあと、最初のメッセージで「NEXT EMPERORの求人を見た」と送ってください。"
+                    : "下のボタンから進むと、応募先にこのことが伝わるよう自動で設定されています。"}
                 </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <ButtonLink href={applyHref} external>
-                  応募先へ進む
+                  {isLine ? "LINEで応募する" : "応募先へ進む"}
                 </ButtonLink>
                 <ButtonLink href="/recruit" variant="outline">
                   求人一覧へ戻る

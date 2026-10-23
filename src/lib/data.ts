@@ -63,6 +63,8 @@ export function buildApplyHref(job: Job): string {
     if (u.hostname === "line.me" && u.pathname.includes("/oaMessage/")) {
       return raw.includes("?") ? raw : `${raw.replace(/\/?$/, "/")}?${encodeURIComponent(msg)}`;
     }
+    // LINEの友だち追加リンク（lin.ee / line.me）は、URLを変えると開けなくなることがあるのでそのまま使う
+    if (u.hostname === "lin.ee" || u.hostname === "line.me") return raw;
     if (!u.searchParams.has("ref")) u.searchParams.set("ref", "next-emperor");
     if (!u.searchParams.has("utm_source")) {
       u.searchParams.set("utm_source", "next-emperor");
