@@ -103,7 +103,7 @@ export default function ContactForm() {
 
   const Err = ({ k }: { k: keyof ContactInput }) =>
     errors[k] ? (
-      <p id={`e-${k}`} className="mt-2 text-sm text-[#E2A79A]">
+      <p id={`e-${k}`} className="mt-2 text-sm text-danger">
         {errors[k]}
       </p>
     ) : null;
@@ -120,7 +120,7 @@ export default function ContactForm() {
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-8" aria-label="法人向けお問い合わせフォーム">
       {!configured && (
-        <div role="note" className="border border-[#8A5A4E] bg-[#2A1C18] px-5 py-4 text-sm leading-relaxed text-[#E8C9BF]">
+        <div role="note" className="border border-danger/50 bg-danger/10 px-5 py-4 text-sm leading-relaxed text-ivory">
           【管理者向け】メール送信先が未設定のため、現在このフォームからは送信できません。環境変数
           RESEND_API_KEY（ResendのAPIキー）をCloudflareに設定してください。
         </div>
@@ -131,7 +131,7 @@ export default function ContactForm() {
           ref={alertRef}
           tabIndex={-1}
           role="alert"
-          className="border border-[#8A5A4E] bg-[#2A1C18] px-5 py-4 text-sm leading-relaxed text-[#E8C9BF] outline-none"
+          className="border border-danger/50 bg-danger/10 px-5 py-4 text-sm leading-relaxed text-ivory outline-none"
         >
           {serverMessage}
         </div>

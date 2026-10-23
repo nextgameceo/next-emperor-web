@@ -10,7 +10,7 @@ export function Container({ children, className = "" }: { children: ReactNode; c
   return <div className={`mx-auto w-full max-w-site px-5 sm:px-8 ${className}`}>{children}</div>;
 }
 
-/** セクション共通の余白（上に細い金の罫線） */
+/** セクション共通の余白（上に細い金の罫線）。背景は白（theme-light） */
 export function Section({
   children,
   id,
@@ -28,7 +28,7 @@ export function Section({
   band?: boolean;
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
+    <section id={id} aria-labelledby={labelledBy} className={`theme-light relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
       {divider && (
         <span
           aria-hidden
@@ -124,7 +124,7 @@ export function ButtonLink({ href, children, variant = "primary", external, clas
 /** 下層ページ上部のタイトル帯 */
 export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: string; lead?: string }) {
   return (
-    <div className="relative border-b border-gold/20 pb-16 pt-36 sm:pb-24 sm:pt-48">
+    <div className="edge-gold relative pb-16 pt-36 sm:pb-24 sm:pt-48">
       <Container>
         <div className="fade-up">
           <Eyebrow>{eyebrow}</Eyebrow>

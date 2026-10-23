@@ -10,6 +10,53 @@
  * アニメーションは「静かに現れる・光がすっと走る」上品な動きに限定。
  */
 
+/* =========================================================
+   カラー設定（R G B）
+   ========================================================= */
+:root,
+.theme-dark {
+  --c-ivory: 245 240 232;
+  --c-ivory-muted: 191 185 196;
+  --c-ivory-dim: 138 133 146;
+  --c-gold: 221 180 110;
+  --c-gold-soft: 242 221 180;
+  --c-gold-deep: 169 122 60;
+  --c-silver: 214 204 220;
+  --c-silver-deep: 154 144 166;
+  --c-ice: 127 214 242;
+  --c-ice-soft: 182 237 251;
+  --c-ice-deep: 63 166 210;
+  --c-charcoal: 17 17 20;
+  --c-charcoal-light: 24 24 29;
+  --c-charcoal-line: 42 41 48;
+  --c-navy-light: 21 21 26;
+  --c-danger: 226 167 154;
+  --card-face: #0e0e11;
+  color: rgb(var(--c-ivory));
+}
+/* 白背景のセクション */
+.theme-light {
+  --c-ivory: 23 22 27;
+  --c-ivory-muted: 74 70 82;
+  --c-ivory-dim: 116 111 124;
+  --c-gold: 146 104 40;
+  --c-gold-soft: 169 122 60;
+  --c-gold-deep: 118 82 30;
+  --c-silver: 110 100 120;
+  --c-silver-deep: 87 78 97;
+  --c-ice: 24 124 164;
+  --c-ice-soft: 32 140 184;
+  --c-ice-deep: 18 98 132;
+  --c-charcoal: 246 244 240;
+  --c-charcoal-light: 239 236 230;
+  --c-charcoal-line: 225 220 212;
+  --c-navy-light: 243 241 236;
+  --c-danger: 179 64 42;
+  --card-face: #ffffff;
+  color: rgb(var(--c-ivory));
+  background-color: #ffffff;
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
@@ -91,7 +138,7 @@
     position: relative;
     border: 1px solid transparent;
     background:
-      linear-gradient(#0E0E11, #0E0E11) padding-box,
+      linear-gradient(var(--card-face), var(--card-face)) padding-box,
       linear-gradient(140deg, rgba(242, 217, 168, 0.85), rgba(208, 192, 210, 0.14) 38%, rgba(127, 214, 242, 0.12) 62%, rgba(127, 214, 242, 0.7)) border-box;
     transition: translate 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s ease;
   }
@@ -313,6 +360,174 @@
   opacity: 0.07;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- 白背景セクション用の調整 ---- */
+/*
+ * セクションごとの色（上から順に、5色をくり返します）
+ *   1. ホワイト   2. アイボリー（暖）   3. ミスト（水色寄り）
+ *   4. シャンパン   5. ラベンダーミスト（銀寄り）
+ * --tint は背景色、--glow-a / --glow-b は左上・右下にのせる淡い光の色（R G B）
+ */
+.theme-light {
+  --tint: 255 255 255;
+  --glow-a: 221 180 110;
+  --glow-b: 127 214 242;
+  background-color: rgb(var(--tint));
+  background-image:
+    radial-gradient(60% 50% at 0% 0%, rgb(var(--glow-a) / 0.1), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgb(var(--glow-b) / 0.09), transparent 70%);
+}
+main > section.theme-light:nth-of-type(5n + 1) { --tint: 255 255 255; --glow-a: 221 180 110; --glow-b: 127 214 242; }
+main > section.theme-light:nth-of-type(5n + 2) { --tint: 250 247 241; --glow-a: 221 180 110; --glow-b: 232 205 150; }
+main > section.theme-light:nth-of-type(5n + 3) { --tint: 243 247 249; --glow-a: 127 214 242; --glow-b: 154 143 168; }
+main > section.theme-light:nth-of-type(5n + 4) { --tint: 248 243 234; --glow-a: 201 149 79; --glow-b: 127 214 242; }
+main > section.theme-light:nth-of-type(5n + 5) { --tint: 246 244 249; --glow-a: 154 143 168; --glow-b: 221 180 110; }
+
+/* 帯：細かなドット模様を、中央に向かってふんわり */
+.theme-light.band,
+.theme-light .band {
+  background-color: rgb(var(--tint));
+  background-image: radial-gradient(rgb(var(--glow-a) / 0.32) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+.theme-light.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 60% at 50% 50%, rgb(var(--tint) / 0.96), rgb(var(--tint) / 0.6) 60%, transparent 100%);
+}
+.theme-light.band > * {
+  position: relative;
+}
+
+/* カード：白地＋細い罫線。縁にだけ、ほのかに金と水色 */
+.theme-light .card {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(140deg, rgba(169, 122, 60, 0.55), #e7e1d6 26%, #e7e1d6 74%, rgba(24, 124, 164, 0.45)) border-box;
+  box-shadow:
+    0 1px 0 rgba(23, 22, 27, 0.03),
+    0 24px 48px -36px rgba(23, 22, 27, 0.35);
+}
+.theme-light .card:hover {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(140deg, rgba(169, 122, 60, 0.95), rgba(221, 180, 110, 0.4) 35%, rgba(127, 214, 242, 0.35) 65%, rgba(24, 124, 164, 0.9)) border-box;
+  box-shadow:
+    0 1px 0 rgba(23, 22, 27, 0.03),
+    0 30px 60px -34px rgba(24, 124, 164, 0.4);
+}
+.theme-light .corners::before {
+  border-color: #b8873e;
+}
+.theme-light .corners::after {
+  border-color: #3fa6d2;
+}
+
+/* 金・銀の文字（白地用に深い色へ） */
+.theme-light .metal-gold {
+  background: linear-gradient(110deg, #7a5420 0%, #c3914a 25%, #946628 45%, #6f4b1b 62%, #b88640 82%, #8a5f26 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.theme-light .metal-silver {
+  background: linear-gradient(180deg, #1f1d24 0%, #4d4557 55%, #18161c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 文字を少しだけ読みやすく */
+.theme-light .body-text {
+  color: rgb(60 56 68);
+}
+.theme-light .eyebrow {
+  letter-spacing: 0.22em;
+}
+
+/* ボタン */
+.theme-light .btn-silver {
+  border-color: rgba(31, 29, 36, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+}
+.theme-light .btn-silver:hover {
+  border-color: #187ca4;
+  color: #187ca4;
+}
+.theme-light .btn-gold {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 14px 28px -16px rgba(146, 104, 40, 0.65);
+}
+
+/* 入力欄 */
+.theme-light .field {
+  background: #faf8f4;
+}
+.theme-light .field:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(221, 180, 110, 0.18);
+}
+
+/* 黒（ヒーロー）と白の境目：金のライン */
+.edge-gold {
+  position: relative;
+}
+.edge-gold::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(221, 180, 110, 0.7) 20%, rgba(127, 214, 242, 0.6) 80%, transparent);
+}
+
+/* 白いセクションの中に、あえて黒いパーツを置く場合（.theme-dark） */
+.theme-light .theme-dark.card,
+.theme-light .theme-dark .card {
+  background:
+    linear-gradient(#0e0e11, #0e0e11) padding-box,
+    linear-gradient(140deg, rgba(242, 217, 168, 0.85), rgba(208, 192, 210, 0.14) 38%, rgba(127, 214, 242, 0.12) 62%, rgba(127, 214, 242, 0.7)) border-box;
+}
+.theme-light .theme-dark .metal-gold {
+  background: linear-gradient(110deg, #a97436 0%, #feeccd 22%, #e4b56b 40%, #a97436 60%, #f2d9a8 80%, #c8954f 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.theme-light .theme-dark .metal-silver {
+  background: linear-gradient(180deg, #ffffff 0%, #e6dcea 42%, #9a8fa8 68%, #efe8f2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.theme-light .theme-dark .body-text {
+  color: rgb(var(--c-ivory-muted));
+}
+.theme-light .theme-dark .btn-silver {
+  border-color: rgba(214, 204, 220, 0.6);
+  background: transparent;
+}
+.theme-light .theme-dark .btn-silver:hover {
+  border-color: rgb(127 214 242);
+  color: rgb(182 237 251);
+}
+.theme-light .theme-dark .corners::before {
+  border-color: rgb(221 180 110);
+}
+.theme-light .theme-dark .corners::after,
+.theme-light .theme-dark.corners::after {
+  border-color: rgb(127 214 242);
+}
+.theme-light .theme-dark.corners::before {
+  border-color: rgb(221 180 110);
 }
 
 /* セクションの濃淡（帯） */

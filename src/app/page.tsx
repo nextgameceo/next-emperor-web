@@ -113,7 +113,7 @@ export default function HomePage() {
       {/* ===== HERO ===== */}
       <section
         aria-labelledby="hero-title"
-        className="relative flex min-h-[100svh] items-center overflow-hidden pb-28 pt-28 sm:pb-36 sm:pt-32"
+        className="edge-gold relative flex min-h-[100svh] items-center overflow-hidden pb-28 pt-28 sm:pb-36 sm:pt-32"
       >
         <div aria-hidden className="hero-spot pointer-events-none absolute left-1/2 top-[8%] h-[min(110vw,820px)] w-[min(110vw,820px)] -translate-x-1/2" />
         <Container className="relative text-center">
@@ -469,7 +469,7 @@ export default function HomePage() {
       {/* ===== FOR BUSINESS ===== */}
       <Section labelledBy="business-title">
         <Container>
-          <div className="card corners mx-auto max-w-4xl px-7 py-16 text-center sm:px-16 sm:py-20" data-reveal>
+          <div className="theme-dark card corners mx-auto max-w-4xl px-7 py-16 text-center sm:px-16 sm:py-20" data-reveal>
             <Eyebrow center>企業の成長を、ともに</Eyebrow>
             <h2 id="business-title" className="heading-en mt-5">
               <span className="metal-silver">Grow</span> <span className="metal-gold">Together</span>

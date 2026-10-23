@@ -85,7 +85,7 @@ export default function ServicePage() {
         </Section>
       ))}
 
-      <section className="border-t border-charcoal-line bg-charcoal/40 py-20">
+      <section className="theme-light border-t border-charcoal-line py-20">
         <Container className="flex flex-col gap-4 sm:flex-row sm:justify-center">
           <ButtonLink href="/recruit">お仕事を探す</ButtonLink>
           <ButtonLink href="/contact" variant="outline">

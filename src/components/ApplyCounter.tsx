@@ -49,7 +49,7 @@ export default function ApplyCounter() {
   const digits = String(shown).padStart(Math.max(MIN_DIGITS, String(total).length), "0").split("");
 
   return (
-    <div ref={ref} className="card corners relative overflow-hidden px-6 py-12 text-center sm:px-12 sm:py-14">
+    <div ref={ref} className="theme-dark card corners relative overflow-hidden px-6 py-12 text-center sm:px-12 sm:py-14">
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(221,180,110,0.10),transparent_65%)]" />
       <p className="relative flex items-center justify-center gap-3 font-display text-xs tracking-[0.3em] text-ice">
         <span className="relative flex h-2 w-2">
