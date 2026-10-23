@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Hero from "@/components/Hero";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
 import { formatDate, getAllPosts } from "@/lib/blog";
@@ -108,47 +109,7 @@ export default function HomePage() {
   return (
     <>
       {/* ===== HERO ===== */}
-      <section
-        aria-labelledby="hero-title"
-        className="edge-gold relative flex min-h-[100svh] items-center overflow-hidden pb-28 pt-28 sm:pb-36 sm:pt-32"
-      >
-        <div aria-hidden className="hero-spot pointer-events-none absolute left-1/2 top-[8%] h-[min(110vw,820px)] w-[min(110vw,820px)] -translate-x-1/2" />
-        <Container className="relative text-center">
-          <div className="mx-auto w-[min(82vw,560px)]">
-            <div className="logo-intro">
-              <Logo className="h-auto w-full" priority sizes="(max-width: 640px) 82vw, 560px" />
-            </div>
-          </div>
-          <Ornament className="fade-up mt-8 sm:mt-10" animate />
-          <h1
-            id="hero-title"
-            className="mt-8 font-serif text-[1.95rem] font-medium leading-[1.55] tracking-[0.1em] sm:text-[3.4rem] sm:leading-[1.5]"
-          >
-            <span className="line-rise metal-silver" style={delay(0.5)}>
-              夜の経験を、
-            </span>
-            <br />
-            <span className="line-rise" style={delay(0.8)}>
-              <span className="metal-gold shimmer">明日の可能性へ。</span>
-            </span>
-          </h1>
-          <div className="fade-up-delay-2 mx-auto mt-7 max-w-xl space-y-1 text-[0.84rem] leading-[2.1] tracking-[0.02em] text-ivory/85 sm:text-base sm:tracking-[0.06em]">
-            <p>今までの経験は、あなたの強みになる。</p>
-            <p>夜職から昼職へ、新しいキャリアへの第一歩を。</p>
-            <p>NEXT EMPERORがあなたの挑戦を応援します。</p>
-          </div>
-          <div className="fade-up-delay-2 mt-11 flex flex-col justify-center gap-4 sm:flex-row">
-            <ButtonLink href="/recruit">お仕事を探す</ButtonLink>
-            <ButtonLink href="/business" variant="outline">
-              企業の方はこちら
-            </ButtonLink>
-          </div>
-        </Container>
-        <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex" aria-hidden>
-          <span className="font-display text-[0.65rem] tracking-luxe text-silver/60">SCROLL</span>
-          <span className="scroll-line h-12 w-px bg-gradient-to-b from-ice to-transparent" />
-        </div>
-      </section>
+      <Hero />
 
       {/* ===== ABOUT ===== */}
       <Section labelledBy="about-title">

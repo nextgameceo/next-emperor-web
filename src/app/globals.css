@@ -630,3 +630,48 @@ main > section.theme-light:nth-of-type(5n + 5) { --tint: 246 244 249; --glow-a: 
 .prose-ne table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
 .prose-ne th, .prose-ne td { border: 1px solid theme("colors.charcoal.line"); padding: 0.6em 0.9em; text-align: left; }
 .prose-ne th { color: theme("colors.gold.DEFAULT"); font-weight: 500; }
+
+/* =========================================================
+   トップのヒーロー
+   ========================================================= */
+/* ごく薄いグリッド（中央に向かってフェード） */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(221, 180, 110, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(221, 180, 110, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 60% 45%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 60% 45%, #000 20%, transparent 75%);
+}
+/* ロゴの背後でゆっくり回る光の輪 */
+.hero-ring {
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.hero-ring-gold {
+  border: 1px solid transparent;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(242, 217, 168, 0.75) 40deg, transparent 110deg, transparent 200deg, rgba(221, 180, 110, 0.4) 250deg, transparent 320deg) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0);
+}
+.hero-ring-ice {
+  border: 1px dashed rgba(127, 214, 242, 0.22);
+}
+/* 流れる英字 */
+.hero-marquee {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-ring-gold { animation: spin 26s linear infinite; }
+  .hero-ring-ice { animation: spin 60s linear infinite reverse; }
+  .hero-marquee { animation: marquee 60s linear infinite; }
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
