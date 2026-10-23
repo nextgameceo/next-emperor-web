@@ -1,2 +1,3 @@
 /blog /news 301
 /blog/* /news/:splat 301
+/news/recruit-open /news/category/%E6%B1%82%E4%BA%BA%E6%83%85%E5%A0%B1 301
