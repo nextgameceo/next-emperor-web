@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const c = siteConfig.company;
   // 値が入っている項目だけを表示（未確定情報は表示しない）
+  // 地図の検索に使う住所（郵便番号と階数を除く）
+  const mapQuery = (c.address || "").replace(/^〒\d{3}-\d{4}\s*/, "").replace(/\s*\d+階.*$/, "");
   const rows = [
     { k: "会社名", v: c.legalName },
     { k: "英語表記", v: c.englishName },
@@ -101,6 +103,38 @@ export default function AboutPage() {
               </dd>
             </div>
           </dl>
+
+          {/* ===== ACCESS（Googleマップ） ===== */}
+          {c.address && (
+            <div className="mt-20" id="access">
+              <p className="font-display text-xs tracking-[0.3em] text-ice">Access</p>
+              <h3 className="mt-2 text-xl tracking-[0.08em] text-ivory">オフィスへのアクセス</h3>
+              <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:items-start">
+                <div>
+                  <p className="text-sm tracking-[0.12em] text-gold">所在地</p>
+                  <p className="mt-2 leading-[2] text-ivory/90">{c.address}</p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-3 border border-charcoal-line px-5 py-3 text-sm tracking-[0.14em] text-ivory transition-colors hover:border-gold hover:text-gold"
+                  >
+                    Googleマップで開く <span aria-hidden>↗</span>
+                  </a>
+                </div>
+                <div className="card relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
+                  <iframe
+                    title={`${c.legalName} の所在地（Googleマップ）`}
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=ja&z=17&output=embed`}
+                    className="absolute inset-0 h-full w-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </Container>
       </Section>
     </>
