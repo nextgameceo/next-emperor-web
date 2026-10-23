@@ -100,7 +100,14 @@ export default function AboutPage() {
                       )}
                     </li>
                   ))}
-                  {c.businessNote && <li className="pl-9 text-sm text-ivory-muted">{c.businessNote}</li>}
+                  {c.businessNote && (
+                    <li>
+                      <p className="flex items-baseline gap-3 font-serif tracking-[0.05em] text-ivory">
+                        <span className="font-display text-lg text-ice">{String(c.business.length + 1).padStart(2, "0")}</span>
+                        {c.businessNote}
+                      </p>
+                    </li>
+                  )}
                 </ol>
               </dd>
             </div>
@@ -111,20 +118,8 @@ export default function AboutPage() {
             <div className="mt-20" id="access">
               <p className="font-display text-xs tracking-[0.3em] text-ice">Access</p>
               <h3 className="mt-2 text-xl tracking-[0.08em] text-ivory">オフィスへのアクセス</h3>
-              <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:items-start">
-                <div>
-                  <p className="text-sm tracking-[0.12em] text-gold">所在地</p>
-                  <p className="mt-2 whitespace-pre-line leading-[2] text-ivory/90">{addressLines}</p>
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-3 border border-charcoal-line px-5 py-3 text-sm tracking-[0.14em] text-ivory transition-colors hover:border-gold hover:text-gold"
-                  >
-                    Googleマップで開く <span aria-hidden>↗</span>
-                  </a>
-                </div>
-                <div className="card relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
+              <div className="mt-8">
+                <div className="card relative aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
                   <iframe
                     title={`${c.legalName} の所在地（Googleマップ）`}
                     src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=ja&z=17&output=embed`}
@@ -134,6 +129,14 @@ export default function AboutPage() {
                     allowFullScreen
                   />
                 </div>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-3 border border-charcoal-line px-5 py-3 text-sm tracking-[0.14em] text-ivory transition-colors hover:border-gold hover:text-gold"
+                >
+                  Googleマップで開く <span aria-hidden>↗</span>
+                </a>
               </div>
             </div>
           )}

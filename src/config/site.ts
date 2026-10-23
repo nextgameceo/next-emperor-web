@@ -55,7 +55,7 @@ export const siteConfig = {
     status: "設立準備中",
     location: "愛知県名古屋市",
     capital: "4,000,000円",
-    representative: "代表社員　石原 利輝",
+    representative: "石原 利輝",
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
     address: "〒460-0002 愛知県名古屋市中区丸の内3丁目19番23号 FPSビル9階",
