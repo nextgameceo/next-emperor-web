@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BigMarquee from "@/components/BigMarquee";
 import Hero from "@/components/Hero";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
@@ -188,7 +189,6 @@ export default function HomePage() {
       <Section labelledBy="stance-title" band>
         <Container>
           <SectionHeading
-            align="center"
             eyebrow="私たちが大切にしていること"
             id="stance-title"
             title={
@@ -197,16 +197,21 @@ export default function HomePage() {
               </>
             }
           />
-          <ul className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-16 grid border-t border-ivory/10 sm:grid-cols-2 lg:grid-cols-4">
             {stance.map((s, i) => (
-              <li key={s.en} className="card px-7 py-10 text-center" data-reveal style={delay(i * 0.12)}>
-                <p className="font-display text-sm tracking-luxe text-ice">0{i + 1}</p>
-                <p className="mt-3 font-display text-[2rem] leading-none">
+              <li
+                key={s.en}
+                className="group relative border-b border-ivory/10 px-1 py-10 sm:px-8 sm:[&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0 lg:[&:nth-child(odd)]:border-r"
+                data-reveal
+                style={delay(i * 0.12)}
+              >
+                <span aria-hidden className="absolute left-0 top-0 h-px w-0 bg-gold transition-all duration-700 group-hover:w-full" />
+                <p className="font-display text-xs tracking-[0.3em] text-ice">0{i + 1}</p>
+                <p className="mt-6 font-display text-[2.1rem] uppercase leading-none tracking-[0.04em]">
                   <span className="metal-gold">{s.en}</span>
                 </p>
-                <Sparkle className="mx-auto mt-5 h-2.5 w-2.5 text-ice/70" twinkle delay={`${i * 0.5}s`} />
-                <p className="mt-5 font-serif text-[0.98rem] leading-relaxed tracking-[0.06em] text-ivory">{s.ja}</p>
-                <p className="mt-4 text-left text-[0.85rem] leading-[1.95] text-ivory-muted">{s.body}</p>
+                <p className="mt-6 text-[1rem] leading-relaxed tracking-[0.06em] text-ivory">{s.ja}</p>
+                <p className="mt-4 text-[0.85rem] leading-[2] text-ivory-muted">{s.body}</p>
               </li>
             ))}
           </ul>
@@ -231,23 +236,31 @@ export default function HomePage() {
             夜の仕事で当たり前のようにやってきたことの中には、昼の仕事で高く求められる力がたくさんあります。
             自分では気づきにくい「強み」を知ることが、新しいキャリアへの自信につながります。
           </p>
-          <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-16 grid border-l border-t border-ivory/10 md:grid-cols-2 lg:grid-cols-3">
             {strengths.map((s, i) => (
-              <li key={s.title} className="card corners p-8" data-reveal style={delay((i % 3) * 0.12)}>
-                <div className="flex items-center gap-4">
-                  <span className="font-display text-3xl leading-none">
-                    <span className="metal-gold">{String(i + 1).padStart(2, "0")}</span>
+              <li
+                key={s.title}
+                className="group relative border-b border-r border-ivory/10 p-8 transition-colors duration-500 hover:bg-ivory/[0.025] sm:p-10"
+                data-reveal
+                style={delay((i % 3) * 0.12)}
+              >
+                <div className="flex items-start justify-between">
+                  <span className="font-display text-[3.4rem] font-light leading-none text-ivory/15 transition-colors duration-500 group-hover:text-gold">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="h-px flex-1 bg-gradient-to-r from-gold/60 via-ice/40 to-transparent" aria-hidden />
+                  <span aria-hidden className="mt-3 h-[5px] w-[5px] rotate-45 bg-gold/60" />
                 </div>
-                <h3 className="mt-5 font-display text-lg tracking-[0.1em] text-ivory">{s.en}</h3>
-                <p className="mt-1 text-sm text-gold-soft">{s.title}</p>
-                <p className="mt-3 text-sm leading-[2] text-ivory-muted">{s.body}</p>
+                <h3 className="mt-10 font-display text-lg uppercase tracking-[0.1em] text-ivory">{s.en}</h3>
+                <p className="mt-1 text-sm text-gold">{s.title}</p>
+                <p className="mt-4 text-sm leading-[2] text-ivory-muted">{s.body}</p>
               </li>
             ))}
           </ul>
         </Container>
       </Section>
+
+      {/* ===== 流れる英字 ===== */}
+      <BigMarquee words={["Hospitality", "Communication", "Sales Drive", "Resilience"]} />
 
       {/* ===== SERVICE ===== */}
       <Section labelledBy="service-title" band>
@@ -265,12 +278,11 @@ export default function HomePage() {
             {services.map((s, i) => (
               <article key={s.no} className="card corners p-9 sm:p-12" data-reveal style={delay(i * 0.15)}>
                 <div className="flex items-end justify-between">
-                  <p className="font-display text-7xl leading-none">
+                  <p className="font-display text-7xl leading-none" data-parallax="0.06">
                     <span className="metal-gold">{s.no}</span>
                   </p>
-                  <Sparkle className="mb-2 h-4 w-4 text-ice" twinkle />
                 </div>
-                <span className="mt-8 block h-px w-full bg-gradient-to-r from-gold/60 via-ice/40 to-transparent" aria-hidden />
+                <span className="mt-8 block h-px w-full bg-gradient-to-r from-gold/70 via-gold/20 to-transparent" aria-hidden data-reveal="line-x" />
                 <h3 className="mt-8 font-display text-2xl font-medium tracking-[0.08em] text-ivory sm:text-[1.75rem]">{s.en}</h3>
                 <p className="mt-2 text-sm tracking-[0.06em] text-gold-soft">{s.title}</p>
                 <div className="body-text mt-6 space-y-3">

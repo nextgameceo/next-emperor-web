@@ -209,9 +209,15 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex min-h-[3.25rem] w-full items-center justify-center bg-gold px-10 text-sm tracking-[0.2em] text-ink transition-colors hover:bg-gold-soft disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+          className="btn-pill group relative inline-flex h-[3.6rem] w-full items-center justify-between gap-10 overflow-hidden rounded-full pl-8 pr-2 text-[0.85rem] tracking-[0.16em] disabled:cursor-wait disabled:opacity-60 sm:w-auto"
         >
-          {status === "sending" ? "送信中…" : "送信する"}
+          <span aria-hidden className="btn-pill-fill absolute inset-0 origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-x-100" />
+          <span className="btn-pill-label relative transition-colors duration-500">{status === "sending" ? "送信中…" : "送信する"}</span>
+          <span className="btn-orb relative grid h-11 w-11 place-items-center rounded-full text-black">
+            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </span>
         </button>
       </div>
     </form>
