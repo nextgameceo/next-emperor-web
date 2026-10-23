@@ -81,7 +81,7 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
 
   const Err = ({ k }: { k: keyof Values }) =>
     errors[k] ? (
-      <p id={`la-e-${k}`} className="mt-2 text-sm text-[#E2A79A]">
+      <p id={`la-e-${k}`} className="mt-2 text-sm text-danger">
         {errors[k]}
       </p>
     ) : null;

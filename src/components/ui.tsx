@@ -10,7 +10,7 @@ export function Container({ children, className = "" }: { children: ReactNode; c
   return <div className={`mx-auto w-full max-w-site px-5 sm:px-8 ${className}`}>{children}</div>;
 }
 
-/** セクション共通の余白（上に細い金の罫線） */
+/** セクション共通の余白（上に細い金の罫線）。背景は白（theme-light） */
 export function Section({
   children,
   id,
@@ -28,7 +28,7 @@ export function Section({
   band?: boolean;
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
+    <section id={id} aria-labelledby={labelledBy} className={`theme-light relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
       {divider && (
         <span
           aria-hidden

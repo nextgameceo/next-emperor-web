@@ -19,7 +19,7 @@ export default function PartnerCard({ partner }: { partner: Partner }) {
     <span className="text-lg tracking-[0.06em] text-ivory">{partner.name}</span>
   );
 
-  const cls = "card corners flex h-40 items-center justify-center px-8 sm:h-44";
+  const cls = "theme-dark card corners flex h-40 items-center justify-center px-8 sm:h-44";
 
   if (partner.url) {
     return (
