@@ -59,17 +59,27 @@ export default function Hero({ latest }: { latest: Latest }) {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
               <Link
                 href="/recruit"
-                className="group inline-flex h-14 items-center justify-between gap-10 bg-gold px-7 text-sm font-medium tracking-[0.14em] text-black transition-colors hover:bg-gold-soft"
+                className="group relative inline-flex h-[3.6rem] items-center justify-between gap-8 overflow-hidden rounded-full border border-gold/50 bg-white/[0.03] pl-7 pr-2 text-[0.85rem] tracking-[0.16em] text-ivory backdrop-blur-sm transition-colors duration-500 hover:border-gold sm:justify-start"
               >
-                お仕事を探す
-                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                {/* ホバーで金色が左から満ちる */}
+                <span aria-hidden className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-[#f3dfb0] via-gold to-[#b98a45] transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-x-100" />
+                <span className="relative transition-colors duration-500 group-hover:text-black">お仕事を探す</span>
+                <span className="relative grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-[#f6e4bb] via-gold to-[#a97a3c] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform duration-500 group-hover:translate-x-0.5">
+                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </span>
               </Link>
               <Link
                 href="/business"
-                className="group inline-flex h-14 items-center gap-3 text-sm tracking-[0.14em] text-ivory/85 transition-colors hover:text-gold"
+                className="group inline-flex h-[3.6rem] items-center gap-4 text-[0.85rem] tracking-[0.16em] text-ivory/85 transition-colors hover:text-ivory"
               >
-                <span className="border-b border-white/30 pb-1 transition-colors group-hover:border-gold">企業の方はこちら</span>
-                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/25 transition-colors duration-500 group-hover:border-gold group-hover:text-gold">
+                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </span>
+                企業の方はこちら
               </Link>
             </div>
           </div>
