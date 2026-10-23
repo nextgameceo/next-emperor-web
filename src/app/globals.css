@@ -363,15 +363,57 @@
 }
 
 /* ---- 白背景セクション用の調整 ---- */
+/* 白い面：ごく淡い金と水色の光をのせて、のっぺりさせない */
+.theme-light {
+  background-image:
+    radial-gradient(60% 50% at 0% 0%, rgba(221, 180, 110, 0.09), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgba(127, 214, 242, 0.08), transparent 70%);
+}
+/* 帯（薄いベージュ）：細かなドット模様を、中央に向かってふんわり */
+.theme-light.band,
+.theme-light .band {
+  background-color: #f7f4ee;
+  background-image:
+    radial-gradient(rgba(146, 104, 40, 0.13) 1px, transparent 1.2px),
+    linear-gradient(180deg, #f7f4ee, #f3efe7);
+  background-size: 22px 22px, 100% 100%;
+}
+.theme-light.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 60% at 50% 50%, rgba(247, 244, 238, 0.95), rgba(247, 244, 238, 0.55) 60%, transparent 100%);
+}
+.theme-light.band > * {
+  position: relative;
+}
+
+/* カード：白地＋細い罫線。縁にだけ、ほのかに金と水色 */
 .theme-light .card {
   background:
     linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(140deg, rgba(169, 122, 60, 0.75), rgba(110, 100, 120, 0.16) 38%, rgba(24, 124, 164, 0.14) 62%, rgba(24, 124, 164, 0.6)) border-box;
-  box-shadow: 0 10px 30px -22px rgba(23, 22, 27, 0.35);
+    linear-gradient(140deg, rgba(169, 122, 60, 0.55), #e7e1d6 26%, #e7e1d6 74%, rgba(24, 124, 164, 0.45)) border-box;
+  box-shadow:
+    0 1px 0 rgba(23, 22, 27, 0.03),
+    0 24px 48px -36px rgba(23, 22, 27, 0.35);
 }
 .theme-light .card:hover {
-  box-shadow: 0 22px 44px -26px rgba(24, 124, 164, 0.45);
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(140deg, rgba(169, 122, 60, 0.95), rgba(221, 180, 110, 0.4) 35%, rgba(127, 214, 242, 0.35) 65%, rgba(24, 124, 164, 0.9)) border-box;
+  box-shadow:
+    0 1px 0 rgba(23, 22, 27, 0.03),
+    0 30px 60px -34px rgba(24, 124, 164, 0.4);
 }
+.theme-light .corners::before {
+  border-color: #b8873e;
+}
+.theme-light .corners::after {
+  border-color: #3fa6d2;
+}
+
+/* 金・銀の文字（白地用に深い色へ） */
 .theme-light .metal-gold {
   background: linear-gradient(110deg, #7a5420 0%, #c3914a 25%, #946628 45%, #6f4b1b 62%, #b88640 82%, #8a5f26 100%);
   background-size: 220% 100%;
@@ -380,17 +422,56 @@
   color: transparent;
 }
 .theme-light .metal-silver {
-  background: linear-gradient(180deg, #2a2731 0%, #5d5468 50%, #1f1d24 100%);
+  background: linear-gradient(180deg, #1f1d24 0%, #4d4557 55%, #18161c 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.theme-light .btn-silver {
-  border-color: rgba(87, 78, 97, 0.45);
+
+/* 文字を少しだけ読みやすく */
+.theme-light .body-text {
+  color: rgb(60 56 68);
 }
-.theme-light.band,
-.theme-light .band {
-  background: #f7f5f1;
+.theme-light .eyebrow {
+  letter-spacing: 0.22em;
+}
+
+/* ボタン */
+.theme-light .btn-silver {
+  border-color: rgba(31, 29, 36, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+}
+.theme-light .btn-silver:hover {
+  border-color: #187ca4;
+  color: #187ca4;
+}
+.theme-light .btn-gold {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 14px 28px -16px rgba(146, 104, 40, 0.65);
+}
+
+/* 入力欄 */
+.theme-light .field {
+  background: #faf8f4;
+}
+.theme-light .field:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(221, 180, 110, 0.18);
+}
+
+/* 黒（ヒーロー）と白の境目：金のライン */
+.edge-gold {
+  position: relative;
+}
+.edge-gold::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(221, 180, 110, 0.7) 20%, rgba(127, 214, 242, 0.6) 80%, transparent);
 }
 
 /* 白いセクションの中に、あえて黒いパーツを置く場合（.theme-dark） */
@@ -412,6 +493,28 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.theme-light .theme-dark .body-text {
+  color: rgb(var(--c-ivory-muted));
+}
+.theme-light .theme-dark .btn-silver {
+  border-color: rgba(214, 204, 220, 0.6);
+  background: transparent;
+}
+.theme-light .theme-dark .btn-silver:hover {
+  border-color: rgb(127 214 242);
+  color: rgb(182 237 251);
+}
+.theme-light .theme-dark .corners::before {
+  border-color: rgb(221 180 110);
+}
+.theme-light .theme-dark .corners::after,
+.theme-light .theme-dark.corners::after {
+  border-color: rgb(127 214 242);
+}
+.theme-light .theme-dark.corners::before {
+  border-color: rgb(221 180 110);
 }
 
 /* セクションの濃淡（帯） */

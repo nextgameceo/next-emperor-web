@@ -124,7 +124,7 @@ export function ButtonLink({ href, children, variant = "primary", external, clas
 /** 下層ページ上部のタイトル帯 */
 export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: string; lead?: string }) {
   return (
-    <div className="relative border-b border-gold/20 pb-16 pt-36 sm:pb-24 sm:pt-48">
+    <div className="edge-gold relative pb-16 pt-36 sm:pb-24 sm:pt-48">
       <Container>
         <div className="fade-up">
           <Eyebrow>{eyebrow}</Eyebrow>
