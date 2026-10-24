@@ -929,3 +929,71 @@ html.cursor-hover .cursor-ring {
     background-size: 100% 100%;
   }
 }
+
+/* =========================================================
+   セクションの区切り（SectionDivider）
+   ========================================================= */
+.divider-line {
+  background: linear-gradient(90deg, transparent, rgba(127, 214, 242, 0.55) 18%, #ddb46e 50%, rgba(127, 214, 242, 0.55) 82%, transparent);
+}
+.divider-sweep {
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 240, 210, 0.95) 50%, transparent);
+  border-radius: 9999px;
+  opacity: 0;
+}
+.divider-glow {
+  background: radial-gradient(closest-side, rgba(221, 180, 110, 0.22), transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .divider .divider-line {
+    transform: scaleX(0);
+    transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  html.js .divider.is-visible .divider-line {
+    transform: scaleX(1);
+  }
+  html.js .divider .divider-mark {
+    opacity: 0;
+    transform: scale(0.3) rotate(-180deg);
+    transition: opacity 0.6s ease 0.5s, transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+  }
+  html.js .divider.is-visible .divider-mark {
+    opacity: 1;
+    transform: none;
+  }
+  html.js .divider .divider-side {
+    opacity: 0;
+    transition: opacity 0.8s ease 0.9s, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s;
+  }
+  html.js .divider .divider-side:first-child { transform: translateX(-24px); }
+  html.js .divider .divider-side:last-child { transform: translateX(24px); }
+  html.js .divider.is-visible .divider-side {
+    opacity: 1;
+    transform: none;
+  }
+  .divider.is-visible .divider-sweep {
+    animation: dividerSweep 3.6s cubic-bezier(0.6, 0, 0.4, 1) 1.2s infinite;
+  }
+  .divider-ring {
+    animation: spin360 14s linear infinite;
+  }
+  .divider-glow {
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  @keyframes dividerSweep {
+    0% { transform: translate(-40vw, -50%); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translate(110vw, -50%); opacity: 0; }
+  }
+}
+
+.divider-bgtext {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(221, 180, 110, 0.16);
+}
