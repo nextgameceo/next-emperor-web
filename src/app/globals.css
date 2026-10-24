@@ -961,3 +961,17 @@ html.cursor-hover .cursor-ring {
     opacity: 1;
   }
 }
+
+.divider-flow {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(169, 122, 60, 0.28);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .divider .divider-flow {
+    opacity: 0;
+    transition: opacity 1.2s ease 0.6s;
+  }
+  html.js .divider.is-visible .divider-flow {
+    opacity: 1;
+  }
+}
