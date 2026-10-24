@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ApplyCounter from "@/components/ApplyCounter";
+import BigMarquee from "@/components/BigMarquee";
 import { Sparkle } from "@/components/Decor";
 import JobCard from "@/components/JobCard";
 import RecruitNotice from "@/components/RecruitNotice";
@@ -85,6 +86,8 @@ export default function RecruitPage() {
 
       {/* ===== CAREER OPTIONS ===== */}
       {careers.length > 0 && (
+        <>
+        <BigMarquee words={["Sales", "Installer", "Your Next Stage"]} reverse />
         <Section labelledBy="career-title" band>
           <Container>
             <SectionHeading
@@ -163,6 +166,7 @@ export default function RecruitPage() {
             </ol>
           </Container>
         </Section>
+        </>
       )}
 
       {/* ===== OPEN POSITIONS ===== */}

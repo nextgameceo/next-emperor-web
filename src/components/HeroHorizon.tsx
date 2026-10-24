@@ -28,7 +28,8 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
     let raf = 0;
     let visible = true;
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-    const t0 = performance.now();
+    // オープニング表示中は、光が昇るのを幕が上がった後にずらす
+    const t0 = performance.now() + (document.documentElement.classList.contains("intro") ? 1700 : 0);
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -60,7 +61,7 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
 
     const draw = (now: number) => {
       const t = (now - t0) / 1000;
-      const rise = reduce ? 1 : Math.min(1, t / 2.8);
+      const rise = reduce ? 1 : Math.min(1, Math.max(0, t) / 2.8);
       const ease = 1 - Math.pow(1 - rise, 3);
       mouse.x += (mouse.tx - mouse.x) * 0.04;
       mouse.y += (mouse.ty - mouse.y) * 0.04;

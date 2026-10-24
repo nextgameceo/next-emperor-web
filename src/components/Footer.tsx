@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import SplitText from "./SplitText";
 import { ButtonLink } from "./ui";
 import { siteConfig } from "@/config/site";
 
@@ -46,10 +47,12 @@ export default function Footer() {
             夜の経験を、明日の可能性へ。
           </p>
           <div className="mt-8 flex flex-col gap-12 xl:flex-row xl:items-end xl:justify-between">
-            <p className="font-display text-[2.6rem] font-medium uppercase leading-[1.05] tracking-[0.04em] text-ivory sm:text-[4.2rem] lg:text-[4.4rem]" data-reveal="mask">
-              From Night
-              <br />
-              <span className="metal-gold">To Tomorrow.</span>
+            <p className="font-display text-[2.6rem] font-medium uppercase leading-[1.05] tracking-[0.04em] text-ivory sm:text-[4.2rem] lg:text-[4.4rem]" data-reveal="split">
+              <SplitText>
+                From Night
+                <br />
+                <span className="metal-gold">To Tomorrow.</span>
+              </SplitText>
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6" data-reveal>
               <ButtonLink href="/recruit">お仕事を探す</ButtonLink>
@@ -98,9 +101,10 @@ export default function Footer() {
         <div className="mx-auto max-w-site px-5 sm:px-8 lg:px-20">
           <p
             aria-hidden
+            data-reveal="split"
             className="select-none whitespace-nowrap pt-8 text-center font-display text-[10.8vw] font-semibold uppercase leading-[0.9] tracking-[0.02em] text-white/[0.05] lg:text-[9.6rem]"
           >
-            Next Emperor
+            <SplitText>Next Emperor</SplitText>
           </p>
           <div className="flex flex-col items-center gap-2 py-8 text-[0.7rem] tracking-[0.12em] text-ivory/40 sm:flex-row sm:justify-between">
             <p>{siteConfig.legalName}</p>
