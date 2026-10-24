@@ -2,7 +2,7 @@
 
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * サイト全体の動き
@@ -22,9 +22,14 @@ export default function RevealObserver() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.95 });
+    // スマホ・タブレット（指で操作する端末）では、なめらかスクロールを使わない
+    // （iPhoneの慣性スクロールと競合して、位置が飛ぶことがあるため）
+    const touch = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+    const lenis = touch ? null : new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.95 });
     let raf = 0;
     const root = document.documentElement;
+    const bar = document.querySelector<HTMLElement>(".scroll-progress");
+    let lastP = -1;
 
     // カーソル（PCのみ）
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -36,10 +41,14 @@ export default function RevealObserver() {
     const pos = { x: -100, y: -100, rx: -100, ry: -100 };
 
     const loop = (t: number) => {
-      lenis.raf(t);
-      // スクロール量のバー
+      lenis?.raf(t);
+      // スクロール量のバー（バーだけを直接動かす：ページ全体の再計算を起こさない）
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      root.style.setProperty("--scroll", max > 0 ? (window.scrollY / max).toFixed(4) : "0");
+      const p = max > 0 ? Math.round((window.scrollY / max) * 1000) / 1000 : 0;
+      if (bar && p !== lastP) {
+        bar.style.transform = `scaleX(${p})`;
+        lastP = p;
+      }
       // カーソル
       if (fine) {
         pos.rx += (pos.x - pos.rx) * 0.16;
@@ -108,7 +117,7 @@ export default function RevealObserver() {
 
     return () => {
       cancelAnimationFrame(raf);
-      lenis.destroy();
+      lenis?.destroy();
       dot.remove();
       ring.remove();
       window.removeEventListener("pointermove", onMove);
@@ -116,8 +125,13 @@ export default function RevealObserver() {
     };
   }, []);
 
-  // ページを移動したら一番上へ（なめらかスクロール使用時のずれ防止）
+  // ページを移動したら一番上へ（最初の表示では何もしない）
+  const firstPath = useRef(true);
   useEffect(() => {
+    if (firstPath.current) {
+      firstPath.current = false;
+      return;
+    }
     window.scrollTo(0, 0);
   }, [pathname]);
 

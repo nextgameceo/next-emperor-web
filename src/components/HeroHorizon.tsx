@@ -62,7 +62,15 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
       return { R, cx, cy: top + R };
     };
 
+    // スマホでは描画を毎秒30回に抑えて、電池とメモリの負担を減らす
+    const minGap = window.innerWidth < 768 ? 1000 / 30 : 0;
+    let lastDraw = 0;
     const draw = (now: number) => {
+      if (minGap && now - lastDraw < minGap && !reduce) {
+        if (visible) raf = requestAnimationFrame(draw);
+        return;
+      }
+      lastDraw = now;
       const t = (now - t0) / 1000;
       const rise = reduce ? 1 : Math.min(1, Math.max(0, t) / 2.8);
       const ease = 1 - Math.pow(1 - rise, 3);
