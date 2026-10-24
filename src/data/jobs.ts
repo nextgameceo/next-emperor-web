@@ -147,6 +147,7 @@ export const jobs: Job[] = [
     holidays: "",
     benefits: [],
     applyUrl: "https://lin.ee/qFAptqb",
+    applyLineId: "@331czsza",
     status: "published",
     updatedAt: "2026-10-24",
   },

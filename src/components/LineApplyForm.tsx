@@ -14,6 +14,7 @@ type Props = {
   lineId: string; // 例："@030cihhe"
   jobTitle: string;
   jobSlug: string; // 計測用（求人ごとの集計に使用）
+  selfHiring?: boolean; // NEXT EMPEROR自身の求人（文言を自社向けに切り替える）
   friendUrl?: string; // 友だち追加用のURL（任意）
 };
 
@@ -28,7 +29,7 @@ type Values = {
 
 const initial: Values = { name: "", age: "", area: "", time: "", career: "", note: "" };
 
-export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: Props) {
+export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, selfHiring = false }: Props) {
   const [v, setV] = useState<Values>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof Values, string>>>({});
   const [opened, setOpened] = useState(false);
@@ -50,7 +51,7 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
     }
     const line = (label: string, value: string) => `${label}：${value.trim() || "—"}`;
     const text = [
-      "【NEXT EMPEROR経由】",
+      selfHiring ? "【採用応募】" : "【NEXT EMPEROR経由】",
       `「${jobTitle}」に応募します。`,
       "",
       line("お名前", v.name),
@@ -97,7 +98,7 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
       <p className="font-display text-xs tracking-[0.28em] text-ice">APPLY VIA LINE</p>
       <h2 className="mt-3 text-xl tracking-[0.06em] text-ivory sm:text-2xl">LINEで応募する</h2>
       <p className="mt-4 text-sm leading-[2] text-ivory-muted">
-        下の項目を入力して「LINEを開く」を押すと、入力した内容がメッセージに入った状態で、応募窓口（提携する人材紹介会社）のLINEが開きます。
+        下の項目を入力して「LINEを開く」を押すと、入力した内容がメッセージに入った状態で、{selfHiring ? "NEXT EMPEROR公式" : "応募窓口（提携する人材紹介会社）"}のLINEが開きます。
         内容を確認して、LINEで送信してください。
       </p>
 
@@ -141,7 +142,9 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl }: 
             LINEを開く <span aria-hidden>→</span>
           </button>
           <p className="text-xs leading-relaxed text-ivory-dim">
-            ※ 入力内容はNEXT EMPERORには送信・保存されません。LINE上でご本人が送信した時点で、応募窓口に届きます。
+            {selfHiring
+              ? "※ 入力内容は、LINE上でご本人が送信した時点で、NEXT EMPERORに届きます。それまでは、どこにも送信・保存されません。"
+              : "※ 入力内容はNEXT EMPERORには送信・保存されません。LINE上でご本人が送信した時点で、応募窓口に届きます。"}
           </p>
           {opened && (
             <p role="status" className="border border-ice/40 px-4 py-3 text-sm leading-relaxed text-ice">
