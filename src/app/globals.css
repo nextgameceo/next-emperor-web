@@ -828,6 +828,12 @@ html.cursor-hover .cursor-ring {
   letter-spacing: 0.32em;
   fill-opacity: 0.6;
 }
+.emblem-mono {
+  font-family: Oxanium, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
 .emblem-text {
   font-family: Oxanium, sans-serif;
   font-size: 11.2px;

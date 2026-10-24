@@ -116,8 +116,7 @@ export function NightToDayArt({ className = "" }: { className?: string }) {
 
       {/* 中央のしるし */}
       <g className="art-pop" style={{ "--k": 2 } as React.CSSProperties}>
-        <path d="M240 190c1.6 13 8.6 20 21.5 21.8-12.9 1.8-19.9 8.8-21.5 21.8-1.6-13-8.6-20-21.5-21.8 12.9-1.8 19.9-8.8 21.5-21.8z" fill="#DDB46E" />
-        <text x="240" y="262" textAnchor="middle" className="art-label" fill="currentColor">NEXT</text>
+        <text x="240" y="236" textAnchor="middle" className="art-label" fill="currentColor">NEXT</text>
       </g>
 
       {/* アーチを走る光 */}
@@ -143,7 +142,7 @@ export function Emblem({ className = "h-32 w-32" }: { className?: string }) {
         </text>
       </g>
       <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" strokeOpacity="0.2" />
-      <path d="M80 56c1.8 14.5 9.5 22.2 24 24-14.5 1.8-22.2 9.5-24 24-1.8-14.5-9.5-22.2-24-24 14.5-1.8 22.2-9.5 24-24z" fill="#DDB46E" />
+      <text x="80" y="88" textAnchor="middle" className="emblem-mono" fill="#DDB46E">NE</text>
     </svg>
   );
 }
