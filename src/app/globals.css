@@ -929,3 +929,49 @@ html.cursor-hover .cursor-ring {
     background-size: 100% 100%;
   }
 }
+
+/* =========================================================
+   セクションの区切り（SectionDivider：控えめ版）
+   ========================================================= */
+.divider-line {
+  background: linear-gradient(90deg, transparent, rgba(221, 180, 110, 0.5) 25%, rgba(221, 180, 110, 0.8) 50%, rgba(127, 214, 242, 0.45) 75%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .divider .divider-line {
+    transform: scaleX(0);
+    transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  html.js .divider.is-visible .divider-line {
+    transform: scaleX(1);
+  }
+  html.js .divider .divider-mark {
+    opacity: 0;
+    transform: scale(0.5) rotate(-90deg);
+    transition: opacity 0.6s ease 0.5s, transform 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s;
+  }
+  html.js .divider.is-visible .divider-mark {
+    opacity: 1;
+    transform: none;
+  }
+  html.js .divider .divider-side {
+    opacity: 0;
+    transition: opacity 0.8s ease 0.8s;
+  }
+  html.js .divider.is-visible .divider-side {
+    opacity: 1;
+  }
+}
+
+.divider-flow {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(169, 122, 60, 0.28);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js .divider .divider-flow {
+    opacity: 0;
+    transition: opacity 1.2s ease 0.6s;
+  }
+  html.js .divider.is-visible .divider-flow {
+    opacity: 1;
+  }
+}

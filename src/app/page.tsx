@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LineIcon, NightToDayArt } from "@/components/Art";
 import BigMarquee from "@/components/BigMarquee";
+import SectionDivider from "@/components/SectionDivider";
 import Hero from "@/components/Hero";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
@@ -191,6 +192,8 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      <SectionDivider no={2} label="Our Promise" total={10} />
+
       {/* ===== PROMISE ===== */}
       <Section labelledBy="stance-title" band>
         <Container>
@@ -223,6 +226,8 @@ export default function HomePage() {
           </ul>
         </Container>
       </Section>
+
+      <SectionDivider no={3} label="Your Strength" total={10} />
 
       {/* ===== STRENGTHS ===== */}
       <Section labelledBy="strength-title">
@@ -316,6 +321,8 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      <SectionDivider no={5} label="Your Future" total={10} />
+
       {/* ===== RECRUIT ===== */}
       <Section labelledBy="recruit-title">
         <Container>
@@ -362,8 +369,12 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      <SectionDivider no={6} label="How to Apply" total={10} />
+
       {/* ===== FLOW ===== */}
       <ApplyFlow />
+
+      <SectionDivider no={7} label="Our Partners" total={10} />
 
       {/* ===== PARTNER ===== */}
       <Section labelledBy="partner-title" band>
@@ -399,6 +410,8 @@ export default function HomePage() {
           )}
         </Container>
       </Section>
+
+      <SectionDivider no={8} label="Latest News" total={10} />
 
       {/* ===== NEWS ===== */}
       {posts.length > 0 && (
@@ -455,8 +468,12 @@ export default function HomePage() {
         </Section>
       )}
 
+      <SectionDivider no={9} label="FAQ" total={10} />
+
       {/* ===== FAQ ===== */}
       <FaqSection />
+
+      <SectionDivider no={10} label="Grow Together" total={10} />
 
       {/* ===== FOR BUSINESS ===== */}
       <Section labelledBy="business-title">
