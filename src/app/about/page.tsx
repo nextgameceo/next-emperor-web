@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LineIcon, NightToDayArt } from "@/components/Art";
 import BigMarquee from "@/components/BigMarquee";
 import { Container, PageHero, Section, SectionHeading } from "@/components/ui";
 import { siteConfig } from "@/config/site";
@@ -41,6 +42,9 @@ export default function AboutPage() {
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <SectionHeading eyebrow="経験に、誇りを。未来に、選択肢を。" id="message-title" title={<><span className="metal-silver">Pride in Your Past.</span><br /><span className="metal-gold">Choice for Your Future.</span></>} />
             <div className="body-text space-y-6">
+              <div className="mb-10 max-w-md text-ivory" data-reveal>
+                <NightToDayArt className="h-auto w-full" />
+              </div>
               <p>
                 接客で磨いた気配り、初対面の人と信頼関係を築く力、数字に向き合ってきた営業力。夜の仕事で培われたこれらの力は、昼の仕事でも大きな強みになります。
               </p>
@@ -54,13 +58,15 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-20 grid gap-6 sm:grid-cols-2">
-            <div className="card corners p-9 sm:p-12">
+            <div className="card corners p-9 sm:p-12" data-reveal>
+              <LineIcon name="target" className="mb-6 h-12 w-12 text-ivory/70" />
               <p className="font-display text-3xl"><span className="metal-gold">Mission</span></p>
               <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
                 夜職で培った接客力、営業力、コミュニケーション能力を活かし、新しいキャリアの可能性を広げる。
               </p>
             </div>
-            <div className="card corners p-9 sm:p-12">
+            <div className="card corners p-9 sm:p-12" data-reveal style={{ "--d": "0.12s" } as React.CSSProperties}>
+              <LineIcon name="impression" className="mb-6 h-12 w-12 text-ivory/70" />
               <p className="font-display text-3xl"><span className="metal-gold">Vision</span></p>
               <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
                 誰もが過去の経験に誇りを持ち、自分らしい未来へ挑戦できる社会をつくる。

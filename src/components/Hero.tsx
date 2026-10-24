@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroHorizon from "./HeroHorizon";
+import { Emblem } from "./Art";
 import SplitText from "./SplitText";
 import { Container, delay } from "./ui";
 
@@ -88,6 +89,11 @@ export default function Hero({ latest }: { latest: Latest }) {
           </div>
         </div>
       </Container>
+
+      {/* 回るエンブレム（PC） */}
+      <div className="pointer-events-none absolute right-[7%] top-32 hidden text-ivory/70 xl:block">
+        <Emblem className="fade-up-delay-2 h-36 w-36" />
+      </div>
 
       {/* 下段：入口（罫線で区切ったセル） */}
       <div className="relative border-t border-white/[0.08] bg-black/60">

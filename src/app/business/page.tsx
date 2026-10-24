@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LineIcon } from "@/components/Art";
 import { ButtonLink, Container, PageHero, Section, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -78,9 +79,12 @@ export default function BusinessPage() {
         <Container>
           <SectionHeading eyebrow="支援内容" id="menu-title" title={<>What <span className="metal-gold">We Do</span></>} />
           <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {menus.map((m) => (
-              <article key={m.title} className="card corners p-8 sm:p-10">
-                <p className="eyebrow">{m.en}</p>
+            {menus.map((m, i) => (
+              <article key={m.title} className="card corners p-8 sm:p-10" data-reveal style={{ "--d": `${(i % 2) * 0.12}s` } as React.CSSProperties}>
+                <div className="mb-8 flex items-start justify-between">
+                  <p className="eyebrow">{m.en}</p>
+                  <LineIcon name={(["megaphone", "briefcase", "network", "compass"] as const)[i % 4]} className="h-12 w-12 text-ivory/70" />
+                </div>
                 <h3 className="mt-4 font-serif text-xl tracking-[0.06em]">{m.title}</h3>
                 <p className="body-text mt-4">{m.body}</p>
               </article>

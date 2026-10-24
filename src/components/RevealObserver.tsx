@@ -83,6 +83,7 @@ export default function RevealObserver() {
       const card = el?.closest?.<HTMLElement>(".card, [data-tilt]") ?? null;
       if (tilted && tilted !== card) {
         tilted.style.transform = "";
+        tilted.style.removeProperty("--mx");
         tilted = null;
       }
       if (card && card.getBoundingClientRect().width < 900) {
@@ -90,6 +91,8 @@ export default function RevealObserver() {
         const cr = card.getBoundingClientRect();
         const px = (e.clientX - cr.left) / cr.width - 0.5;
         const py = (e.clientY - cr.top) / cr.height - 0.5;
+        card.style.setProperty("--mx", `${(e.clientX - cr.left).toFixed(0)}px`);
+        card.style.setProperty("--my", `${(e.clientY - cr.top).toFixed(0)}px`);
         card.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-4px)`;
       }
 

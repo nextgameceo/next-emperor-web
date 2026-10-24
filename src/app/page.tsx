@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LineIcon, NightToDayArt } from "@/components/Art";
 import BigMarquee from "@/components/BigMarquee";
 import Hero from "@/components/Hero";
 import Logo from "@/components/Logo";
@@ -103,6 +104,8 @@ const businessPoints = [
 ];
 
 
+const strengthIcons = ["hospitality", "communication", "sales", "detail", "impression", "resilience"] as const;
+
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 4);
   const partners = getApprovedPartners();
@@ -130,18 +133,21 @@ export default function HomePage() {
                 <br />
                 昼の舞台で輝かせる。
               </p>
+              <div className="mt-10 max-w-md text-ivory" data-reveal style={delay(0.2)}>
+                <NightToDayArt className="h-auto w-full" />
+              </div>
             </div>
             <div className="body-text space-y-6">
               <p data-reveal>
                 NEXT EMPERORは、夜職から昼職へのキャリアチェンジを応援する
-                <span className="text-gold-soft">採用マーケティング・法人営業支援会社</span>です。
+                <span className="hl text-ivory">採用マーケティング・法人営業支援会社</span>です。
               </p>
               <p data-reveal style={delay(0.1)}>
                 夜職で培った接客力、コミュニケーション能力、営業力を活かし、一人ひとりの新しい可能性を広げます。
               </p>
               <p data-reveal style={delay(0.2)}>
                 「昼の仕事に興味はあるけれど、自分の経験が通用するのか分からない」。そんな不安を抱える方は少なくありません。
-                けれど、夜の現場で人と向き合い、信頼を積み重ねてきた経験は、決して無駄にはなりません。
+                けれど、夜の現場で人と向き合い、信頼を積み重ねてきた経験は、<span className="hl text-ivory">決して無駄にはなりません。</span>
                 私たちは、その経験を新しいキャリアにつなげるための情報と機会を届けます。
               </p>
               <p data-reveal style={delay(0.3)}>
@@ -248,7 +254,7 @@ export default function HomePage() {
                   <span className="font-display text-[3.4rem] font-light leading-none text-ivory/15 transition-colors duration-500 group-hover:text-gold" data-parallax="0.05">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span aria-hidden className="mt-3 h-[5px] w-[5px] rotate-45 bg-gold/60" />
+                  <LineIcon name={strengthIcons[i]} className="h-11 w-11 text-ivory/70" />
                 </div>
                 <h3 className="mt-10 font-display text-lg uppercase tracking-[0.1em] text-ivory">{s.en}</h3>
                 <p className="mt-1 text-sm text-gold">{s.title}</p>
@@ -281,6 +287,7 @@ export default function HomePage() {
                   <p className="font-display text-7xl leading-none" data-parallax="0.06">
                     <span className="metal-gold">{s.no}</span>
                   </p>
+                  <LineIcon name={i === 0 ? "megaphone" : "target"} className="h-16 w-16 text-ivory/70" />
                 </div>
                 <span className="mt-8 block h-px w-full bg-gradient-to-r from-gold/70 via-gold/20 to-transparent" aria-hidden data-reveal="line-x" />
                 <h3 className="mt-8 font-display text-2xl font-medium tracking-[0.08em] text-ivory sm:text-[1.75rem]">{s.en}</h3>

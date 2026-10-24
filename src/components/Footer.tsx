@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import { Emblem } from "./Art";
 import SplitText from "./SplitText";
 import { ButtonLink } from "./ui";
 import { siteConfig } from "@/config/site";
@@ -67,9 +68,12 @@ export default function Footer() {
       {/* 中段：ロゴとリンク */}
       <div className="relative mx-auto grid max-w-site gap-14 px-5 py-16 sm:px-8 lg:grid-cols-[1.2fr_2fr] lg:px-20">
         <div>
-          <Link href="/" aria-label="NEXT EMPEROR ホーム" className="inline-block">
-            <Logo className="h-auto w-[200px]" sizes="200px" />
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/" aria-label="NEXT EMPEROR ホーム" className="inline-block">
+              <Logo className="h-auto w-[200px]" sizes="200px" />
+            </Link>
+            <Emblem className="h-20 w-20 shrink-0 text-ivory/60" />
+          </div>
           <p className="mt-6 text-xs leading-[2] tracking-[0.08em] text-ivory/50">
             {siteConfig.legalName}
             <br />
