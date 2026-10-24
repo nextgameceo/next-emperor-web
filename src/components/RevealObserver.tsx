@@ -10,6 +10,8 @@ import { useEffect } from "react";
  * ・data-reveal：画面に入ると is-visible が付き、ふわっと表示（"mask" は下から文字がせり上がる / "line" は線が伸びる）
  * ・data-parallax="0.1"：スクロールに合わせて、ゆっくり上下する（数値が大きいほど大きく動く）
  * ・.btn-pill / [data-magnetic]：マウスに少し吸い寄せられるボタン（PCのみ）
+ * ・.card / [data-tilt]：マウスの位置に合わせて、カードが少し傾く（PCのみ）
+ * ・金色のカーソル、画面上部のスクロール量のバー
  * ・「動きを減らす」設定の端末では、すべて控えめ（またはなし）になります
  */
 export default function RevealObserver() {
@@ -22,8 +24,29 @@ export default function RevealObserver() {
 
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.95 });
     let raf = 0;
+    const root = document.documentElement;
+
+    // カーソル（PCのみ）
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    const dot = document.createElement("div");
+    const ring = document.createElement("div");
+    dot.className = "cursor-dot";
+    ring.className = "cursor-ring";
+    if (fine) document.body.append(dot, ring);
+    const pos = { x: -100, y: -100, rx: -100, ry: -100 };
+
     const loop = (t: number) => {
       lenis.raf(t);
+      // スクロール量のバー
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty("--scroll", max > 0 ? (window.scrollY / max).toFixed(4) : "0");
+      // カーソル
+      if (fine) {
+        pos.rx += (pos.x - pos.rx) * 0.16;
+        pos.ry += (pos.y - pos.ry) * 0.16;
+        dot.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+        ring.style.transform = `translate3d(${pos.rx.toFixed(1)}px, ${pos.ry.toFixed(1)}px, 0)`;
+      }
       // パララックス
       const vh = window.innerHeight;
       document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
@@ -37,11 +60,30 @@ export default function RevealObserver() {
     };
     raf = requestAnimationFrame(loop);
 
-    // マグネットボタン
-    const fine = window.matchMedia("(pointer: fine)").matches;
+    // マグネットボタン・カードの傾き
     let current: HTMLElement | null = null;
+    let tilted: HTMLElement | null = null;
     const onMove = (e: PointerEvent) => {
       if (!fine) return;
+      pos.x = e.clientX;
+      pos.y = e.clientY;
+      root.classList.add("cursor-on");
+      const el = e.target as HTMLElement;
+      root.classList.toggle("cursor-hover", !!el?.closest?.("a, button, summary, label, input, select, textarea, [data-magnetic]"));
+
+      const card = el?.closest?.<HTMLElement>(".card, [data-tilt]") ?? null;
+      if (tilted && tilted !== card) {
+        tilted.style.transform = "";
+        tilted = null;
+      }
+      if (card && card.getBoundingClientRect().width < 900) {
+        tilted = card;
+        const cr = card.getBoundingClientRect();
+        const px = (e.clientX - cr.left) / cr.width - 0.5;
+        const py = (e.clientY - cr.top) / cr.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-4px)`;
+      }
+
       const target = (e.target as HTMLElement)?.closest?.<HTMLElement>(".btn-pill, [data-magnetic]") ?? null;
       if (current && current !== target) {
         current.style.transform = "";
@@ -56,7 +98,10 @@ export default function RevealObserver() {
     };
     const onLeave = () => {
       if (current) current.style.transform = "";
+      if (tilted) tilted.style.transform = "";
       current = null;
+      tilted = null;
+      root.classList.remove("cursor-on");
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
@@ -64,6 +109,8 @@ export default function RevealObserver() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      dot.remove();
+      ring.remove();
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
     };

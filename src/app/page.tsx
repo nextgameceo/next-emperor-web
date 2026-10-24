@@ -245,7 +245,7 @@ export default function HomePage() {
                 style={delay((i % 3) * 0.12)}
               >
                 <div className="flex items-start justify-between">
-                  <span className="font-display text-[3.4rem] font-light leading-none text-ivory/15 transition-colors duration-500 group-hover:text-gold">
+                  <span className="font-display text-[3.4rem] font-light leading-none text-ivory/15 transition-colors duration-500 group-hover:text-gold" data-parallax="0.05">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span aria-hidden className="mt-3 h-[5px] w-[5px] rotate-45 bg-gold/60" />

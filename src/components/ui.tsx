@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import HeroHorizon from "./HeroHorizon";
+import SplitText from "./SplitText";
 
 /** スクロール表示の遅延を指定するためのヘルパー（例：delay(0.2)） */
 export const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
@@ -33,7 +34,7 @@ export function Section({
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="mx-auto h-full max-w-site border-x border-ivory/[0.07]" />
       </div>
-      {divider && <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-ivory/[0.08]" />}
+      {divider && <span aria-hidden data-reveal="line-x" className="absolute inset-x-0 top-0 h-px bg-ivory/[0.1]" />}
       <div className="relative">{children}</div>
     </section>
   );
@@ -69,8 +70,8 @@ export function SectionHeading({
       <div data-reveal>
         <Eyebrow center={center}>{eyebrow}</Eyebrow>
       </div>
-      <Tag id={id} className="heading-en mt-6" data-reveal="mask" style={delay(0.1)}>
-        {title}
+      <Tag id={id} className="heading-en mt-6" data-reveal="split" style={delay(0.1)}>
+        <SplitText>{title}</SplitText>
       </Tag>
     </div>
   );
@@ -166,8 +167,8 @@ export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: str
                 : "text-[2.8rem] leading-[1.05] sm:text-[4.6rem] lg:text-[5.6rem]"
             }`}
           >
-            <span className="line-rise" style={delay(0.15)}>
-              {title}
+            <span className="split-load block" style={delay(0.15)}>
+              <SplitText>{title}</SplitText>
             </span>
           </h1>
           {lead && <p className="fade-up-delay mt-8 max-w-2xl text-[0.95rem] leading-[2.05] tracking-[0.04em] text-ivory/70 sm:text-base">{lead}</p>}

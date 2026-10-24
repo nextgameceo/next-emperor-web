@@ -138,7 +138,8 @@
     position: relative;
     border: 1px solid rgb(var(--c-ivory) / 0.09);
     background: var(--card-face);
-    transition: border-color 0.5s ease, background-color 0.5s ease;
+    transition: border-color 0.5s ease, background-color 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transform-style: preserve-3d;
   }
   .card::after {
     content: "";
@@ -614,5 +615,212 @@ html.lenis body {
   @keyframes marquee-x {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+}
+
+/* =========================================================
+   文字アニメーション（SplitText）
+   ========================================================= */
+.char,
+.word {
+  display: inline-block;
+}
+.word {
+  white-space: nowrap;
+}
+.char-gold {
+  background: linear-gradient(180deg, #f8e7c0 0%, #ddb46e 55%, #a97a3c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.theme-light .char-gold {
+  background: linear-gradient(180deg, #a2752f, #7e5720);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.theme-light .theme-dark .char-gold {
+  background: linear-gradient(180deg, #f8e7c0 0%, #ddb46e 55%, #a97a3c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal="split"] {
+    opacity: 1;
+    transform: none;
+  }
+  html.js [data-reveal="split"] .char {
+    opacity: 0;
+    transform: translateY(0.55em) rotate(5deg);
+    filter: blur(5px);
+    transition:
+      opacity 0.8s ease,
+      transform 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.8s ease;
+    transition-delay: calc(var(--i) * 30ms + var(--d, 0s));
+  }
+  html.js [data-reveal="split"].is-visible .char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .split-load .char {
+    animation: charIn 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 45ms + var(--d, 0s) + var(--intro, 0s));
+  }
+  @keyframes charIn {
+    from { opacity: 0; transform: translateY(0.55em) rotate(5deg); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+}
+
+/* =========================================================
+   オープニング（初回訪問時のみ）
+   ========================================================= */
+.intro-overlay {
+  display: none;
+}
+html.intro {
+  --intro: 1.9s;
+}
+html.intro .intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: #000;
+  animation: introOut 1s cubic-bezier(0.7, 0, 0.2, 1) 1.6s forwards;
+}
+.intro-logo {
+  width: min(62vw, 380px);
+  height: auto;
+  animation: introLogo 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.intro-bar {
+  position: relative;
+  width: min(48vw, 220px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.intro-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #7fd6f2, #ddb46e);
+  transform-origin: left;
+  animation: introBar 1.4s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+.intro-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ddb46e, #7fd6f2, transparent);
+}
+html.intro .fade-up { animation-delay: var(--intro); }
+html.intro .fade-up-delay { animation-delay: calc(0.35s + var(--intro)); }
+html.intro .fade-up-delay-2 { animation-delay: calc(0.7s + var(--intro)); }
+@keyframes introLogo {
+  from { opacity: 0; transform: scale(0.94); filter: blur(10px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes introBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes introOut {
+  0% { clip-path: inset(0 0 0 0); }
+  99% { clip-path: inset(0 0 100% 0); visibility: visible; }
+  100% { clip-path: inset(0 0 100% 0); visibility: hidden; pointer-events: none; }
+}
+
+/* =========================================================
+   ページ切り替え（幕が上がる）
+   ========================================================= */
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  pointer-events: none;
+  background: #000;
+  animation: curtainUp 0.95s cubic-bezier(0.7, 0, 0.2, 1) 0.08s both;
+}
+.page-curtain::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #7fd6f2, #ddb46e 50%, #7fd6f2);
+}
+@keyframes curtainUp {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 100% 0); }
+}
+
+/* =========================================================
+   スクロール量のバー・カーソル
+   ========================================================= */
+.scroll-progress {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(var(--scroll, 0));
+  background: linear-gradient(90deg, #7fd6f2, #ddb46e);
+  pointer-events: none;
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 300;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #ddb46e;
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1px solid rgba(221, 180, 110, 0.6);
+  transition: opacity 0.3s ease, width 0.35s ease, height 0.35s ease, margin 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+}
+html.cursor-on .cursor-dot,
+html.cursor-on .cursor-ring {
+  opacity: 1;
+}
+html.cursor-hover .cursor-ring {
+  width: 70px;
+  height: 70px;
+  margin: -35px 0 0 -35px;
+  background: rgba(221, 180, 110, 0.12);
+  border-color: rgba(221, 180, 110, 0.9);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.intro .intro-overlay,
+  .page-curtain,
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
   }
 }

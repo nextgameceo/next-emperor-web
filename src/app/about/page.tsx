@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BigMarquee from "@/components/BigMarquee";
 import { Container, PageHero, Section, SectionHeading } from "@/components/ui";
 import { siteConfig } from "@/config/site";
 
@@ -69,7 +70,9 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section labelledBy="profile-title" className="border-t border-charcoal-line">
+      <BigMarquee words={["Pride", "Choice", "Respect", "Future"]} />
+
+      <Section labelledBy="profile-title">
         <Container>
           <SectionHeading eyebrow="会社情報" id="profile-title" title="Company Profile" />
           <dl className="mt-12 border-t border-charcoal-line">

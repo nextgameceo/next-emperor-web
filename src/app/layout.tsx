@@ -8,6 +8,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RevealObserver from "@/components/RevealObserver";
+import PageCurtain from "@/components/PageCurtain";
 import BackgroundFX from "@/components/BackgroundFX";
 import { siteConfig } from "@/config/site";
 import { GA_ID } from "@/lib/analytics";
@@ -59,7 +60,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja" suppressHydrationWarning>
       <body>
         {/* スクロール表示アニメーション用（描画前に js クラスを付与してちらつきを防ぐ） */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('ne-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro');sessionStorage.setItem('ne-intro','1')}}catch(e){}",
+          }}
+        />
+        {/* オープニング（初回のみ表示） */}
+        <div className="intro-overlay" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/logo-arch.png" alt="" className="intro-logo" />
+          <span className="intro-bar" />
+        </div>
+        <div className="scroll-progress" aria-hidden />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
@@ -69,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main" className="relative">{children}</main>
         <Footer />
         <RevealObserver />
+        <PageCurtain />
         {/* Google アナリティクス */}
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga-init" strategy="afterInteractive">

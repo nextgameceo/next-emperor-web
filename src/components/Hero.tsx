@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroHorizon from "./HeroHorizon";
+import SplitText from "./SplitText";
 import { Container, delay } from "./ui";
 
 type Latest = { slug: string; title: string; date: string } | null;
@@ -44,11 +45,13 @@ export default function Hero({ latest }: { latest: Latest }) {
             id="hero-title"
             className="mt-9 text-[2.5rem] font-medium leading-[1.3] tracking-[0.04em] text-ivory sm:text-[4rem] lg:text-[5.4rem] lg:leading-[1.18]"
           >
-            <span className="line-rise block" style={delay(0.25)}>
-              夜の経験を、
+            <span className="split-load block" style={delay(0.25)}>
+              <SplitText>夜の経験を、</SplitText>
             </span>
-            <span className="line-rise block" style={delay(0.5)}>
-              <span className="metal-gold">明日の可能性へ。</span>
+            <span className="split-load block" style={delay(0.55)}>
+              <SplitText>
+                <span className="metal-gold">明日の可能性へ。</span>
+              </SplitText>
             </span>
           </h1>
 
