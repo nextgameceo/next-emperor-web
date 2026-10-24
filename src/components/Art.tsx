@@ -149,8 +149,12 @@ export function Emblem({ className = "h-32 w-32" }: { className?: string }) {
           <textPath href="#emblemCircle">NEXT EMPEROR ・ FROM NIGHT TO TOMORROW ・ </textPath>
         </text>
       </g>
-      <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" strokeOpacity="0.2" />
-      <text x="80" y="88" textAnchor="middle" className="emblem-mono" fill="#DDB46E">NE</text>
+      <clipPath id="emblemClip">
+        <circle cx="80" cy="80" r="45" />
+      </clipPath>
+      {/* 中心：ファビコンと同じ「NE」マーク */}
+      <image href="/images/emblem-mark.jpg" x="23" y="23" width="114" height="114" clipPath="url(#emblemClip)" preserveAspectRatio="xMidYMid slice" />
+      <circle cx="80" cy="80" r="45" fill="none" stroke="#DDB46E" strokeOpacity="0.45" />
     </svg>
   );
 }
