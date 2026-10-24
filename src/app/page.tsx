@@ -121,14 +121,18 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <div>
-              <div data-reveal>
-                <Eyebrow>NEXT EMPERORとは</Eyebrow>
-              </div>
-              <h2 id="about-title" className="heading-en mt-5" data-reveal style={delay(0.12)}>
-                <span className="metal-silver">What is</span>
-                <br />
-                <span className="metal-gold">NEXT EMPEROR</span>
-              </h2>
+              <SectionHeading
+                art="compass"
+                eyebrow="NEXT EMPERORとは"
+                id="about-title"
+                title={
+                  <>
+                    What is
+                    <br />
+                    <span className="metal-gold">NEXT EMPEROR</span>
+                  </>
+                }
+              />
               <p className="mt-6 font-serif text-lg leading-[2] tracking-[0.06em] text-gold-soft" data-reveal style={delay(0.24)}>
                 夜で磨いた力を、
                 <br />
@@ -277,6 +281,7 @@ export default function HomePage() {
       <Section labelledBy="service-title" band>
         <Container>
           <SectionHeading
+            art="briefcase"
             eyebrow="2つの事業で、人と企業の未来を支える"
             id="service-title"
             title={
@@ -287,25 +292,19 @@ export default function HomePage() {
           />
           <div className="mt-16 grid gap-6 lg:grid-cols-2">
             {services.map((s, i) => (
-              <article key={s.no} className="card corners p-9 sm:p-12" data-reveal style={delay(i * 0.15)}>
-                <div className="flex items-end justify-between">
-                  <p className="font-display text-7xl leading-none" data-parallax="0.06">
-                    <span className="metal-gold">{s.no}</span>
-                  </p>
-                  <LineIcon name={i === 0 ? "megaphone" : "target"} className="h-16 w-16 text-ivory/70" />
+              <article key={s.no} className="card corners p-7 sm:p-9" data-reveal style={delay(i * 0.15)}>
+                <div className="flex items-center gap-4">
+                  <LineIcon name={i === 0 ? "megaphone" : "target"} className="h-10 w-10 shrink-0 text-ivory/70" />
+                  <div className="min-w-0">
+                    <p className="font-display text-[0.65rem] tracking-[0.28em] text-ice">SERVICE {s.no}</p>
+                    <h3 className="mt-1 font-display text-lg font-medium uppercase tracking-[0.08em] text-ivory sm:text-xl">{s.en}</h3>
+                  </div>
                 </div>
-                <span className="mt-8 block h-px w-full bg-gradient-to-r from-gold/70 via-gold/20 to-transparent" aria-hidden data-reveal="line-x" />
-                <h3 className="mt-8 font-display text-2xl font-medium tracking-[0.08em] text-ivory sm:text-[1.75rem]">{s.en}</h3>
-                <p className="mt-2 text-sm tracking-[0.06em] text-gold-soft">{s.title}</p>
-                <div className="body-text mt-6 space-y-3">
-                  {s.body.map((b) => (
-                    <p key={b}>{b}</p>
-                  ))}
-                </div>
-                <ul className="mt-7 space-y-3 border-t border-charcoal-line pt-7 text-sm text-ivory/90">
+                <p className="mt-4 text-sm tracking-[0.06em] text-gold">{s.title}</p>
+                <p className="mt-3 text-sm leading-[1.95] text-ivory-muted">{s.body.join("")}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
                   {s.points.map((p) => (
-                    <li key={p} className="flex items-center gap-3">
-                      <Sparkle className="h-2.5 w-2.5 shrink-0 text-gold" />
+                    <li key={p} className="border border-ivory/10 px-3 py-1.5 text-xs text-ivory/80">
                       {p}
                     </li>
                   ))}
@@ -380,6 +379,7 @@ export default function HomePage() {
       <Section labelledBy="partner-title" band>
         <Container>
           <SectionHeading
+            art="link"
             eyebrow="提携企業"
             id="partner-title"
             title={
@@ -419,6 +419,7 @@ export default function HomePage() {
           <Container>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <SectionHeading
+            art="news"
                 eyebrow="ニュース・お知らせ"
                 id="blog-title"
                 title={

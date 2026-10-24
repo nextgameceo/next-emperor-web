@@ -34,6 +34,7 @@ export function ApplyFlow({ divider = true }: { divider?: boolean }) {
     <Section labelledBy="flow-title" divider={divider}>
       <Container>
         <SectionHeading
+          art="steps"
           eyebrow="ご応募までの流れ"
           id="flow-title"
           title={
@@ -77,7 +78,7 @@ export function FaqSection() {
       <Container>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.8fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <SectionHeading eyebrow="よくあるご質問" id="faq-title" title={<span className="metal-gold">FAQ</span>} />
+            <SectionHeading art="question" eyebrow="よくあるご質問" id="faq-title" title={<span className="metal-gold">FAQ</span>} />
             <p className="body-text mt-6 max-w-sm" data-reveal style={delay(0.2)}>
               応募の方法や、NEXT EMPERORの役割について、よくいただくご質問をまとめました。
             </p>

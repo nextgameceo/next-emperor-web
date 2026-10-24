@@ -17,7 +17,11 @@ type IconName =
   | "solar"
   | "briefcase"
   | "network"
-  | "compass";
+  | "compass"
+  | "steps"
+  | "news"
+  | "question"
+  | "link";
 
 const ICONS: Record<IconName, string[]> = {
   hospitality: ["M15 7h18l-2.5 14a6.5 6.5 0 0 1-13 0z", "M24 27.5v12", "M16.5 40h15", "M18 13h12"],
@@ -35,6 +39,10 @@ const ICONS: Record<IconName, string[]> = {
   solar: ["M6 32l7-15h29l-7 15z", "M9.5 24.5h29", "M22.5 17l-7 15", "M32 17l-7 15", "M20.5 32v8", "M14 40h13", "M40 4v4", "M46 10h-4", "M44.5 5.5l-2.5 2.5"],
   briefcase: ["M6 16h36v24H6z", "M17 16v-5h14v5", "M6 27h36", "M21 27v4h6v-4"],
   network: ["M12 12a4 4 0 1 0 0 .1", "M37 15a4 4 0 1 0 0 .1", "M24 37a4 4 0 1 0 0 .1", "M15.5 13.5l17.5 1.5", "M14 15.5l8 18", "M35 18.5 26 34"],
+  steps: ["M6 41h9v-8h9v-8h9v-8h9", "M30 7h12v12", "M42 7 29 20"],
+  news: ["M8 9h26v31H12a4 4 0 0 1-4-4z", "M34 17h6v19a4 4 0 0 1-4 4", "M14 16h14", "M14 23h14", "M14 30h9"],
+  question: ["M24 5a19 19 0 1 0 0 38 19 19 0 0 0 0-38z", "M18.5 19a5.5 5.5 0 1 1 8 4.9c-1.6.8-2.5 2-2.5 3.6V30", "M24 35v.6"],
+  link: ["M20 28a7 7 0 0 0 10 0l7-7a7 7 0 0 0-10-10l-2 2", "M28 20a7 7 0 0 0-10 0l-7 7a7 7 0 0 0 10 10l2-2"],
   compass: ["M24 5a19 19 0 1 0 0 38 19 19 0 0 0 0-38z", "M31 17l-4.5 9.5L17 31l4.5-9.5z", "M24 5v4", "M24 39v4", "M5 24h4", "M39 24h4"],
 };
 
@@ -144,6 +152,27 @@ export function Emblem({ className = "h-32 w-32" }: { className?: string }) {
       <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" strokeOpacity="0.2" />
       <text x="80" y="88" textAnchor="middle" className="emblem-mono" fill="#DDB46E">NE</text>
     </svg>
+  );
+}
+
+/**
+ * セクションタイトルの左に置くマーク
+ * ・外側の点線の輪がゆっくり回り、金色の光の粒が周りをめぐる
+ * ・画面に入ると、円と中のアイコンが線で描かれる
+ */
+export function TitleArt({ name, className = "" }: { name: IconName; className?: string }) {
+  return (
+    <span className={`title-art relative grid shrink-0 place-items-center ${className}`} aria-hidden>
+      <svg viewBox="0 0 100 100" className="draw-svg absolute inset-0 h-full w-full" fill="none">
+        <g className="title-orbit">
+          <circle cx="50" cy="50" r="48" stroke="currentColor" strokeOpacity="0.6" strokeDasharray="1.5 5" />
+          <circle cx="50" cy="2" r="2.6" fill="#DDB46E" />
+        </g>
+        <circle cx="50" cy="50" r="39" stroke="#DDB46E" strokeWidth="1.8" pathLength={1} style={{ "--k": 0 } as React.CSSProperties} />
+        <circle cx="50" cy="50" r="39" fill="#DDB46E" fillOpacity="0.12" />
+      </svg>
+      <LineIcon name={name} className="relative h-[46%] w-[46%] text-[rgb(var(--c-gold))]" />
+    </span>
   );
 }
 
