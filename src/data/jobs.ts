@@ -113,7 +113,7 @@ export const jobs: Job[] = [
     benefits: [],
     applyUrl: "https://lin.ee/O7Zx1HB",
     applyLineId: "@030cihhe",
-    status: "published",
+    status: "draft",
     updatedAt: "2026-10-23",
   },
   {

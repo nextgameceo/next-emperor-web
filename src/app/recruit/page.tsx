@@ -13,7 +13,7 @@ import { getOpenJobs, getPublishedJobs } from "@/lib/data";
 export const metadata: Metadata = {
   title: "求人情報｜昼職という選択肢",
   description:
-    "夜職から昼職へ。営業や施工職人など、夜の仕事で磨いた会話力・観察力・段取り力が活きる昼職の選択肢と、提携企業の求人情報をご紹介します。",
+    "夜職から昼職へ。営業や採用マーケターなど、夜の仕事で磨いた会話力・観察力・発信力が活きる昼職の選択肢と、提携企業の求人情報をご紹介します。",
   alternates: { canonical: "/recruit" },
 };
 
