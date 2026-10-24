@@ -33,13 +33,16 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // iPhoneはスクロールでアドレスバーが伸び縮みするたびに resize が起きるため、
+      // 横幅が変わったときと、高さが大きく変わったときだけ作り直す
+      if (w && Math.abs(rect.width - w) < 1 && Math.abs(rect.height - h) < 120) return;
+      dpr = Math.min(window.devicePixelRatio || 1, rect.width < 768 ? 1.25 : 1.5);
       w = rect.width;
       h = rect.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.round(Math.min(420, (w * h) / 3200));
+      const count = Math.round(Math.min(220, (w * h) / 5000));
       stars = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -126,7 +129,7 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
       ctx.strokeStyle = rim;
       ctx.lineWidth = 1.4;
       ctx.shadowColor = "rgba(242,217,168,0.9)";
-      ctx.shadowBlur = 18 * ease;
+      ctx.shadowBlur = w < 768 ? 0 : 10 * ease;
       ctx.stroke();
       ctx.restore();
 

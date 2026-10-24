@@ -9,7 +9,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RevealObserver from "@/components/RevealObserver";
 import PageCurtain from "@/components/PageCurtain";
-import BackgroundFX from "@/components/BackgroundFX";
 import { siteConfig } from "@/config/site";
 import { GA_ID } from "@/lib/analytics";
 
@@ -58,7 +57,7 @@ const orgJsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body>
+      <body className="bg-black">
         {/* スクロール表示アニメーション用（描画前に js クラスを付与してちらつきを防ぐ） */}
         <script
           dangerouslySetInnerHTML={{
@@ -77,7 +76,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <BackgroundFX />
         <Header />
         <main id="main" className="relative">{children}</main>
         <Footer />

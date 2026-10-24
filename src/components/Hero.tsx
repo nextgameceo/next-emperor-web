@@ -90,7 +90,7 @@ export default function Hero({ latest }: { latest: Latest }) {
       </Container>
 
       {/* 下段：入口（罫線で区切ったセル） */}
-      <div className="relative border-t border-white/[0.08] bg-black/30 backdrop-blur-[2px]">
+      <div className="relative border-t border-white/[0.08] bg-black/60">
         <Container>
           <ul className="-mx-5 grid grid-cols-3 divide-x divide-white/[0.08] sm:mx-0 lg:border-x lg:border-white/[0.07]">
             {entries.map((e, i) => (
