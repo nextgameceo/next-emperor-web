@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LineIcon } from "@/components/Art";
 import Link from "next/link";
 import ApplyCounter from "@/components/ApplyCounter";
 import BigMarquee from "@/components/BigMarquee";
@@ -75,6 +76,7 @@ export default function RecruitPage() {
           <ul className="mt-14 grid gap-6 md:grid-cols-3">
             {transferable.map((t, i) => (
               <li key={t.en} className="card corners p-8" data-reveal style={delay(i * 0.12)}>
+                <LineIcon name={(["communication", "detail", "resilience"] as const)[i % 3]} className="mb-8 h-12 w-12 text-ivory/70" />
                 <p className="font-display text-xs tracking-[0.24em] text-ice">{t.en}</p>
                 <h3 className="mt-3 text-xl tracking-[0.08em] text-ivory">{t.title}</h3>
                 <p className="mt-4 text-sm leading-[2] text-ivory-muted">{t.text}</p>
@@ -117,6 +119,7 @@ export default function RecruitPage() {
                     </span>
                     <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
                       <div>
+                        <LineIcon name={i === 0 ? "communication" : "solar"} className="mb-8 h-16 w-16 text-gold" />
                         <p className="font-display text-xs tracking-[0.28em] text-ice">
                           {String(i + 1).padStart(2, "0")} / {c?.en ?? "CAREER"}
                         </p>

@@ -28,6 +28,8 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
     let raf = 0;
     let visible = true;
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    let shoot: { x: number; y: number; born: number; len: number } | null = null;
+    let nextShoot = 2.5;
     // オープニング表示中は、光が昇るのを幕が上がった後にずらす
     const t0 = performance.now() + (document.documentElement.classList.contains("intro") ? 1700 : 0);
 
@@ -101,6 +103,36 @@ export default function HeroHorizon({ variant = "home" }: { variant?: "home" | "
         ctx.beginPath();
         ctx.arc(px, py, s.r * (0.6 + s.z * 0.7), 0, Math.PI * 2);
         ctx.fill();
+      }
+
+      // 流れ星（数秒に1本、斜めに走る）
+      if (!reduce) {
+        if (!shoot && t > nextShoot) {
+          shoot = { x: w * (0.15 + Math.random() * 0.7), y: h * (0.05 + Math.random() * 0.3), born: t, len: 90 + Math.random() * 80 };
+          nextShoot = t + 3.5 + Math.random() * 4;
+        }
+        if (shoot) {
+          const life = (t - shoot.born) / 1.1;
+          if (life >= 1) shoot = null;
+          else {
+            const dx = Math.cos(0.5) * life * w * 0.35;
+            const dy = Math.sin(0.5) * life * w * 0.35;
+            const hx = shoot.x + dx;
+            const hy = shoot.y + dy;
+            const tx = hx - Math.cos(0.5) * shoot.len;
+            const ty = hy - Math.sin(0.5) * shoot.len;
+            const a = Math.sin(life * Math.PI);
+            const gr = ctx.createLinearGradient(tx, ty, hx, hy);
+            gr.addColorStop(0, "rgba(242,221,180,0)");
+            gr.addColorStop(1, `rgba(255,244,220,${0.9 * a})`);
+            ctx.strokeStyle = gr;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(tx, ty);
+            ctx.lineTo(hx, hy);
+            ctx.stroke();
+          }
+        }
       }
 
       // 夜明けの光（地平線の上に広がる）
