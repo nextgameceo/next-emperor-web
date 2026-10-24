@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import LineApplyForm from "@/components/LineApplyForm";
 import RecruitNotice from "@/components/RecruitNotice";
-import { ButtonLink, Container, PageHero, Section } from "@/components/ui";
+import { ButtonLink, Container, Notice, PageHero, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
 import { REFERRAL_LABEL, buildApplyHref, getJobBySlug, getJobCompany, getPublishedJobs } from "@/lib/data";
 
@@ -35,7 +35,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
   if (!job) notFound();
 
   const company = getJobCompany(job);
-  const hidden = Boolean(job.companyLabel?.trim());
+  const hidden = Boolean(job.companyLabel?.trim()) && !job.selfHiring;
   const rows = [
     { k: hidden ? "業種" : "企業名", v: company },
     { k: "仕事内容", v: job.description },
@@ -131,7 +131,14 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
           )}
 
           <div className="mt-12 space-y-8">
-            <RecruitNotice />
+            {job.selfHiring ? (
+              <Notice>
+                こちらは、合同会社NEXT EMPEROR自身の求人です。応募はNEXT EMPEROR公式LINEで受け付け、選考・採用の判断も当社が行います。
+                いただいた個人情報は、この求人の選考とご連絡のためにのみ使用します。
+              </Notice>
+            ) : (
+              <RecruitNotice />
+            )}
             {job.applyLineId ? (
               <div className="space-y-6">
                 <LineApplyForm lineId={job.applyLineId} jobTitle={job.title} jobSlug={job.slug} friendUrl={canApply ? applyHref : undefined} />

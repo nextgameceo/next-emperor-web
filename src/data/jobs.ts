@@ -23,6 +23,7 @@ export type Job = {
   title: string; // 求人タイトル
   partnerId: string; // 企業（partners.ts の id）
   companyLabel?: string; // 会社名の代わりに表示する表記（会社名を伏せる場合）
+  selfHiring?: boolean; // NEXT EMPEROR自身の求人（true にすると、応募に関する注意書きが自社向けに変わります）
   career?: {
     en: string; // 職種の英語表記（例："SALES"）
     name: string; // 職種名（例："営業"）
@@ -114,5 +115,39 @@ export const jobs: Job[] = [
     applyLineId: "@030cihhe",
     status: "published",
     updatedAt: "2026-10-23",
+  },
+  {
+    slug: "craftsman-recruit-marketer",
+    title: "職人採用マーケター",
+    partnerId: "next-emperor",
+    companyLabel: "合同会社NEXT EMPEROR",
+    selfHiring: true,
+    career: {
+      en: "MARKETER",
+      name: "職人採用マーケター",
+      catch: "発信の力で、現場に人を集める仕事。",
+      skills: ["SNSで人を惹きつける発信力", "相手に刺さる言葉を選ぶ力", "数字を見て改善し続ける力"],
+    },
+    industry:
+      "NEXT EMPEROR自身の採用です。提携企業（太陽光パネルの施工会社など）の職人採用を、SNSや求人広告を使って支援する、採用マーケティングの仕事です。\n「どうすれば、この仕事の魅力が伝わるか」を考え、発信し、応募につなげていきます。",
+    description:
+      "・提携企業の職人募集に向けた、SNS投稿・求人原稿の企画と作成\n・Instagram、TikTok、求人媒体などでの発信と運用\n・閲覧数や応募数などの数字の分析と、発信内容の改善\n・提携企業との打ち合わせ（募集したい人物像のすり合わせなど）\n\n※雇用形態・報酬・勤務条件は、応募時にご説明します。",
+    appeal: [
+      "SNSでの発信が好きな方、得意な方",
+      "人の心を動かす言葉や見せ方を考えるのが好きな方",
+      "夜の仕事で集客や指名獲得に工夫してきた方",
+      "数字を見ながら、試行錯誤するのが苦にならない方",
+    ],
+    closing:
+      "お店に人を呼ぶために、毎日どんな発信をしてきましたか。\nどんな言葉なら響くか、どんな写真なら目に留まるか。\nその感覚は、採用マーケティングの世界でそのまま武器になります。\n\n今度は、働く場所を探している人と、人を待っている現場をつなぐ側へ。\nあなたの発信力で、誰かの次の一歩をつくりませんか。",
+    location: "",
+    employmentType: "",
+    salary: "",
+    workingHours: "",
+    holidays: "",
+    benefits: [],
+    applyUrl: "",
+    status: "published",
+    updatedAt: "2026-10-24",
   },
 ];

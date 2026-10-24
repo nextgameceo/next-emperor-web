@@ -119,7 +119,7 @@ export default function RecruitPage() {
                     </span>
                     <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
                       <div>
-                        <LineIcon name={i === 0 ? "communication" : "solar"} className="mb-8 h-16 w-16 text-gold" />
+                        <LineIcon name={(["communication", "solar", "megaphone"] as const)[i % 3]} className="mb-8 h-16 w-16 text-gold" />
                         <p className="font-display text-xs tracking-[0.28em] text-ice">
                           {String(i + 1).padStart(2, "0")} / {c?.en ?? "CAREER"}
                         </p>
