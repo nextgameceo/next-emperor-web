@@ -170,7 +170,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mt-20 grid gap-6 sm:grid-cols-2">
+          <div className="mt-16 grid gap-4 sm:grid-cols-2">
             {[
               {
                 en: "Mission",
@@ -183,13 +183,13 @@ export default function HomePage() {
                 note: "どんな道を歩んできた人も、胸を張って次の一歩を踏み出せる。そんな社会を目指します。",
               },
             ].map((m, i) => (
-              <div key={m.en} className="card corners p-9 sm:p-12" data-reveal style={delay(i * 0.15)}>
-                <p className="flex items-center gap-3 font-display text-3xl">
-                  <Sparkle className={`h-3.5 w-3.5 ${i ? "text-ice" : "text-gold"}`} twinkle delay={`${i * 0.8}s`} />
-                  <span className="metal-gold">{m.en}</span>
-                </p>
-                <p className="mt-6 font-serif text-lg leading-[2] tracking-[0.06em] text-ivory sm:text-xl">{m.text}</p>
-                <p className="mt-5 border-t border-charcoal-line pt-5 text-sm leading-[2] text-ivory-muted">{m.note}</p>
+              <div key={m.en} className="card corners flex gap-5 p-6 sm:p-7" data-reveal style={delay(i * 0.15)}>
+                <LineIcon name={i ? "compass" : "target"} className="h-9 w-9 shrink-0 text-ivory/60" />
+                <div>
+                  <p className="font-display text-[0.7rem] uppercase tracking-[0.3em] text-ice">{m.en}</p>
+                  <p className="mt-2 text-[0.95rem] leading-[1.9] tracking-[0.04em] text-ivory">{m.text}</p>
+                  <p className="mt-2 text-xs leading-[1.9] text-ivory-muted">{m.note}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -202,6 +202,7 @@ export default function HomePage() {
       <Section labelledBy="stance-title" band>
         <Container>
           <SectionHeading
+            art="seal"
             eyebrow="私たちが大切にしていること"
             id="stance-title"
             title={
@@ -210,21 +211,21 @@ export default function HomePage() {
               </>
             }
           />
-          <ul className="mt-16 grid border-t border-ivory/10 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-12 grid border-t border-ivory/10 sm:grid-cols-2 lg:grid-cols-4">
             {stance.map((s, i) => (
               <li
                 key={s.en}
-                className="group relative border-b border-ivory/10 px-1 py-10 sm:px-8 sm:[&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0 lg:[&:nth-child(odd)]:border-r"
+                className="group relative border-b border-ivory/10 px-1 py-6 sm:px-6 sm:[&:nth-child(odd)]:border-r lg:border-r lg:last:border-r-0 lg:[&:nth-child(odd)]:border-r"
                 data-reveal
                 style={delay(i * 0.12)}
               >
                 <span aria-hidden className="absolute left-0 top-0 h-px w-0 bg-gold transition-all duration-700 group-hover:w-full" />
-                <p className="font-display text-xs tracking-[0.3em] text-ice">0{i + 1}</p>
-                <p className="mt-6 font-display text-[2.1rem] uppercase leading-none tracking-[0.04em]">
-                  <span className="metal-gold">{s.en}</span>
+                <p className="flex items-baseline gap-3">
+                  <span className="font-display text-[0.65rem] tracking-[0.25em] text-ice">0{i + 1}</span>
+                  <span className="font-display text-sm uppercase tracking-[0.16em] text-gold">{s.en}</span>
                 </p>
-                <p className="mt-6 text-[1rem] leading-relaxed tracking-[0.06em] text-ivory">{s.ja}</p>
-                <p className="mt-4 text-[0.85rem] leading-[2] text-ivory-muted">{s.body}</p>
+                <p className="mt-3 text-[0.95rem] tracking-[0.05em] text-ivory">{s.ja}</p>
+                <p className="mt-2 text-xs leading-[1.9] text-ivory-muted">{s.body}</p>
               </li>
             ))}
           </ul>
@@ -237,6 +238,7 @@ export default function HomePage() {
       <Section labelledBy="strength-title">
         <Container>
           <SectionHeading
+            art="sales"
             eyebrow="夜の経験は、昼の仕事で活きる"
             id="strength-title"
             title={
@@ -251,23 +253,23 @@ export default function HomePage() {
             夜の仕事で当たり前のようにやってきたことの中には、昼の仕事で高く求められる力がたくさんあります。
             自分では気づきにくい「強み」を知ることが、新しいキャリアへの自信につながります。
           </p>
-          <ul className="mt-16 grid border-l border-t border-ivory/10 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid border-l border-t border-ivory/10 md:grid-cols-2 lg:grid-cols-3">
             {strengths.map((s, i) => (
               <li
                 key={s.title}
-                className="group relative border-b border-r border-ivory/10 p-8 transition-colors duration-500 hover:bg-ivory/[0.025] sm:p-10"
+                className="group relative flex gap-4 border-b border-r border-ivory/10 p-6 transition-colors duration-500 hover:bg-ivory/[0.025]"
                 data-reveal
                 style={delay((i % 3) * 0.12)}
               >
-                <div className="flex items-start justify-between">
-                  <span className="font-display text-[3.4rem] font-light leading-none text-ivory/15 transition-colors duration-500 group-hover:text-gold" data-parallax="0.05">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <LineIcon name={strengthIcons[i]} className="h-11 w-11 text-ivory/70" />
+                <LineIcon name={strengthIcons[i]} className="h-8 w-8 shrink-0 text-ivory/60" />
+                <div>
+                  <p className="flex items-baseline gap-2">
+                    <span className="font-display text-[0.65rem] tracking-[0.2em] text-ice">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-display text-[0.8rem] uppercase tracking-[0.12em] text-ivory">{s.en}</span>
+                  </p>
+                  <p className="mt-1 text-xs text-gold">{s.title}</p>
+                  <p className="mt-2 text-xs leading-[1.9] text-ivory-muted">{s.body}</p>
                 </div>
-                <h3 className="mt-10 font-display text-lg uppercase tracking-[0.1em] text-ivory">{s.en}</h3>
-                <p className="mt-1 text-sm text-gold">{s.title}</p>
-                <p className="mt-4 text-sm leading-[2] text-ivory-muted">{s.body}</p>
               </li>
             ))}
           </ul>

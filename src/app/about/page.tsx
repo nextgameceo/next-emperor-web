@@ -57,21 +57,19 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mt-20 grid gap-6 sm:grid-cols-2">
-            <div className="card corners p-9 sm:p-12" data-reveal>
-              <LineIcon name="target" className="mb-6 h-12 w-12 text-ivory/70" />
-              <p className="font-display text-3xl"><span className="metal-gold">Mission</span></p>
-              <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
-                夜職で培った接客力、営業力、コミュニケーション能力を活かし、新しいキャリアの可能性を広げる。
-              </p>
-            </div>
-            <div className="card corners p-9 sm:p-12" data-reveal style={{ "--d": "0.12s" } as React.CSSProperties}>
-              <LineIcon name="impression" className="mb-6 h-12 w-12 text-ivory/70" />
-              <p className="font-display text-3xl"><span className="metal-gold">Vision</span></p>
-              <p className="mt-5 font-serif text-lg leading-[2] tracking-[0.06em]">
-                誰もが過去の経験に誇りを持ち、自分らしい未来へ挑戦できる社会をつくる。
-              </p>
-            </div>
+          <div className="mt-16 grid gap-4 sm:grid-cols-2">
+            {[
+              { en: "Mission", icon: "target" as const, text: "夜職で培った接客力、営業力、コミュニケーション能力を活かし、新しいキャリアの可能性を広げる。" },
+              { en: "Vision", icon: "compass" as const, text: "誰もが過去の経験に誇りを持ち、自分らしい未来へ挑戦できる社会をつくる。" },
+            ].map((m, i) => (
+              <div key={m.en} className="card corners flex gap-5 p-6 sm:p-7" data-reveal style={{ "--d": `${i * 0.12}s` } as React.CSSProperties}>
+                <LineIcon name={m.icon} className="h-9 w-9 shrink-0 text-ivory/60" />
+                <div>
+                  <p className="font-display text-[0.7rem] uppercase tracking-[0.3em] text-ice">{m.en}</p>
+                  <p className="mt-2 text-[0.95rem] leading-[1.9] tracking-[0.04em] text-ivory">{m.text}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </Container>
       </Section>
