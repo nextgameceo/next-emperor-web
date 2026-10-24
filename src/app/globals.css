@@ -981,3 +981,41 @@ html.cursor-hover .cursor-ring {
     opacity: 1;
   }
 }
+
+/* =========================================================
+   セクションタイトルのマーク（TitleArt）
+   ========================================================= */
+.heading-en-lg {
+  font-size: 2.3rem;
+}
+@media (min-width: 640px) {
+  .heading-en-lg { font-size: 3.8rem; }
+}
+@media (min-width: 1024px) {
+  .heading-en-lg { font-size: 4.6rem; }
+}
+.title-art {
+  color: rgb(var(--c-gold));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .title-orbit {
+    transform-origin: 50px 50px;
+    animation: spin360 18s linear infinite;
+  }
+  html.js .title-block .title-art {
+    opacity: 0;
+    transform: scale(0.6) rotate(-60deg);
+    transition: opacity 0.7s ease, transform 1.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  html.js .title-block.is-visible .title-art {
+    opacity: 1;
+    transform: none;
+  }
+  html.js .title-block .title-underline {
+    transform: scaleX(0);
+    transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1) 0.5s;
+  }
+  html.js .title-block.is-visible .title-underline {
+    transform: scaleX(1);
+  }
+}

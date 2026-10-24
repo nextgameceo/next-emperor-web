@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import HeroHorizon from "./HeroHorizon";
 import SplitText from "./SplitText";
+import { TitleArt, type IconName } from "./Art";
 
 /** スクロール表示の遅延を指定するためのヘルパー（例：delay(0.2)） */
 export const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
@@ -50,29 +51,41 @@ export function Eyebrow({ children, center = false }: { children: ReactNode; cen
   );
 }
 
-/** ラベル＋大見出し（スクロールで表示） */
+/** ラベル＋大見出し（スクロールで表示）。art を渡すと、左にマーク（ベクターアート）が付く */
 export function SectionHeading({
   eyebrow,
   title,
   id,
   align = "left",
   as: Tag = "h2",
+  art,
 }: {
   eyebrow: string;
   title: ReactNode;
   id?: string;
   align?: "left" | "center";
   as?: "h1" | "h2";
+  art?: IconName;
 }) {
   const center = align === "center";
-  return (
+  const heading = (
     <div className={center ? "text-center" : ""}>
       <div data-reveal>
         <Eyebrow center={center}>{eyebrow}</Eyebrow>
       </div>
-      <Tag id={id} className="heading-en mt-6" data-reveal="split" style={delay(0.1)}>
+      <Tag id={id} className={`heading-en mt-6 ${art ? "heading-en-lg" : ""}`} data-reveal="split" style={delay(0.1)}>
         <SplitText>{title}</SplitText>
       </Tag>
+    </div>
+  );
+  if (!art) return heading;
+  return (
+    <div className="title-block flex items-center gap-5 sm:gap-8" data-reveal>
+      <TitleArt name={art} className="h-[4.5rem] w-[4.5rem] sm:h-24 sm:w-24 lg:h-[7.5rem] lg:w-[7.5rem]" />
+      <div className="min-w-0">
+        {heading}
+        <span aria-hidden className="title-underline mt-5 block h-px w-full max-w-[16rem] origin-left bg-gradient-to-r from-[rgb(var(--c-gold))] via-[rgb(var(--c-gold)/0.5)] to-transparent" />
+      </div>
     </div>
   );
 }

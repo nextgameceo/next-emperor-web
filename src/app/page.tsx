@@ -121,14 +121,18 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <div>
-              <div data-reveal>
-                <Eyebrow>NEXT EMPERORとは</Eyebrow>
-              </div>
-              <h2 id="about-title" className="heading-en mt-5" data-reveal style={delay(0.12)}>
-                <span className="metal-silver">What is</span>
-                <br />
-                <span className="metal-gold">NEXT EMPEROR</span>
-              </h2>
+              <SectionHeading
+                art="compass"
+                eyebrow="NEXT EMPERORとは"
+                id="about-title"
+                title={
+                  <>
+                    What is
+                    <br />
+                    <span className="metal-gold">NEXT EMPEROR</span>
+                  </>
+                }
+              />
               <p className="mt-6 font-serif text-lg leading-[2] tracking-[0.06em] text-gold-soft" data-reveal style={delay(0.24)}>
                 夜で磨いた力を、
                 <br />
@@ -277,6 +281,7 @@ export default function HomePage() {
       <Section labelledBy="service-title" band>
         <Container>
           <SectionHeading
+            art="briefcase"
             eyebrow="2つの事業で、人と企業の未来を支える"
             id="service-title"
             title={
@@ -380,6 +385,7 @@ export default function HomePage() {
       <Section labelledBy="partner-title" band>
         <Container>
           <SectionHeading
+            art="link"
             eyebrow="提携企業"
             id="partner-title"
             title={
@@ -419,6 +425,7 @@ export default function HomePage() {
           <Container>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <SectionHeading
+            art="news"
                 eyebrow="ニュース・お知らせ"
                 id="blog-title"
                 title={
