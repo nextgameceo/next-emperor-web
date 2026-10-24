@@ -146,7 +146,7 @@ export const jobs: Job[] = [
     workingHours: "",
     holidays: "",
     benefits: [],
-    applyUrl: "",
+    applyUrl: "https://lin.ee/qFAptqb",
     status: "published",
     updatedAt: "2026-10-24",
   },

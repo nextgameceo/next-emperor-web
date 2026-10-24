@@ -148,6 +148,11 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
               </div>
             ) : canApply ? (
               <div className="space-y-6">
+              {job.selfHiring ? (
+                <p className="text-sm leading-[1.9] text-ivory/80">
+                  下のボタンからNEXT EMPEROR公式LINEを友だち追加し、「職種名」と「お名前」を送ってください。担当者からご連絡します。
+                </p>
+              ) : (
               <div className="border border-gold/40 px-5 py-5 text-sm leading-[1.9] text-ivory/90">
                 <p className="text-xs tracking-[0.16em] text-gold">応募のときのお願い</p>
                 <p className="mt-2">
@@ -157,9 +162,10 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
                     : "下のボタンから進むと、応募先にこのことが伝わるよう自動で設定されています。"}
                 </p>
               </div>
+              )}
               <div className="flex flex-col gap-4 sm:flex-row">
                 <ButtonLink href={applyHref} external>
-                  {isLine ? "LINEで応募する" : "応募先へ進む"}
+                  {isLine ? (job.selfHiring ? "LINEで応募・問い合わせ" : "LINEで応募する") : "応募先へ進む"}
                 </ButtonLink>
                 <ButtonLink href="/recruit" variant="outline">
                   求人一覧へ戻る
