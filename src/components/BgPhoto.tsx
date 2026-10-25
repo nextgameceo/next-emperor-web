@@ -16,6 +16,12 @@ export const PHOTOS = {
   nightView: "photo-1650385114503-ab8a04090e6a",
   /** 夕暮れから夜へ変わる街 */
   dusk: "photo-1707473323036-f89a88017cee",
+  /** 昼の街並み（上空から） */
+  dayCity: "photo-1585916353757-857f7994f4ea",
+  /** 雲の上の朝の空 */
+  skyAbove: "photo-1735585142563-1fea15aba663",
+  /** 飛行機から見た空と雲 */
+  clouds: "photo-1738788175202-8f0020f7b727",
 } as const;
 
 export type PhotoKey = keyof typeof PHOTOS;

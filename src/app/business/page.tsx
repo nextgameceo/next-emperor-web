@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BgPhoto from "@/components/BgPhoto";
 import { LineIcon } from "@/components/Art";
 import { ButtonLink, Container, PageHero, Section, SectionHeading } from "@/components/ui";
 
@@ -55,7 +56,7 @@ export default function BusinessPage() {
         lead="NEXT EMPERORは、企業の採用マーケティング、集客、営業活動を支援します。新しい人材との出会いやビジネス機会の創出をサポートします。"
       />
 
-      <Section labelledBy="issues-title">
+      <Section labelledBy="issues-title" bg={<BgPhoto photo="dayCity" mono blend="multiply" fade="both" opacity={0.1} />}>
         <Container>
           <SectionHeading eyebrow="こんな課題はありませんか" id="issues-title" title={<>Your <span className="metal-gold">Challenges</span></>} />
           <ul className="mt-14 grid border-t border-ivory/10 sm:grid-cols-2">
@@ -93,7 +94,7 @@ export default function BusinessPage() {
         </Container>
       </Section>
 
-      <Section labelledBy="flow-title" className="border-t border-charcoal-line">
+      <Section labelledBy="flow-title" className="border-t border-charcoal-line" bg={<BgPhoto photo="clouds" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <SectionHeading eyebrow="ご相談の流れ" id="flow-title" title={<>How It <span className="metal-gold">Works</span></>} />
           <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

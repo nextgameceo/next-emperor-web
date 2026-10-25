@@ -1,5 +1,4 @@
 import Link from "next/link";
-import BgPhoto from "./BgPhoto";
 import HeroHorizon from "./HeroHorizon";
 import { Emblem } from "./Art";
 import SplitText from "./SplitText";
@@ -23,8 +22,6 @@ export default function Hero({ latest }: { latest: Latest }) {
   return (
     <section aria-labelledby="hero-title" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black">
       <HeroHorizon />
-      {/* 夜の街の灯り（空の下にうっすら） */}
-      <BgPhoto photo="nightCity" blend="screen" fade="top" opacity={0.4} position="center 70%" priority />
 
       {/* 縦の罫線（PC） */}
       <Container className="pointer-events-none absolute inset-0 hidden lg:block" >

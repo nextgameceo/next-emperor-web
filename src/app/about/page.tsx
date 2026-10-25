@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BgPhoto from "@/components/BgPhoto";
 import { LineIcon, NightToDayArt } from "@/components/Art";
 import BigMarquee from "@/components/BigMarquee";
 import { Container, PageHero, Section, SectionHeading } from "@/components/ui";
@@ -38,7 +39,7 @@ export default function AboutPage() {
         lead="夜の経験を、明日の可能性へ。NEXT EMPERORは、人と企業の新しい出会いを支える会社です。"
       />
 
-      <Section labelledBy="message-title">
+      <Section labelledBy="message-title" bg={<BgPhoto photo="skyAbove" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <SectionHeading eyebrow="経験に、誇りを。未来に、選択肢を。" id="message-title" title={<><span className="metal-silver">Pride in Your Past.</span><br /><span className="metal-gold">Choice for Your Future.</span></>} />

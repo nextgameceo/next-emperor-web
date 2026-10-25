@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BgPhoto from "@/components/BgPhoto";
 import { LineIcon } from "@/components/Art";
 import Link from "next/link";
 import ApplyCounter from "@/components/ApplyCounter";
@@ -59,7 +60,7 @@ export default function RecruitPage() {
       </section>
 
       {/* ===== WHY ===== */}
-      <Section labelledBy="why-title">
+      <Section labelledBy="why-title" bg={<BgPhoto photo="dayCity" mono blend="multiply" fade="both" opacity={0.1} />}>
         <Container>
           <SectionHeading
             eyebrow="夜の経験は、昼の武器になる"
@@ -174,7 +175,7 @@ export default function RecruitPage() {
       )}
 
       {/* ===== OPEN POSITIONS ===== */}
-      <Section labelledBy="open-title">
+      <Section labelledBy="open-title" bg={<BgPhoto photo="skyAbove" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <SectionHeading
             eyebrow="掲載中の求人"

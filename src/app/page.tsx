@@ -118,7 +118,7 @@ export default function HomePage() {
       <Hero latest={posts[0] ? { slug: posts[0].slug, title: posts[0].title, date: posts[0].date } : null} />
 
       {/* ===== ABOUT ===== */}
-      <Section labelledBy="about-title">
+      <Section labelledBy="about-title" bg={<BgPhoto photo="skyAbove" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <div>
@@ -236,7 +236,7 @@ export default function HomePage() {
       <SectionDivider no={3} label="Your Strength" total={10} />
 
       {/* ===== STRENGTHS ===== */}
-      <Section labelledBy="strength-title">
+      <Section labelledBy="strength-title" bg={<BgPhoto photo="dayCity" mono blend="multiply" fade="both" opacity={0.1} />}>
         <Container>
           <SectionHeading
             art="sales"
@@ -480,7 +480,7 @@ export default function HomePage() {
       <SectionDivider no={10} label="Grow Together" total={10} />
 
       {/* ===== FOR BUSINESS ===== */}
-      <Section labelledBy="business-title">
+      <Section labelledBy="business-title" bg={<BgPhoto photo="clouds" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <div className="theme-dark card corners mx-auto max-w-4xl px-7 py-16 text-center sm:px-16 sm:py-20" data-reveal>
             <Eyebrow center>企業の成長を、ともに</Eyebrow>
