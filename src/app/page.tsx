@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { LineIcon, NightToDayArt } from "@/components/Art";
-import BgPhoto from "@/components/BgPhoto";
 import BigMarquee from "@/components/BigMarquee";
 import SectionDivider from "@/components/SectionDivider";
 import Hero from "@/components/Hero";
@@ -118,7 +117,7 @@ export default function HomePage() {
       <Hero latest={posts[0] ? { slug: posts[0].slug, title: posts[0].title, date: posts[0].date } : null} />
 
       {/* ===== ABOUT ===== */}
-      <Section labelledBy="about-title" bg={<BgPhoto photo="skyAbove" mono blend="multiply" fade="both" opacity={0.12} />}>
+      <Section labelledBy="about-title">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[5fr_7fr] lg:gap-20">
             <div>
@@ -236,7 +235,7 @@ export default function HomePage() {
       <SectionDivider no={3} label="Your Strength" total={10} />
 
       {/* ===== STRENGTHS ===== */}
-      <Section labelledBy="strength-title" bg={<BgPhoto photo="dayCity" mono blend="multiply" fade="both" opacity={0.1} />}>
+      <Section labelledBy="strength-title">
         <Container>
           <SectionHeading
             art="sales"
@@ -326,7 +325,7 @@ export default function HomePage() {
       <SectionDivider no={5} label="Your Future" total={10} />
 
       {/* ===== RECRUIT ===== */}
-      <Section labelledBy="recruit-title" bg={<BgPhoto photo="dusk" mono blend="multiply" fade="both" opacity={0.12} />}>
+      <Section labelledBy="recruit-title">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <div data-reveal>
@@ -480,7 +479,7 @@ export default function HomePage() {
       <SectionDivider no={10} label="Grow Together" total={10} />
 
       {/* ===== FOR BUSINESS ===== */}
-      <Section labelledBy="business-title" bg={<BgPhoto photo="clouds" mono blend="multiply" fade="both" opacity={0.12} />}>
+      <Section labelledBy="business-title">
         <Container>
           <div className="theme-dark card corners mx-auto max-w-4xl px-7 py-16 text-center sm:px-16 sm:py-20" data-reveal>
             <Eyebrow center>企業の成長を、ともに</Eyebrow>
