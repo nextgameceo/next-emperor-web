@@ -1019,3 +1019,19 @@ html.cursor-hover .cursor-ring {
     transform: scaleX(1);
   }
 }
+
+/* ===== 背景の写真（BgPhoto） ===== */
+.bg-photo__img {
+  opacity: var(--o, 0.25);
+  animation: bgPhotoIn 1.6s ease both;
+}
+@keyframes bgPhotoIn {
+  from { opacity: 0; }
+}
+.bg-photo--both { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent); }
+.bg-photo--bottom { -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent); mask-image: linear-gradient(to bottom, #000 35%, transparent); }
+.bg-photo--top { -webkit-mask-image: linear-gradient(to top, #000 35%, transparent); mask-image: linear-gradient(to top, #000 35%, transparent); }
+.bg-photo--radial { -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 20%, transparent 75%); }
+@media (prefers-reduced-motion: reduce) {
+  .bg-photo__img { animation: none; }
+}

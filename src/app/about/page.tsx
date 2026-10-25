@@ -34,6 +34,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="会社概要"
         title="About Us"
+        photo="nightView"
         lead="夜の経験を、明日の可能性へ。NEXT EMPERORは、人と企業の新しい出会いを支える会社です。"
       />
 

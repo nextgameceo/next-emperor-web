@@ -45,6 +45,7 @@ export default function RecruitPage() {
       <PageHero
         eyebrow="昼職という、次のステージへ"
         title="Recruit"
+        photo="dusk"
         lead="夜の仕事で磨いてきた力は、昼の世界でも必ず活きる。NEXT EMPERORは、あなたの経験が輝く「昼職の選択肢」をご紹介します。"
       />
 

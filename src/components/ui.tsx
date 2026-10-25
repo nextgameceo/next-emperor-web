@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import HeroHorizon from "./HeroHorizon";
+import BgPhoto, { type PhotoKey } from "./BgPhoto";
 import SplitText from "./SplitText";
 import { TitleArt, type IconName } from "./Art";
 
@@ -20,6 +21,7 @@ export function Section({
   labelledBy,
   divider = true,
   band = false,
+  bg,
 }: {
   children: ReactNode;
   id?: string;
@@ -28,6 +30,8 @@ export function Section({
   divider?: boolean;
   /** true でわずかに明るい帯にする（セクションの濃淡） */
   band?: boolean;
+  /** 背景に敷くもの（写真など） */
+  bg?: ReactNode;
 }) {
   return (
     <section id={id} aria-labelledby={labelledBy} className={`theme-light relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
@@ -35,6 +39,7 @@ export function Section({
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="mx-auto h-full max-w-site border-x border-ivory/[0.07]" />
       </div>
+      {bg}
       {divider && <span aria-hidden data-reveal="line-x" className="absolute inset-x-0 top-0 h-px bg-ivory/[0.1]" />}
       <div className="relative">{children}</div>
     </section>
@@ -160,10 +165,22 @@ export function ButtonLink({ href, children, variant = "primary", external, clas
 }
 
 /** 下層ページ上部のタイトル帯（夜明けの地平線＋大きな英字タイトル） */
-export function PageHero({ eyebrow, title, lead }: { eyebrow: string; title: string; lead?: string }) {
+export function PageHero({
+  eyebrow,
+  title,
+  lead,
+  photo = "nightTowers",
+}: {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  /** 背景にうっすら敷く写真（null で写真なし） */
+  photo?: PhotoKey | null;
+}) {
   return (
     <div className="theme-dark relative overflow-hidden bg-black pb-16 pt-36 sm:pb-24 sm:pt-44">
       <HeroHorizon variant="page" />
+      {photo && <BgPhoto photo={photo} blend="screen" fade="top" opacity={0.45} position="center 60%" priority />}
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="mx-auto h-full max-w-site border-x border-white/[0.07]" />
       </div>

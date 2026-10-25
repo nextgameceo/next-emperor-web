@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LineIcon, NightToDayArt } from "@/components/Art";
+import BgPhoto from "@/components/BgPhoto";
 import BigMarquee from "@/components/BigMarquee";
 import SectionDivider from "@/components/SectionDivider";
 import Hero from "@/components/Hero";
@@ -325,7 +326,7 @@ export default function HomePage() {
       <SectionDivider no={5} label="Your Future" total={10} />
 
       {/* ===== RECRUIT ===== */}
-      <Section labelledBy="recruit-title">
+      <Section labelledBy="recruit-title" bg={<BgPhoto photo="dusk" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <div data-reveal>

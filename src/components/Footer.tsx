@@ -4,6 +4,7 @@ import { Emblem } from "./Art";
 import SplitText from "./SplitText";
 import { ButtonLink } from "./ui";
 import { siteConfig } from "@/config/site";
+import BgPhoto from "./BgPhoto";
 
 /** フッターのリンク（3つのまとまり） */
 const groups = [
@@ -42,7 +43,9 @@ export default function Footer() {
 
       {/* 上段：締めのメッセージ */}
       <div className="relative border-b border-white/[0.08]">
-        <div className="mx-auto max-w-site px-5 py-20 sm:px-8 sm:py-28 lg:px-20">
+        {/* 夕暮れの街（明日へ向かう光） */}
+        <BgPhoto photo="dusk" blend="screen" fade="both" opacity={0.32} />
+        <div className="relative mx-auto max-w-site px-5 py-20 sm:px-8 sm:py-28 lg:px-20">
           <p className="flex items-center gap-3 text-xs tracking-[0.2em] text-gold sm:text-[0.8rem]" data-reveal>
             <span aria-hidden className="h-[5px] w-[5px] rotate-45 bg-gold" />
             夜の経験を、明日の可能性へ。
