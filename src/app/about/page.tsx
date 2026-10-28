@@ -135,7 +135,7 @@ export default function AboutPage() {
                   <iframe
                     title={`${c.legalName} の所在地（Googleマップ）`}
                     src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=ja&z=16&output=embed`}
-                    className="map-mono absolute inset-0 h-full w-full border-0"
+                    className="absolute inset-0 h-full w-full border-0"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
