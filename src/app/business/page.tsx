@@ -6,7 +6,7 @@ import { ButtonLink, Container, PageHero, Section, SectionHeading } from "@/comp
 export const metadata: Metadata = {
   title: "法人向けサービス",
   description:
-    "NEXT EMPERORの法人向けサービス。採用マーケティング、人材集客、営業代行・販路開拓・営業戦略立案で、企業の成長を支援します。",
+    "名古屋のNEXT EMPERORによる法人向けサービス。採用マーケティング、人材集客、営業代行・販路開拓・営業戦略立案で、企業の成長を支援します。",
   alternates: { canonical: "/business" },
 };
 

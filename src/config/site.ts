@@ -15,14 +15,16 @@ export const siteConfig = {
    *   Cloudflare のビルド用環境変数 NEXT_PUBLIC_SITE_URL を設定した場合は、そちらが優先されます。
    */
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://next-emperor.com").replace(/\/$/, ""),
-  title: "NEXT EMPEROR｜夜職から昼職へ。新しいキャリアの可能性を。",
+  title: "NEXT EMPEROR｜夜職から昼職へ。名古屋発、新しいキャリアの可能性を。",
   description:
-    "NEXT EMPERORは、夜職から昼職への新しい挑戦を応援します。採用マーケティング、人材集客、法人営業支援を通じて、人と企業の可能性を広げます。",
+    "NEXT EMPERORは、名古屋を拠点に、夜職から昼職への新しい挑戦を応援する会社です。採用マーケティング、人材集客、法人営業支援を通じて、人と企業の可能性を広げます。",
   keywords: [
     "夜職から昼職",
     "夜職 転職",
     "昼職 求人",
     "名古屋 昼職",
+    "名古屋 夜職 転職",
+    "愛知 昼職 求人",
     "キャリアチェンジ",
     "採用マーケティング",
     "法人営業支援",
@@ -36,6 +38,8 @@ export const siteConfig = {
    */
   logo: {
     src: "/images/logo-arch.png" as string | null,
+    /** 表示用の軽い画像（WebP）。幅ごとに用意し、端末に合ったものだけを読み込みます */
+    srcSet: "/images/logo-arch-400.webp 400w, /images/logo-arch-640.webp 640w",
     width: 1281,
     height: 624,
     alt: "NEXT EMPEROR",
@@ -71,7 +75,7 @@ export const siteConfig = {
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
     address: "〒460-0002 愛知県名古屋市中区丸の内3丁目19番23号 FPSビル9階",
-    tel: "052-000-0000", // 例："052-000-0000"
+    tel: "", // 電話番号が決まったら入れる（例："052-000-0000"）。空欄の間は表示されません
     established: "",
     /**
      * 事業内容（大項目と、その具体的な内容）

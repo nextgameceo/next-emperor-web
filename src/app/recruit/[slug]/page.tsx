@@ -130,7 +130,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
             </section>
           )}
 
-          <div className="mt-12 space-y-8">
+          <div id="apply" className="mt-12 scroll-mt-24 space-y-8">
             {job.selfHiring ? (
               <Notice>
                 こちらは、合同会社NEXT EMPEROR自身の求人です。応募はNEXT EMPEROR公式LINEで受け付け、選考・採用の判断も当社が行います。

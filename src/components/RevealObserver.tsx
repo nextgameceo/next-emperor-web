@@ -40,14 +40,33 @@ export default function RevealObserver() {
     if (fine) document.body.append(dot, ring);
     const pos = { x: -100, y: -100, rx: -100, ry: -100 };
 
+    // パララックスの対象（ページ移動や読み込み後に取り直す）
+    let px: HTMLElement[] = [];
+    const collect = () => {
+      px = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+    };
+    collect();
+    const mo = new MutationObserver(() => collect());
+    mo.observe(document.body, { childList: true, subtree: true });
+    let lastY = -1;
+    let lastH = -1;
+
     const loop = (t: number) => {
       lenis?.raf(t);
+      // スクロールしていない間は、位置の計算をしない（スマホの負担を減らす）
+      const y = window.scrollY;
+      const vh = window.innerHeight;
+      const moved = y !== lastY || vh !== lastH;
+      lastY = y;
+      lastH = vh;
       // スクロール量のバー（バーだけを直接動かす：ページ全体の再計算を起こさない）
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.round((window.scrollY / max) * 1000) / 1000 : 0;
-      if (bar && p !== lastP) {
-        bar.style.transform = `scaleX(${p})`;
-        lastP = p;
+      if (moved) {
+        const max = document.documentElement.scrollHeight - vh;
+        const p = max > 0 ? Math.round((y / max) * 1000) / 1000 : 0;
+        if (bar && p !== lastP) {
+          bar.style.transform = `scaleX(${p})`;
+          lastP = p;
+        }
       }
       // カーソル
       if (fine) {
@@ -56,15 +75,21 @@ export default function RevealObserver() {
         dot.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
         ring.style.transform = `translate3d(${pos.rx.toFixed(1)}px, ${pos.ry.toFixed(1)}px, 0)`;
       }
-      // パララックス
-      const vh = window.innerHeight;
-      document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) return;
-        const speed = Number(el.dataset.parallax) || 0.1;
-        const center = r.top + r.height / 2 - vh / 2;
-        el.style.transform = `translate3d(0, ${(-center * speed).toFixed(1)}px, 0)`;
-      });
+      // パララックス（先に位置をまとめて読み、あとでまとめて書く：再計算の連鎖を防ぐ）
+      if (moved && px.length) {
+        const reads = px.map((el) => {
+          const r = el.getBoundingClientRect();
+          const cur = Number(el.dataset.py || 0); // 今の移動量を戻して、元の位置で計算する
+          return { el, top: r.top - cur, h: r.height };
+        });
+        for (const { el, top, h } of reads) {
+          if (top + h < -200 || top > vh + 200) continue;
+          const speed = Number(el.dataset.parallax) || 0.1;
+          const off = -(top + h / 2 - vh / 2) * speed;
+          el.dataset.py = off.toFixed(1);
+          el.style.transform = `translate3d(0, ${off.toFixed(1)}px, 0)`;
+        }
+      }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -120,6 +145,7 @@ export default function RevealObserver() {
 
     return () => {
       cancelAnimationFrame(raf);
+      mo.disconnect();
       lenis?.destroy();
       dot.remove();
       ring.remove();
@@ -136,6 +162,18 @@ export default function RevealObserver() {
       return;
     }
     window.scrollTo(0, 0);
+  }, [pathname]);
+
+  // 画面の外にあるセクションの「ずっと動き続けるアニメーション」を一時停止（スマホの負担を減らす）
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const blocks = Array.from(document.querySelectorAll<HTMLElement>("main > *, footer"));
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle("is-off", !e.isIntersecting)),
+      { rootMargin: "200px 0px" },
+    );
+    blocks.forEach((b) => io.observe(b));
+    return () => io.disconnect();
   }, [pathname]);
 
   // スクロールで表示

@@ -144,7 +144,7 @@ export default function HomePage() {
             </div>
             <div className="body-text space-y-6">
               <p data-reveal>
-                NEXT EMPERORは、夜職から昼職へのキャリアチェンジを応援する
+                NEXT EMPERORは、名古屋を拠点に、夜職から昼職へのキャリアチェンジを応援する
                 <span className="hl text-ivory">採用マーケティング・法人営業支援会社</span>です。
               </p>
               <p data-reveal style={delay(0.1)}>

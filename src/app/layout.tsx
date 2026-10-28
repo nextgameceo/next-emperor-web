@@ -7,6 +7,7 @@ import "@fontsource/oxanium/600.css";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MobileCTA from "@/components/MobileCTA";
 import RevealObserver from "@/components/RevealObserver";
 import PageCurtain from "@/components/PageCurtain";
 import { siteConfig } from "@/config/site";
@@ -69,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* オープニング（初回のみ表示） */}
         <div className="intro-overlay" aria-hidden>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/logo-arch.png" alt="" className="intro-logo" />
+          <img src="/images/logo-arch-640.webp" alt="" width={640} height={312} className="intro-logo" />
           <span className="intro-bar" />
         </div>
         <div className="scroll-progress" aria-hidden />
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main" className="relative">{children}</main>
         <Footer />
+        <MobileCTA />
         <RevealObserver />
         <PageCurtain />
         {/* Google アナリティクス */}

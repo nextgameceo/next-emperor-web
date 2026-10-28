@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site";
 export const metadata: Metadata = {
   title: "会社概要",
   description:
-    "NEXT EMPERORの会社概要。夜職から昼職へのキャリアチェンジを応援する採用マーケティング・法人営業支援会社です。",
+    "NEXT EMPEROR（愛知県名古屋市）の会社概要。夜職から昼職へのキャリアチェンジを応援する採用マーケティング・法人営業支援会社です。",
   alternates: { canonical: "/about" },
 };
 

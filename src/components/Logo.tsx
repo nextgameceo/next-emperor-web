@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { siteConfig } from "@/config/site";
 
 type Props = { className?: string; priority?: boolean; sizes?: string };
@@ -11,18 +10,22 @@ type Props = { className?: string; priority?: boolean; sizes?: string };
 export default function Logo({
   className = "h-10 w-auto",
   priority = false,
-  sizes = "(max-width: 640px) 220px, 320px",
+  sizes = "200px",
 }: Props) {
   const { logo } = siteConfig;
 
   if (logo.src) {
     return (
-      <Image
-        src={logo.src}
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={logo.srcSet ? "/images/logo-arch-640.webp" : logo.src}
+        srcSet={logo.srcSet || undefined}
         alt={logo.alt}
         width={logo.width}
         height={logo.height}
-        priority={priority}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : undefined}
+        decoding="async"
         className={className}
         style={logo.softenGlow ? { filter: "saturate(0.82) brightness(0.96)" } : undefined}
         sizes={sizes}

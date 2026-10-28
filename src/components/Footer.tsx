@@ -118,7 +118,7 @@ export default function Footer() {
           >
             <SplitText>Next Emperor</SplitText>
           </p>
-          <div className="flex flex-col items-center gap-2 py-8 text-[0.7rem] tracking-[0.12em] text-ivory/40 sm:flex-row sm:justify-between">
+          <div className="flex flex-col items-center gap-2 py-8 text-[0.7rem] tracking-[0.12em] text-ivory/60 sm:flex-row sm:justify-between">
             <p>{siteConfig.legalName}</p>
             <p>© {new Date().getFullYear()} NEXT EMPEROR LLC. All Rights Reserved.</p>
           </div>
