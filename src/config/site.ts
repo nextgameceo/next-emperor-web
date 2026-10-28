@@ -47,6 +47,17 @@ export const siteConfig = {
    * 予備の設定（現在のデザインは単色背景のため未使用）
    */
   heroImage: null as string | null,
+  /**
+   * ソーシャルメディア（フッターにアイコンで表示）
+   * URLを入れたものだけ表示されます。空欄（""）のものは表示されません。
+   */
+  social: {
+    line: "https://lin.ee/qFAptqb",
+    instagram: "",
+    tiktok: "",
+    x: "",
+    youtube: "",
+  },
 
   /** 会社情報（値が空のものは会社概要ページに表示されません） */
   company: {

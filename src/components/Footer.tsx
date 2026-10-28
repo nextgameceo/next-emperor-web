@@ -5,6 +5,7 @@ import SplitText from "./SplitText";
 import { ButtonLink } from "./ui";
 import { siteConfig } from "@/config/site";
 import BgPhoto from "./BgPhoto";
+import SocialLinks from "./SocialLinks";
 
 /** フッターのリンク（3つのまとまり） */
 const groups = [
@@ -84,6 +85,10 @@ export default function Footer() {
               {siteConfig.company.email}
             </a>
           </p>
+          <div className="mt-7">
+            <p className="font-display text-[0.68rem] uppercase tracking-[0.28em] text-ice">Follow Us</p>
+            <SocialLinks className="mt-4" />
+          </div>
         </div>
         <nav aria-label="フッターナビゲーション" className="grid grid-cols-2 gap-10 sm:grid-cols-3">
           {groups.map((g) => (
