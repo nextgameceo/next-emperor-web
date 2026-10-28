@@ -9,6 +9,7 @@ type Key = keyof typeof siteConfig.social;
 const LABELS: Record<Key, string> = {
   line: "LINE公式アカウント",
   instagram: "Instagram",
+  threads: "Threads",
   tiktok: "TikTok",
   x: "X（旧Twitter）",
   youtube: "YouTube",
@@ -30,6 +31,12 @@ function Icon({ name }: { name: Key }) {
           <rect x="3" y="3" width="18" height="18" rx="5" />
           <circle cx="12" cy="12" r="4" />
           <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "threads":
+      return (
+        <svg {...common} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+          <path d="M18.6 8.4C17.6 5.2 15.2 3.5 12 3.5c-4.6 0-7.5 3.3-7.5 8.5s2.9 8.5 7.5 8.5c3.9 0 6.6-2.3 6.6-5.2 0-2.6-2.2-4.1-5.6-4.1-2.4 0-3.9 1.2-3.9 2.8 0 1.5 1.3 2.5 3 2.5 2.6 0 3.9-2 3.9-5 0-2.6-1.4-4.2-3.9-4.2-1.6 0-2.8.6-3.5 1.7" />
         </svg>
       );
     case "tiktok":

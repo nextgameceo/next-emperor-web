@@ -51,6 +51,7 @@ const orgJsonLd = {
   name: siteConfig.legalName,
   alternateName: siteConfig.name,
   url: siteConfig.url,
+  sameAs: Object.values(siteConfig.social).filter(Boolean),
   address: { "@type": "PostalAddress", addressRegion: "愛知県", addressLocality: "名古屋市", addressCountry: "JP" },
 };
 

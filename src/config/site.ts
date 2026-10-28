@@ -52,10 +52,11 @@ export const siteConfig = {
    * URLを入れたものだけ表示されます。空欄（""）のものは表示されません。
    */
   social: {
+    x: "https://x.com/next_emperor",
+    instagram: "https://www.instagram.com/nextemperor.llc/",
+    threads: "https://www.threads.com/@nextemperor.llc",
     line: "https://lin.ee/qFAptqb",
-    instagram: "",
     tiktok: "",
-    x: "",
     youtube: "",
   },
 
