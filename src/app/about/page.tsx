@@ -18,7 +18,11 @@ export default function AboutPage() {
   // 所在地の表示（郵便番号と住所を2段に分ける）
   const addressLines = (c.address || "").replace(/^(〒\d{3}-\d{4})\s*/, "$1\n");
   // 地図の検索に使う住所（郵便番号と階数を除く）
-  const mapQuery = (c.address || "").replace(/^〒\d{3}-\d{4}\s*/, "").replace(/\s*\d+階.*$/, "");
+  // 住所を「郵便番号／番地まで／建物名」に分ける
+  const addrMatch = (c.address || "").match(/^(〒\d{3}-\d{4})?\s*(\S+)\s*(.*)$/);
+  const access = { postal: addrMatch?.[1] ?? "", street: addrMatch?.[2] ?? c.address ?? "", building: addrMatch?.[3] ?? "" };
+  // 地図の検索に使う住所（「3丁目19番23号」→「3丁目19-23」の形にすると、1か所にピンが立ちやすい）
+  const mapQuery = access.street.replace(/(\d+)番(\d+)号?$/, "$1-$2");
   const rows = [
     { k: "会社名", v: c.legalName },
     { k: "英語表記", v: c.englishName },
@@ -125,27 +129,57 @@ export default function AboutPage() {
           {/* ===== ACCESS（Googleマップ） ===== */}
           {c.address && (
             <div className="mt-20" id="access">
-              <p className="font-display text-xs tracking-[0.3em] text-ice">Access</p>
-              <h3 className="mt-2 text-xl tracking-[0.08em] text-ivory">オフィスへのアクセス</h3>
-              <div className="mt-8">
-                <div className="card relative aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
+              <div className="theme-dark grid overflow-hidden border border-white/10 bg-black lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]" data-reveal>
+                {/* 地図（白黒にして、サイトの雰囲気に合わせる） */}
+                <div className="relative aspect-[4/3] overflow-hidden lg:order-2 lg:aspect-auto lg:min-h-[420px]">
                   <iframe
                     title={`${c.legalName} の所在地（Googleマップ）`}
-                    src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=ja&z=17&output=embed`}
-                    className="absolute inset-0 h-full w-full border-0"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=ja&z=16&output=embed`}
+                    className="map-mono absolute inset-0 h-full w-full border-0"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
                   />
+                  {/* 端をうっすら暗くして、カードと馴染ませる（操作の邪魔はしない） */}
+                  <div aria-hidden className="pointer-events-none absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.22)]" />
                 </div>
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-3 border border-charcoal-line px-5 py-3 text-sm tracking-[0.14em] text-ivory transition-colors hover:border-gold hover:text-gold"
-                >
-                  Googleマップで開く <span aria-hidden>↗</span>
-                </a>
+
+                {/* 住所と経路 */}
+                <div className="relative flex flex-col justify-between gap-10 p-8 sm:p-10 lg:order-1 lg:p-12">
+                  <div>
+                    <p className="flex items-center gap-3 font-display text-xs tracking-[0.3em] text-gold">
+                      <span aria-hidden className="h-[5px] w-[5px] rotate-45 bg-gold" />
+                      ACCESS
+                    </p>
+                    <h3 className="mt-5 text-xl tracking-[0.08em] text-ivory sm:text-2xl">オフィスへのアクセス</h3>
+                    <div className="mt-8 border-t border-white/10 pt-8">
+                      <p className="text-sm tracking-[0.1em] text-ivory">{c.legalName}</p>
+                      <address className="mt-4 not-italic text-sm leading-[2.1] tracking-[0.06em] text-ivory/70">
+                        {access.postal && <span className="block font-display tracking-[0.14em] text-ice">{access.postal}</span>}
+                        <span className="block">{access.street}</span>
+                        {access.building && <span className="block">{access.building}</span>}
+                      </address>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-gold px-7 text-sm font-semibold tracking-[0.12em] text-black transition-opacity hover:opacity-90"
+                    >
+                      経路を調べる <span aria-hidden>↗</span>
+                    </a>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full border border-white/20 px-7 text-sm tracking-[0.12em] text-ivory transition-colors hover:border-gold hover:text-gold"
+                    >
+                      Googleマップで開く <span aria-hidden>↗</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           )}
