@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import BgPhoto from "@/components/BgPhoto";
 import { LineIcon } from "@/components/Art";
 import { ButtonLink, Container, PageHero, Section, SectionHeading } from "@/components/ui";
@@ -94,6 +95,26 @@ export default function BusinessPage() {
         </Container>
       </Section>
 
+      <Section labelledBy="doc-title" divider={false}>
+        <Container>
+          <div className="card corners grid items-center gap-10 p-8 sm:p-12 lg:grid-cols-[1.1fr_1fr]">
+            <div>
+              <p className="eyebrow">SERVICE GUIDE</p>
+              <h2 id="doc-title" className="heading-lg mt-5">サービス資料（PDF）をダウンロード</h2>
+              <p className="body-text mt-5">
+                支援メニュー、採用マーケティング支援の中身、ご相談の流れを、1つの資料にまとめました。社内でのご検討にお役立てください。
+              </p>
+              <div className="mt-8">
+                <ButtonLink href="/document">資料をダウンロードする</ButtonLink>
+              </div>
+            </div>
+            <div className="relative aspect-video w-full overflow-hidden border border-charcoal-line bg-black">
+              <Image src="/images/service-guide-cover.webp" alt="NEXT EMPEROR 企業向けサービス資料の表紙" fill sizes="(max-width: 1024px) 100vw, 520px" className="object-cover" />
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       <Section labelledBy="flow-title" className="border-t border-charcoal-line" bg={<BgPhoto photo="clouds" mono blend="multiply" fade="both" opacity={0.12} />}>
         <Container>
           <SectionHeading eyebrow="ご相談の流れ" id="flow-title" title={<>How It <span className="metal-gold">Works</span></>} />
@@ -106,8 +127,11 @@ export default function BusinessPage() {
               </li>
             ))}
           </ol>
-          <div className="mt-16 text-center">
+          <div className="mt-16 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <ButtonLink href="/contact">法人のお問い合わせ</ButtonLink>
+            <ButtonLink href="/document" variant="outline">
+              サービス資料をダウンロード
+            </ButtonLink>
           </div>
         </Container>
       </Section>

@@ -5,6 +5,7 @@
  * ・メールアプリで崩れないよう、表（table）と直接指定のスタイルで組んでいます。
  */
 import type { ContactInput } from "../src/lib/contact";
+import { SERVICE_GUIDE, type DocumentInput } from "../src/lib/document";
 
 export const MAIL_BRAND = {
   site: "https://next-emperor.com",
@@ -166,6 +167,59 @@ export function adminNoticeHtml(input: ContactInput, sentAt: string, logo = MAIL
     notes: [
       "このメールにそのまま返信すると、お問い合わせいただいた方に届きます。",
       "お問い合わせいただいた方には、受付完了の自動返信メールが送られています。",
+    ],
+    logo,
+  });
+}
+
+function documentRows(input: DocumentInput, sentAt: string): string {
+  return [
+    row("会社名", esc(input.company)),
+    row("担当者名", `${esc(input.name)} 様`),
+    row("メールアドレス", esc(input.email)),
+    row("電話番号", esc(input.phone || "（未入力）")),
+    row("請求日時", esc(sentAt)),
+  ].join("");
+}
+
+/** 資料をダウンロードした方に届くメール（資料のリンク付き） */
+export function documentReplyHtml(input: DocumentInput, sentAt: string, logo = MAIL_BRAND.logo): string {
+  const b = MAIL_BRAND;
+  return shell({
+    title: "サービス資料のご案内",
+    preheader: "資料をご請求いただき、ありがとうございます。下のボタンから資料をダウンロードいただけます。",
+    eyebrow: "SERVICE GUIDE",
+    heading: "サービス資料を<br>お届けします",
+    intro: `${esc(input.company)}<br>${esc(input.name)} 様<br><br>
+      このたびは${esc(b.company)}のサービス資料をご請求いただき、誠にありがとうございます。<br>
+      下のボタンから、資料（PDF）をダウンロードいただけます。採用マーケティングや営業支援について、ご不明な点やご相談があれば、お気軽にこのメールへご返信ください。`,
+    sectionLabel: "YOUR REQUEST",
+    rows: documentRows(input, sentAt),
+    button: { href: `${b.site}${SERVICE_GUIDE.path}`, label: "資料をダウンロードする" },
+    notes: [
+      "本メールは資料のご請求にともない、自動でお送りしています。",
+      `このメールに返信いただくと、担当者（${esc(b.email)}）に届きます。`,
+      "お心当たりのない場合は、お手数ですが本メールを破棄してください。",
+    ],
+    logo,
+  });
+}
+
+/** 社内（通知先）に届く「資料請求の通知メール」 */
+export function documentAdminHtml(input: DocumentInput, sentAt: string, logo = MAIL_BRAND.logo): string {
+  const subject = encodeURIComponent(`資料のご請求ありがとうございます（${MAIL_BRAND.company}）`);
+  return shell({
+    title: "サービス資料のダウンロード",
+    preheader: `${input.company} ${input.name}様がサービス資料をダウンロードしました。`,
+    eyebrow: "NEW LEAD",
+    heading: "サービス資料が<br>ダウンロードされました",
+    intro: `公式サイトの資料ダウンロードフォームより、<br>${esc(input.company)} ${esc(input.name)} 様が資料を請求しました。`,
+    sectionLabel: "LEAD DETAILS",
+    rows: documentRows(input, sentAt),
+    button: { href: `mailto:${encodeURIComponent(input.email)}?subject=${subject}`, label: "このお客様にメールする" },
+    notes: [
+      "このメールにそのまま返信すると、資料を請求した方に届きます。",
+      "資料を請求した方には、資料のリンクを記載したメールが自動で送られています。",
     ],
     logo,
   });

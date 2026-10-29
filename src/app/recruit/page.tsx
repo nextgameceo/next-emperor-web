@@ -6,6 +6,7 @@ import ApplyCounter from "@/components/ApplyCounter";
 import BigMarquee from "@/components/BigMarquee";
 import { Sparkle } from "@/components/Decor";
 import JobCard from "@/components/JobCard";
+import LineFollow from "@/components/LineFollow";
 import RecruitNotice from "@/components/RecruitNotice";
 import { ApplyFlow, FaqSection } from "@/components/Sections";
 import { Container, PageHero, Section, SectionHeading, delay } from "@/components/ui";
@@ -210,6 +211,24 @@ export default function RecruitPage() {
               </p>
             </div>
           )}
+
+          <div className="mt-16 grid gap-6 lg:grid-cols-2">
+            <Link href="/shindan" className="card corners group relative flex flex-col justify-between gap-6 p-7 sm:p-9">
+              <div>
+                <p className="eyebrow">CAREER CHECK</p>
+                <p className="mt-3 text-[1.05rem] font-medium leading-[1.7] tracking-[0.04em] text-ivory transition-colors group-hover:text-gold-soft">
+                  どの仕事が合うか迷ったら、1分の適職診断
+                </p>
+                <p className="mt-2 text-sm leading-[1.9] text-ivory-muted">
+                  7つの質問に答えるだけで、夜の経験が活きる強みのタイプと、仕事の例がわかります。
+                </p>
+              </div>
+              <p className="font-display text-xs tracking-[0.2em] text-gold transition-colors group-hover:text-ice">
+                診断をはじめる <span aria-hidden>→</span>
+              </p>
+            </Link>
+            <LineFollow place="recruit" className="lg:flex-col lg:items-start" />
+          </div>
         </Container>
       </Section>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import { Container, Notice, PageHero, Section } from "@/components/ui";
 
@@ -22,6 +23,12 @@ export default function ContactPage() {
           <div className="mb-12">
             <Notice>
               こちらは法人のお客様向けのお問い合わせフォームです。求人への応募は、各求人ページの応募窓口へ直接お進みください。
+              <br />
+              まずはサービスの内容を知りたい方は、
+              <Link href="/document" className="text-gold underline underline-offset-4">
+                サービス資料（PDF）
+              </Link>
+              をダウンロードいただけます。
             </Notice>
           </div>
           <ContactForm />

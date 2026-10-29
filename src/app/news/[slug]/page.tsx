@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ArticleCta from "@/components/ArticleCta";
 import PostCard from "@/components/PostCard";
+import ShareButtons from "@/components/ShareButtons";
 import { Ornament } from "@/components/Decor";
 import { ButtonLink, Container, Eyebrow, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
-import { formatDate, getAllPosts, getPost } from "@/lib/blog";
+import { formatDate, getAllPosts, getPost, getRelatedPosts } from "@/lib/blog";
 
 type Params = { slug: string };
 
@@ -41,9 +43,8 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   const post = getPost((await params).slug);
   if (!post) notFound();
 
-  const others = getAllPosts()
-    .filter((p) => p.slug !== post.slug)
-    .slice(0, 3);
+  const others = getRelatedPosts(post, 3);
+  const pageUrl = `${siteConfig.url}/news/${post.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -84,6 +85,9 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             <h1 className="fade-up-delay mt-6 text-[1.6rem] font-medium leading-[1.6] tracking-[0.04em] text-ivory sm:text-[2.2rem]">
               {post.title}
             </h1>
+            <div className="fade-up-delay mt-8">
+              <ShareButtons url={pageUrl} title={post.title} label="シェア" />
+            </div>
           </Container>
         </header>
 
@@ -96,9 +100,15 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             )}
             <div className="prose-ne" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-            <Ornament className="mt-16" />
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-              <ButtonLink href="/recruit">求人情報を見る</ButtonLink>
+            <div className="mt-14 border-t border-ivory/10 pt-8">
+              <ShareButtons url={pageUrl} title={post.title} />
+            </div>
+
+            <Ornament className="mt-14" />
+            <div className="mt-12">
+              <ArticleCta audience={post.audience} />
+            </div>
+            <div className="mt-10 flex justify-center">
               <ButtonLink href="/news" variant="outline">
                 記事一覧へ戻る
               </ButtonLink>
@@ -111,10 +121,18 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         <Section labelledBy="more-title" band>
           <Container>
             <div data-reveal>
-              <Eyebrow>その他の記事</Eyebrow>
+              <Eyebrow>{post.audience === "general" ? "その他の記事" : "あわせて読みたい"}</Eyebrow>
             </div>
             <h2 id="more-title" className="heading-en mt-5" data-reveal>
-              More <span className="metal-gold">Stories</span>
+              {post.audience === "general" ? (
+                <>
+                  More <span className="metal-gold">Stories</span>
+                </>
+              ) : (
+                <>
+                  Related <span className="metal-gold">Stories</span>
+                </>
+              )}
             </h2>
             <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {others.map((p) => (

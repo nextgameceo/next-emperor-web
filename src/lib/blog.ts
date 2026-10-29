@@ -22,11 +22,30 @@ export type PostMeta = {
   category: string;
   excerpt: string;
   cover?: string;
+  /** 読者：seeker（求職者向け）/ business（企業向け）/ general（どちらでもない） */
+  audience: Audience;
 };
+
+export type Audience = "seeker" | "business" | "general";
 
 export type Post = PostMeta & { html: string };
 
 marked.setOptions({ gfm: true, breaks: true });
+
+/**
+ * 記事の読者を判定する
+ * ・frontmatter に audience: "seeker" | "business" があればそれを使う
+ * ・なければ、本文の最後にあるサイト内リンク（記事末尾の誘導先）で判定
+ *   /contact・/business・/service・/document → 企業向け、/recruit・/shindan → 求職者向け
+ */
+function detectAudience(value: unknown, content: string): Audience {
+  if (value === "seeker" || value === "business" || value === "general") return value;
+  const links = [...content.matchAll(/\]\(\/([a-z]+)/g)].map((m) => m[1]).filter((l) => l !== "news");
+  const last = links[links.length - 1];
+  if (last && ["contact", "business", "service", "document"].includes(last)) return "business";
+  if (last && ["recruit", "shindan"].includes(last)) return "seeker";
+  return "general";
+}
 
 function readFile(file: string) {
   const raw = fs.readFileSync(path.join(BLOG_DIR, file), "utf8");
@@ -41,6 +60,7 @@ function readFile(file: string) {
       category: String(data.category ?? "お知らせ"),
       excerpt: String(data.excerpt ?? ""),
       cover: data.cover ? String(data.cover) : undefined,
+      audience: detectAudience(data.audience, content),
     } satisfies PostMeta,
     draft: data.draft === true,
     content,
@@ -75,6 +95,14 @@ export function getPost(slug: string): Post | null {
   const p = readFile(file);
   if (!isPublic(p.draft, p.meta.date)) return null;
   return { ...p.meta, html: marked.parse(p.content, { async: false }) as string };
+}
+
+/** 関連記事：同じ読者向けの記事を新しい順に優先し、足りなければ他の記事で埋める */
+export function getRelatedPosts(post: PostMeta, limit = 3): PostMeta[] {
+  const others = getAllPosts().filter((p) => p.slug !== post.slug);
+  const same = others.filter((p) => post.audience !== "general" && p.audience === post.audience);
+  const rest = others.filter((p) => !same.includes(p));
+  return [...same, ...rest].slice(0, limit);
 }
 
 export function getCategories(): string[] {

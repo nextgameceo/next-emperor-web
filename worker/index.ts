@@ -1,7 +1,8 @@
 /**
  * Cloudflare Workers 用のプログラム
  * ------------------------------------------------------------
- * ・/api/contact だけをここで処理し、それ以外はサイトの静的ファイル（out フォルダ）を返します。
+ * ・/api/contact（お問い合わせ）と /api/document（資料ダウンロード）などをここで処理し、
+ *   それ以外はサイトの静的ファイル（out フォルダ）を返します。
  * ・お問い合わせメールは Resend（https://resend.com）で送信します。
  *   社内への通知メールと、お問い合わせした方への自動返信メールの2通を送ります（デザインは worker/mail.ts）。
  * ・お問い合わせの送信先・送信元は、下の DEFAULT_TO / DEFAULT_FROM で設定しています。
@@ -12,7 +13,8 @@
  *   APIキーが登録されるまでは送信成功を偽装せず、「送信先が未設定」と返します。
  */
 import { validateContact, type ContactInput } from "../src/lib/contact";
-import { MAIL_BRAND, adminNoticeHtml, autoReplyHtml } from "./mail";
+import { validateDocument, type DocumentInput, SERVICE_GUIDE } from "../src/lib/document";
+import { MAIL_BRAND, adminNoticeHtml, autoReplyHtml, documentAdminHtml, documentReplyHtml } from "./mail";
 import { jobs } from "../src/data/jobs";
 
 export { ApplyCounter } from "./counter";
@@ -183,6 +185,123 @@ async function handleContact(req: Request, env: Env): Promise<Response> {
   return json({ ok: true });
 }
 
+/** サービス資料のダウンロード（会社名・担当者名・メールを受け取り、資料のリンクをメールで送る） */
+async function handleDocument(req: Request, env: Env): Promise<Response> {
+  if (req.method === "GET") return json({ configured: isConfigured(env) });
+  if (req.method !== "POST") return json({ ok: false, message: "不正なリクエストです。" }, 405);
+
+  const origin = req.headers.get("origin");
+  if (origin && new URL(origin).host !== new URL(req.url).host) {
+    return json({ ok: false, message: "不正なリクエストです。" }, 403);
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    body = await req.json();
+  } catch {
+    return json({ ok: false, message: "不正なリクエストです。" }, 400);
+  }
+
+  if (typeof body.website === "string" && body.website.trim() !== "") return json({ ok: true });
+
+  const startedAt = Number(body.startedAt);
+  if (!Number.isFinite(startedAt) || Date.now() - startedAt < 3000) {
+    return json({ ok: false, message: "送信が早すぎます。内容をご確認のうえ、もう一度お試しください。" }, 400);
+  }
+
+  const ip = req.headers.get("cf-connecting-ip") ?? "unknown";
+  if (rateLimited(ip)) {
+    return json({ ok: false, message: "短時間に複数回送信されました。しばらく時間をおいてお試しください。" }, 429);
+  }
+
+  const input: DocumentInput = {
+    company: String(body.company ?? "").trim(),
+    name: String(body.name ?? "").trim(),
+    email: String(body.email ?? "").trim(),
+    phone: String(body.phone ?? "").trim(),
+    agree: body.agree === true,
+  };
+  const errors = validateDocument(input);
+  if (Object.keys(errors).length > 0) {
+    return json({ ok: false, message: "入力内容をご確認ください。", errors }, 422);
+  }
+
+  if (!isConfigured(env)) {
+    return json(
+      {
+        ok: false,
+        code: "NOT_CONFIGURED",
+        message: "現在、資料ダウンロードの受付を準備中です。お手数ですが、お問い合わせフォームからご請求ください。",
+      },
+      503,
+    );
+  }
+
+  const sentAt = new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
+  const from = env.CONTACT_FROM_EMAIL?.trim() || DEFAULT_FROM;
+  const details = [
+    `■ 会社名：${input.company}`,
+    `■ 担当者名：${input.name} 様`,
+    `■ メールアドレス：${input.email}`,
+    `■ 電話番号：${input.phone || "（未入力）"}`,
+    "",
+    `請求日時：${sentAt}`,
+  ].join("\n");
+  const send = (payload: Record<string, unknown>) =>
+    fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, ...payload }),
+    });
+
+  // ① 社内への通知（これが失敗したら受付失敗として扱う）
+  try {
+    const res = await send({
+      to: (env.CONTACT_TO_EMAIL?.trim() || DEFAULT_TO).split(",").map((s) => s.trim()),
+      reply_to: input.email,
+      subject: `【資料ダウンロード】${input.company} ${input.name}様`,
+      html: documentAdminHtml(input, sentAt),
+      text: `NEXT EMPEROR 公式サイトよりサービス資料がダウンロードされました。\n\n${details}`,
+    });
+    if (!res.ok) {
+      console.error("Resend error", res.status, await res.text());
+      throw new Error("send failed");
+    }
+  } catch {
+    return json({ ok: false, message: "送信に失敗しました。時間をおいて再度お試しください。" }, 502);
+  }
+
+  // ② 請求した方へ、資料のリンクを記載したメール（失敗しても画面からダウンロードできる）
+  try {
+    const url = `${MAIL_BRAND.site}${SERVICE_GUIDE.path}`;
+    const res = await send({
+      to: [input.email],
+      reply_to: MAIL_BRAND.email,
+      subject: `【${MAIL_BRAND.company}】サービス資料のご案内`,
+      html: documentReplyHtml(input, sentAt),
+      text: [
+        `${input.company}`,
+        `${input.name} 様`,
+        "",
+        `このたびは${MAIL_BRAND.company}のサービス資料をご請求いただき、誠にありがとうございます。`,
+        "以下のURLから、資料（PDF）をダウンロードいただけます。",
+        url,
+        "",
+        "※ 本メールは資料のご請求にともない、自動でお送りしています。",
+        `※ このメールに返信いただくと、担当者（${MAIL_BRAND.email}）に届きます。`,
+        "",
+        "NEXT EMPEROR LLC",
+        `${MAIL_BRAND.email} | ${MAIL_BRAND.site}`,
+      ].join("\n"),
+    });
+    if (!res.ok) console.error("Document mail error", res.status, await res.text());
+  } catch (e) {
+    console.error("Document mail error", e);
+  }
+
+  return json({ ok: true, url: SERVICE_GUIDE.path });
+}
+
 /** LINE応募フォームの送信数（GET：取得 / POST：1回加算） */
 async function handleApplyCount(req: Request, env: Env): Promise<Response> {
   if (!env.COUNTER) return json({ total: 0, counts: {}, available: false });
@@ -225,6 +344,7 @@ export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
     if (url.pathname === "/api/contact") return handleContact(req, env);
+    if (url.pathname === "/api/document") return handleDocument(req, env);
     if (url.pathname === "/api/apply-count") return handleApplyCount(req, env);
     return env.ASSETS.fetch(req);
   },

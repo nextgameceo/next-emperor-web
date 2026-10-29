@@ -22,7 +22,9 @@ const groups = [
     title: "Career",
     items: [
       { label: "求人情報", href: "/recruit" },
+      { label: "適職診断", href: "/shindan" },
       { label: "法人向けサービス", href: "/business" },
+      { label: "サービス資料", href: "/document" },
     ],
   },
   {
