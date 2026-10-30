@@ -33,8 +33,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       title: post.title,
       description: post.excerpt || siteConfig.description,
       publishedTime: post.date,
-      // アイキャッチ画像があればそれを、なければサイト共通のシェア画像を使用
-      images: [{ url: post.cover || "/opengraph-image.png", width: 1200, height: 630 }],
+      // アイキャッチ画像があればそれを、なければ記事ごとに自動で作るシェア画像（opengraph-image.tsx）を使用
+      ...(post.cover ? { images: [{ url: post.cover, width: 1200, height: 630 }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || siteConfig.description,
+      images: [post.cover || `/news/${post.slug}/opengraph-image`],
     },
   };
 }
@@ -52,7 +58,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
     headline: post.title,
     datePublished: post.date,
     description: post.excerpt,
-    image: post.cover ? `${siteConfig.url}${post.cover}` : `${siteConfig.url}/opengraph-image.png`,
+    image: post.cover ? `${siteConfig.url}${post.cover}` : `${siteConfig.url}/news/${post.slug}/opengraph-image`,
     author: { "@type": "Organization", name: siteConfig.legalName },
     publisher: { "@type": "Organization", name: siteConfig.legalName },
     mainEntityOfPage: `${siteConfig.url}/news/${post.slug}`,

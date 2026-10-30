@@ -348,6 +348,15 @@ export default {
     if (url.pathname === "/api/document") return handleDocument(req, env);
     if (url.pathname === "/api/apply-count") return handleApplyCount(req, env);
     if (url.pathname === "/api/analytics-sync") return handleAnalyticsSync(req, env);
+    // 記事ごとのシェア画像は拡張子なしで書き出されるため、画像（PNG）として返す
+    if (/^\/news\/[^/]+\/opengraph-image$/.test(url.pathname)) {
+      const res = await env.ASSETS.fetch(req);
+      if (!res.ok) return res;
+      const headers = new Headers(res.headers);
+      headers.set("Content-Type", "image/png");
+      headers.set("Cache-Control", "public, max-age=86400");
+      return new Response(res.body, { status: res.status, headers });
+    }
     return env.ASSETS.fetch(req);
   },
 
