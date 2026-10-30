@@ -1,3 +1,4 @@
+import { handleAnalyticsSync, syncAnalytics, type AnalyticsEnv } from "./analytics";
 /**
  * Cloudflare Workers 用のプログラム
  * ------------------------------------------------------------
@@ -19,7 +20,7 @@ import { jobs } from "../src/data/jobs";
 
 export { ApplyCounter } from "./counter";
 
-type Env = {
+type Env = AnalyticsEnv & {
   ASSETS: { fetch: (req: Request) => Promise<Response> };
   RESEND_API_KEY?: string;
   CONTACT_TO_EMAIL?: string;
@@ -346,6 +347,17 @@ export default {
     if (url.pathname === "/api/contact") return handleContact(req, env);
     if (url.pathname === "/api/document") return handleDocument(req, env);
     if (url.pathname === "/api/apply-count") return handleApplyCount(req, env);
+    if (url.pathname === "/api/analytics-sync") return handleAnalyticsSync(req, env);
     return env.ASSETS.fetch(req);
+  },
+
+  // 毎朝のアクセスデータ収集（wrangler.jsonc の triggers.crons）
+  async scheduled(_event: unknown, env: Env, ctx: { waitUntil(p: Promise<unknown>): void }) {
+    ctx.waitUntil(
+      syncAnalytics(env).then(
+        (r) => console.log("analytics sync", r.notes.join(" / ")),
+        (e) => console.error("analytics sync failed", (e as Error).message),
+      ),
+    );
   },
 };
