@@ -26,6 +26,8 @@
   "vars": {
     "GSC_SITE": "sc-domain:next-emperor.com",
     // 書き込み先：Googleドライブ「NEXT EMPEROR アクセスデータ（自動更新）」
-    "ANALYTICS_SHEET_ID": "1Hf6ieHdjMeSklF41CTxwmcptHdGoSOoE5PNO44sSRkk"
+    "ANALYTICS_SHEET_ID": "1Hf6ieHdjMeSklF41CTxwmcptHdGoSOoE5PNO44sSRkk",
+    // Googleアナリティクス（NEXT EMPEROR ＞ next-emperor.com）のプロパティID
+    "GA4_PROPERTY_ID": "560398334"
   }
 }
