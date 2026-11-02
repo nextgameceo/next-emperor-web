@@ -23,7 +23,7 @@ export const partners: Partner[] = [
   {
     id: "one",
     name: "株式会社ONE",
-    business: ["太陽光訪問販売事業"],
+    business: ["訪問販売事業"],
     recruiting: ["訪問販売スタッフ"],
     approved: false,
   },

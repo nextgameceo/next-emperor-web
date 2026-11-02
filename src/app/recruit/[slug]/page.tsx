@@ -90,6 +90,25 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
             </section>
           )}
 
+          {job.highlights && job.highlights.length > 0 && (
+            <section className="mb-16" data-reveal>
+              <p className="eyebrow">WHY THIS JOB</p>
+              <h2 className="heading-en mt-3 text-2xl">この仕事の強み</h2>
+              <ol className="mt-8 grid gap-4 sm:grid-cols-2">
+                {job.highlights.map((h, i) => (
+                  <li key={h.title} className="card corners relative overflow-hidden p-7">
+                    <span aria-hidden className="pointer-events-none absolute -right-1 -top-4 select-none font-display text-[4.5rem] font-semibold leading-none text-gold/[0.08]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p className="font-display text-xs tracking-[0.24em] text-gold">{String(i + 1).padStart(2, "0")}</p>
+                    <h3 className="mt-3 text-lg tracking-[0.06em] text-ivory">{h.title}</h3>
+                    <p className="mt-3 text-sm leading-[2] text-ivory-muted">{h.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
           <h2 className="mb-6 text-sm tracking-[0.16em] text-ice">募集内容</h2>
           <dl className="border-t border-charcoal-line">
             {rows.map((r) => (
