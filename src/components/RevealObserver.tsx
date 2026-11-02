@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
  * ・data-reveal：画面に入ると is-visible が付き、ふわっと表示（"mask" は下から文字がせり上がる / "line" は線が伸びる）
  * ・data-parallax="0.1"：スクロールに合わせて、ゆっくり上下する（数値が大きいほど大きく動く）
  * ・.btn-pill / [data-magnetic]：マウスに少し吸い寄せられるボタン（PCのみ）
- * ・.card / [data-tilt]：マウスの位置に合わせて、カードが少し傾く（PCのみ）
+ * ・.card / [data-tilt]：マウスの位置に合わせて、カードの上を光が追う（PCのみ）
  * ・金色のカーソル、画面上部のスクロール量のバー
  * ・「動きを減らす」設定の端末では、すべて控えめ（またはなし）になります
  */
@@ -114,11 +114,9 @@ export default function RevealObserver() {
       if (card && card.getBoundingClientRect().width < 900) {
         tilted = card;
         const cr = card.getBoundingClientRect();
-        const px = (e.clientX - cr.left) / cr.width - 0.5;
-        const py = (e.clientY - cr.top) / cr.height - 0.5;
         card.style.setProperty("--mx", `${(e.clientX - cr.left).toFixed(0)}px`);
         card.style.setProperty("--my", `${(e.clientY - cr.top).toFixed(0)}px`);
-        card.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-4px)`;
+        // ※カードを傾ける動きはやめ、光（スポットライト）がカーソルを追うだけにする（動きの引き算）
       }
 
       const target = (e.target as HTMLElement)?.closest?.<HTMLElement>(".btn-pill, [data-magnetic]") ?? null;

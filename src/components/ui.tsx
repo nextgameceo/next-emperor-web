@@ -88,8 +88,8 @@ export function SectionHeading({
   );
   if (!art) return heading;
   return (
-    <div className="title-block flex items-center gap-5 sm:gap-8" data-reveal>
-      <TitleArt name={art} className="h-[4.5rem] w-[4.5rem] sm:h-24 sm:w-24 lg:h-[7.5rem] lg:w-[7.5rem]" />
+    <div className="title-block flex items-center gap-4 sm:gap-8" data-reveal>
+      <TitleArt name={art} className="h-[3.6rem] w-[3.6rem] sm:h-24 sm:w-24 lg:h-[7.5rem] lg:w-[7.5rem]" />
       <div className="min-w-0">
         {heading}
         <span aria-hidden className="title-underline mt-5 block h-px w-full max-w-[16rem] origin-left bg-gradient-to-r from-[rgb(var(--c-gold))] via-[rgb(var(--c-gold)/0.5)] to-transparent" />

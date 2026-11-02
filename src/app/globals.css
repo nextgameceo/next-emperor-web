@@ -986,7 +986,8 @@ html.cursor-hover .cursor-ring {
    セクションタイトルのマーク（TitleArt）
    ========================================================= */
 .heading-en-lg {
-  font-size: 2.3rem;
+  font-size: 1.85rem;
+  line-height: 1.15;
 }
 @media (min-width: 640px) {
   .heading-en-lg { font-size: 3.8rem; }
@@ -998,10 +999,7 @@ html.cursor-hover .cursor-ring {
   color: rgb(var(--c-gold));
 }
 @media (prefers-reduced-motion: no-preference) {
-  .title-orbit {
-    transform-origin: 50px 50px;
-    animation: spin360 18s linear infinite;
-  }
+  /* 見出しマークの輪は回さない（動きの引き算：静かに置くほうが上品） */
   html.js .title-block .title-art {
     opacity: 0;
     transform: scale(0.6) rotate(-60deg);
