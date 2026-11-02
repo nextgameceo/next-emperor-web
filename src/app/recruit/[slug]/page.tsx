@@ -84,8 +84,8 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
           {job.industry && (
             <section className="mb-14" data-reveal>
-              <p className="eyebrow">ABOUT THE INDUSTRY</p>
-              <h2 className="heading-en mt-3 text-2xl">業種について</h2>
+              <p className="eyebrow">ABOUT THE JOB</p>
+              <h2 className="heading-en mt-3 text-2xl">仕事について</h2>
               <p className="body-text mt-6 whitespace-pre-line">{job.industry}</p>
             </section>
           )}
