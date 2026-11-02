@@ -72,9 +72,9 @@ export function ApplyFlow({ divider = true }: { divider?: boolean }) {
 }
 
 /** よくある質問（開閉式）：左に見出し、右に質問の一覧 */
-export function FaqSection() {
+export function FaqSection({ tone = "light" }: { tone?: "light" | "dark" | "cream" }) {
   return (
-    <Section labelledBy="faq-title" band>
+    <Section labelledBy="faq-title" band tone={tone}>
       <Container>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.8fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">

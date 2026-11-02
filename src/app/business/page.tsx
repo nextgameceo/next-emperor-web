@@ -77,7 +77,7 @@ export default function BusinessPage() {
         </Container>
       </Section>
 
-      <Section labelledBy="menu-title" band>
+      <Section labelledBy="menu-title" tone="dark">
         <Container>
           <SectionHeading eyebrow="支援内容" id="menu-title" title={<>What <span className="metal-gold">We Do</span></>} />
           <div className="mt-14 grid gap-6 md:grid-cols-2">

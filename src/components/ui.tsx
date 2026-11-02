@@ -22,6 +22,7 @@ export function Section({
   divider = true,
   band = false,
   bg,
+  tone = "light",
 }: {
   children: ReactNode;
   id?: string;
@@ -32,9 +33,11 @@ export function Section({
   band?: boolean;
   /** 背景に敷くもの（写真など） */
   bg?: ReactNode;
+  /** 背景のトーン：light=白（標準）/ dark=漆黒（大事なセクションを際立たせる）/ cream=生成り色（白と黒の間のクッション） */
+  tone?: "light" | "dark" | "cream";
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`theme-light relative py-24 sm:py-32 ${band ? "band" : ""} ${className}`}>
+    <section id={id} aria-labelledby={labelledBy} className={`${tone === "dark" ? "theme-dark section-dark" : tone === "cream" ? "theme-light section-cream" : "theme-light"} relative py-24 sm:py-32 ${band && tone === "light" ? "band" : ""} ${className}`}>
       {/* 縦の細い罫線（PC）：ヒーローから続くグリッド */}
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
         <div className="mx-auto h-full max-w-site border-x border-ivory/[0.07]" />

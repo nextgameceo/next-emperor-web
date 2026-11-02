@@ -93,7 +93,7 @@ export default function RecruitPage() {
       {careers.length > 0 && (
         <>
         <BigMarquee words={["Sales", "Installer", "Your Next Stage"]} reverse />
-        <Section labelledBy="career-title" band>
+        <Section labelledBy="career-title" tone="dark">
           <Container>
             <SectionHeading
               eyebrow="ご紹介している職種"
@@ -233,7 +233,7 @@ export default function RecruitPage() {
       </Section>
 
       <ApplyFlow />
-      <FaqSection />
+      <FaqSection tone="cream" />
     </>
   );
 }

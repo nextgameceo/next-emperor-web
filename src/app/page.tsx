@@ -235,7 +235,7 @@ export default function HomePage() {
       <SectionDivider no={3} label="Your Strength" total={10} />
 
       {/* ===== STRENGTHS ===== */}
-      <Section labelledBy="strength-title">
+      <Section labelledBy="strength-title" tone="dark">
         <Container>
           <SectionHeading
             art="sales"
@@ -280,7 +280,7 @@ export default function HomePage() {
       <BigMarquee words={["Hospitality", "Communication", "Sales Drive", "Resilience"]} />
 
       {/* ===== SERVICE ===== */}
-      <Section labelledBy="service-title" band>
+      <Section labelledBy="service-title" tone="dark">
         <Container>
           <SectionHeading
             art="briefcase"
@@ -474,7 +474,7 @@ export default function HomePage() {
       <SectionDivider no={9} label="FAQ" total={10} />
 
       {/* ===== FAQ ===== */}
-      <FaqSection />
+      <FaqSection tone="cream" />
 
       <SectionDivider no={10} label="Grow Together" total={10} />
 

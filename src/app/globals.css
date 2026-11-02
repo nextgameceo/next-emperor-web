@@ -1054,3 +1054,25 @@ html.cursor-hover .cursor-ring {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* =========================================================
+   セクションのトーン（白・黒・生成り）
+   ========================================================= */
+/* 漆黒のセクション：中央下からほのかな金の光 */
+main > section.section-dark {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 110%, rgba(221, 180, 110, 0.1), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(127, 214, 242, 0.05), transparent 70%),
+    #050507;
+}
+main > section.section-dark .body-text {
+  color: rgb(var(--c-ivory-muted));
+}
+/* 生成り色のセクション */
+main > section.theme-light.section-cream {
+  --tint: 246 240 228;
+  background-color: rgb(var(--tint));
+}
+main > section.theme-light.section-cream .card {
+  --card-face: #fffdf8;
+}
