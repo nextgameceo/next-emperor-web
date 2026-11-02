@@ -39,6 +39,7 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
   const rows = [
     { k: hidden ? "業種" : "企業名", v: company },
     { k: "仕事内容", v: job.description },
+    { k: "応募資格", v: job.requirements },
     { k: "勤務地", v: job.location },
     { k: "雇用形態", v: job.employmentType },
     { k: "給与", v: job.salary },
