@@ -22,12 +22,22 @@ type Values = {
   name: string;
   age: string;
   area: string;
-  time: string;
   career: string;
-  note: string;
+  d1: string;
+  d2: string;
+  d3: string;
 };
 
-const initial: Values = { name: "", age: "", area: "", time: "", career: "", note: "" };
+const initial: Values = { name: "", age: "", area: "", career: "", d1: "", d2: "", d3: "" };
+
+const WEEK = ["日", "月", "火", "水", "木", "金", "土"];
+/** "2026-11-10T14:00" → "11月10日（月）14:00" */
+const fmtDate = (s: string) => {
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  if (!m) return s;
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return `${Number(m[2])}月${Number(m[3])}日（${WEEK[d.getDay()]}）${m[4]}:${m[5]}`;
+};
 
 export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, selfHiring = false }: Props) {
   const [v, setV] = useState<Values>(initial);
@@ -42,8 +52,17 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, se
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs: typeof errors = {};
-    if (!v.name.trim()) errs.name = "お名前（ニックネーム可）を入力してください。";
+    if (!v.name.trim()) errs.name = "氏名を入力してください。";
     if (!/^\d{2}$/.test(v.age.trim())) errs.age = "年齢を数字で入力してください（例：25）。";
+    if (!v.area.trim()) errs.area = "お住まいのエリアを入力してください。";
+    if (!v.career.trim()) errs.career = "現在の仕事を入力してください。";
+    const now = Date.now();
+    (["d1", "d2", "d3"] as const).forEach((k, i) => {
+      if (!v[k]) errs[k] = `面接の第${i + 1}希望の日時を選んでください。`;
+      else if (new Date(v[k]).getTime() < now) errs[k] = "これから先の日時を選んでください。";
+    });
+    if (!errs.d2 && v.d2 && v.d2 === v.d1) errs.d2 = "第1希望とは別の日時を選んでください。";
+    if (!errs.d3 && v.d3 && (v.d3 === v.d1 || v.d3 === v.d2)) errs.d3 = "第1・第2希望とは別の日時を選んでください。";
     setErrors(errs);
     if (Object.keys(errs).length > 0) {
       document.getElementById(`la-${Object.keys(errs)[0]}`)?.focus();
@@ -54,12 +73,15 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, se
       selfHiring ? "【採用応募】" : "【NEXT EMPEROR経由】",
       `「${jobTitle}」に応募します。`,
       "",
-      line("お名前", v.name),
+      line("氏名", v.name),
       line("年齢", `${v.age.trim()}歳`),
       line("お住まいのエリア", v.area),
-      line("連絡のつきやすい時間帯", v.time),
-      line("現在のお仕事・これまでの経験", v.career),
-      line("ひとこと", v.note),
+      line("現在の仕事", v.career),
+      "",
+      "【面接可能日時】",
+      line("第1希望", fmtDate(v.d1)),
+      line("第2希望", fmtDate(v.d2)),
+      line("第3希望", fmtDate(v.d3)),
     ].join("\n");
     const url = `https://line.me/R/oaMessage/${encodeURIComponent(lineId)}/?${encodeURIComponent(text)}`;
     setOpened(true);
@@ -105,8 +127,8 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, se
       <form noValidate onSubmit={onSubmit} className="mt-8 space-y-7" aria-label={`${jobTitle}へのLINE応募`}>
         <div className="grid gap-7 sm:grid-cols-[1fr_140px]">
           <div>
-            <Label k="name" required>お名前（ニックネーム可）</Label>
-            <input {...aria("name")} type="text" autoComplete="nickname" className="field" value={v.name} onChange={(e) => set("name", e.target.value)} />
+            <Label k="name" required>氏名</Label>
+            <input {...aria("name")} type="text" autoComplete="name" placeholder="例：山田 花子" className="field" value={v.name} onChange={(e) => set("name", e.target.value)} />
             <Err k="name" />
           </div>
           <div>
@@ -117,22 +139,41 @@ export default function LineApplyForm({ lineId, jobTitle, jobSlug, friendUrl, se
         </div>
         <div className="grid gap-7 sm:grid-cols-2">
           <div>
-            <Label k="area">お住まいのエリア</Label>
+            <Label k="area" required>お住まいのエリア</Label>
             <input {...aria("area")} type="text" placeholder="例：名古屋市中区" className="field" value={v.area} onChange={(e) => set("area", e.target.value)} />
+            <Err k="area" />
           </div>
           <div>
-            <Label k="time">連絡のつきやすい時間帯</Label>
-            <input {...aria("time")} type="text" placeholder="例：平日12時〜18時" className="field" value={v.time} onChange={(e) => set("time", e.target.value)} />
+            <Label k="career" required>現在の仕事</Label>
+            <input {...aria("career")} type="text" placeholder="例：ラウンジ勤務" className="field" value={v.career} onChange={(e) => set("career", e.target.value)} />
+            <Err k="career" />
           </div>
         </div>
-        <div>
-          <Label k="career">現在のお仕事・これまでの経験</Label>
-          <input {...aria("career")} type="text" placeholder="例：ラウンジ勤務3年" className="field" value={v.career} onChange={(e) => set("career", e.target.value)} />
-        </div>
-        <div>
-          <Label k="note">ひとこと</Label>
-          <textarea {...aria("note")} rows={3} placeholder="聞いてみたいこと、希望の働き方など" className="field resize-y" value={v.note} onChange={(e) => set("note", e.target.value)} />
-        </div>
+
+        <fieldset>
+          <legend className="text-sm tracking-[0.08em] text-ivory/90">
+            面接可能日時 <span className="ml-2 text-[0.7rem] tracking-[0.1em] text-gold">必須・3候補</span>
+          </legend>
+          <p className="mt-2 text-xs leading-relaxed text-ivory-dim">ご都合のよい日時を3つ選んでください。調整のうえ、{selfHiring ? "NEXT EMPEROR" : "応募窓口"}からご連絡します。</p>
+          <div className="mt-4 grid gap-5 sm:grid-cols-3">
+            {(["d1", "d2", "d3"] as const).map((k, i) => (
+              <div key={k}>
+                <label htmlFor={`la-${k}`} className="mb-2 block text-xs tracking-[0.12em] text-gold">
+                  第{i + 1}希望
+                </label>
+                <input
+                  {...aria(k)}
+                  type="datetime-local"
+                  step={1800}
+                  className="field min-h-[3.25rem]"
+                  value={v[k]}
+                  onChange={(e) => set(k, e.target.value)}
+                />
+                <Err k={k} />
+              </div>
+            ))}
+          </div>
+        </fieldset>
 
         <div className="space-y-4 pt-2">
           <button
