@@ -3,6 +3,7 @@ import { LineIcon, NightToDayArt } from "@/components/Art";
 import BigMarquee from "@/components/BigMarquee";
 import SectionDivider from "@/components/SectionDivider";
 import Hero from "@/components/Hero";
+import VisionFilm from "@/components/VisionFilm";
 import Logo from "@/components/Logo";
 import PartnerCard from "@/components/PartnerCard";
 import { formatDate, getAllPosts } from "@/lib/blog";
@@ -115,6 +116,32 @@ export default function HomePage() {
     <>
       {/* ===== HERO ===== */}
       <Hero latest={posts[0] ? { slug: posts[0].slug, title: posts[0].title, date: posts[0].date } : null} />
+
+      {/* ===== BRAND MOVIE ===== */}
+      <Section labelledBy="film-title" tone="dark" divider={false} className="!pb-16 !pt-20 sm:!pb-24 sm:!pt-28">
+        <Container>
+          <div className="mx-auto max-w-5xl">
+            <SectionHeading
+              eyebrow="ブランドムービー"
+              id="film-title"
+              align="center"
+              title={
+                <>
+                  Vision <span className="metal-gold">Film</span>
+                </>
+              }
+            />
+            <p className="body-text mt-6 text-center" data-reveal style={delay(0.2)}>
+              夜の街で働く、すべての人へ。
+              <br />
+              NEXT EMPERORの想いを、60秒の映像にしました。
+            </p>
+            <div className="mt-10 sm:mt-12">
+              <VisionFilm />
+            </div>
+          </div>
+        </Container>
+      </Section>
 
       {/* ===== ABOUT ===== */}
       <Section labelledBy="about-title">
