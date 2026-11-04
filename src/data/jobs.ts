@@ -97,8 +97,8 @@ export const jobs: Job[] = [
     employmentType: "正社員・契約社員（詳しくは応募時にご確認ください）",
     salary:
       "歩合給制（成果に応じて上限なし）\n月収例：100万円〜1,000万円（掲載企業の営業スタッフの実績）\n※収入は成果によって変わり、月収例の金額を保証するものではありません。基本給・保障給など給与の詳しい内訳は、応募時にご確認ください。",
-    workingHours: "",
-    holidays: "",
+    workingHours: "平日（水〜金）12:00〜20:30\n土日祝 9:00〜20:30",
+    holidays: "毎週 月曜・火曜",
     benefits: ["社員旅行あり", "営業の教育制度あり"],
     applyUrl: "https://lin.ee/O7Zx1HB",
     applyLineId: "@030cihhe",
