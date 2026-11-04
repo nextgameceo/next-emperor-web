@@ -36,15 +36,17 @@ export default async function JobDetailPage({ params }: { params: Promise<Params
 
   const company = getJobCompany(job);
   const hidden = Boolean(job.companyLabel?.trim()) && !job.selfHiring;
+  // 業務委託の求人では「給与」ではなく「報酬」など、契約の形に合った言葉で表示する
+  const contract = /業務委託/.test(job.employmentType);
   const rows = [
     { k: hidden ? "業種" : "企業名", v: company },
     { k: "仕事内容", v: job.description },
     { k: "応募資格", v: job.requirements },
     { k: "勤務地", v: job.location },
-    { k: "雇用形態", v: job.employmentType },
-    { k: "給与", v: job.salary },
-    { k: "勤務時間", v: job.workingHours },
-    { k: "休日", v: job.holidays },
+    { k: contract ? "契約形態" : "雇用形態", v: job.employmentType },
+    { k: contract ? "報酬" : "給与", v: job.salary },
+    { k: contract ? "活動時間" : "勤務時間", v: job.workingHours },
+    { k: contract ? "休み" : "休日", v: job.holidays },
     { k: "福利厚生", v: job.benefits.join("\n") },
   ].filter((r) => r.v);
 
