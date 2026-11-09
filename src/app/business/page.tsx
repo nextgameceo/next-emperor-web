@@ -5,9 +5,9 @@ import { LineIcon } from "@/components/Art";
 import { ButtonLink, Container, PageHero, Section, SectionHeading } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "法人向けサービス",
+  title: "法人向けサービス｜求人を出しても人が来ない企業様へ",
   description:
-    "名古屋のNEXT EMPERORによる法人向けサービス。採用マーケティング、人材集客、営業代行・販路開拓・営業戦略立案で、企業の成長を支援します。",
+    "応募が集まらない、すぐ辞めてしまう…そんな企業様へ。夜職経験者など意欲ある未経験人材との出会いをつくる、求人発信・SNS採用・営業代行の支援です。サービス資料（PDF）を無料でダウンロードできます。",
   alternates: { canonical: "/business" },
 };
 

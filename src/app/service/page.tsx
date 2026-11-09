@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ButtonLink, Container, PageHero, Section } from "@/components/ui";
 
 export const metadata: Metadata = {
-  title: "事業内容",
+  title: "事業内容（夜職から昼職へ。採用支援・法人営業支援）",
   description:
-    "NEXT EMPERORの事業内容。人材集客・採用マーケティング支援と、営業代行・販路開拓などの法人営業支援を行います。",
+    "夜の仕事から昼の仕事へのキャリアチェンジを応援するNEXT EMPEROR（名古屋）の事業内容。未経験・夜職経験者の採用支援（求人の発信・集客）と、営業代行・販路開拓を行います。",
   alternates: { canonical: "/service" },
 };
 
