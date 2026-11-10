@@ -95,11 +95,11 @@ export default function AboutPage() {
             <div className="grid gap-2 border-b border-charcoal-line py-6 sm:grid-cols-[200px_1fr] sm:gap-8">
               <dt className="text-sm tracking-[0.12em] text-gold">事業内容</dt>
               <dd>
-                <ol className="space-y-6">
+                <ol className="space-y-4 sm:space-y-6">
                   {c.business.map((b, i) => (
                     <li key={b.title}>
-                      <p className="flex items-baseline gap-3 font-serif tracking-[0.05em] text-ivory">
-                        <span className="font-display text-lg text-ice">{String(i + 1).padStart(2, "0")}</span>
+                      <p className="flex items-baseline gap-3 whitespace-nowrap font-serif text-[clamp(0.62rem,3.05vw,1rem)] tracking-normal text-ivory sm:text-base sm:tracking-[0.05em]">
+                        <span className="font-display text-[1.05em] text-ice sm:text-lg">{String(i + 1).padStart(2, "0")}</span>
                         {b.title}
                       </p>
                       {b.items.length > 0 && (
@@ -115,8 +115,8 @@ export default function AboutPage() {
                   ))}
                   {c.businessNote && (
                     <li>
-                      <p className="flex items-baseline gap-3 font-serif tracking-[0.05em] text-ivory">
-                        <span className="font-display text-lg text-ice">{String(c.business.length + 1).padStart(2, "0")}</span>
+                      <p className="flex items-baseline gap-3 whitespace-nowrap font-serif text-[clamp(0.62rem,3.05vw,1rem)] tracking-normal text-ivory sm:text-base sm:tracking-[0.05em]">
+                        <span className="font-display text-[1.05em] text-ice sm:text-lg">{String(c.business.length + 1).padStart(2, "0")}</span>
                         {c.businessNote}
                       </p>
                     </li>
