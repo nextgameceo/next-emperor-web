@@ -70,7 +70,7 @@ export const siteConfig = {
     englishName: "NEXT EMPEROR LLC",
     status: "設立準備中",
     location: "愛知県名古屋市",
-    capital: "4,000,000円",
+    capital: "1,000,000円",
     representative: "石原 利輝",
     email: "contact@next-emperor.com",
     // 以下は確定後に入力してください（空欄の項目は表示されません）
@@ -107,20 +107,20 @@ export const siteConfig = {
         ],
       },
       {
-        title: "営業代行・営業コンサルティング",
+        title: "採用活動における営業代行及び営業コンサルティング",
         items: [
           "商材・サービスの営業代行",
           "営業戦略の立案、営業プロセスの改善",
           "営業に関する研修・アドバイス",
         ],
       },
-      {
-        title: "広告業及び広告代理店業",
-        items: [],
-      },
+      { title: "インターネットを利用した各種情報提供サービス", items: [] },
+      { title: "WEB開発及び運用支援", items: [] },
+      { title: "アプリケーション開発", items: [] },
+      { title: "広告業及び広告代理店", items: [] },
     ] as { title: string; items: string[] }[],
     /** 事業内容の最後に添える一文（不要なら空欄に） */
-    businessNote: "上記に付随した一切の事業",
+    businessNote: "上記各号に附帯する一切の事業",
   },
 };
 
