@@ -8,6 +8,7 @@ import ShareButtons from "@/components/ShareButtons";
 import { Ornament } from "@/components/Decor";
 import { ButtonLink, Container, Eyebrow, Section } from "@/components/ui";
 import { siteConfig } from "@/config/site";
+import { getActiveAffiliates } from "@/data/affiliates";
 import { formatDate, getAllPosts, getPost, getRelatedPosts } from "@/lib/blog";
 
 type Params = { slug: string };
@@ -88,6 +89,12 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
                 {post.category}
               </Link>
             </div>
+            {post.audience === "seeker" && getActiveAffiliates().length > 0 && (
+              <p className="fade-up mt-4 text-xs tracking-[0.08em] text-ivory-dim">
+                <span className="mr-2 border border-ivory/40 px-1.5 py-px text-ivory">PR</span>
+                この記事には広告（プロモーション）が含まれます
+              </p>
+            )}
             <h1 className="fade-up-delay mt-6 text-[1.6rem] font-medium leading-[1.6] tracking-[0.04em] text-ivory sm:text-[2.2rem]">
               {post.title}
             </h1>

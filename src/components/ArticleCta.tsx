@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Audience } from "@/lib/blog";
+import { getActiveAffiliates } from "@/data/affiliates";
+import AffiliateBox from "./AffiliateBox";
 import LineFollow from "./LineFollow";
 import { ButtonLink } from "./ui";
 
@@ -43,6 +45,7 @@ export default function ArticleCta({ audience }: { audience: Audience }) {
         </div>
       </div>
       <LineFollow place="article" />
+      <AffiliateBox items={getActiveAffiliates()} />
     </div>
   );
 }

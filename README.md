@@ -77,6 +77,12 @@ Cloudflare の Worker → Settings → Variables and Secrets に、次の3つを
 `content/blog/` に Markdown ファイルを追加します（書き方は `_template.md`）。
 未来の日付の記事は、その日付以降にサイトが更新（再公開）されたタイミングで表示されます。
 
+## 広告（アフィリエイト）枠
+
+`src/data/affiliates.ts` に、ASP（A8.net など）で発行された広告リンクを追加し、`active: true` にします。
+active なものがあるときだけ、求職者向けコラムの最後に「PR」枠が出て、記事の上部に「この記事には広告（プロモーション）が含まれます」と表示されます（ステマ規制への対応）。
+クリックは GA4 の `affiliate_click` イベントで計測されます。
+
 ## 公開前チェック
 
 - 職業紹介・募集情報等提供事業に関する法的確認（労働局・専門家）
