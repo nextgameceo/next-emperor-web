@@ -1,8 +1,8 @@
 ---
-title: "NEXT EMPEROR 公式サイトを公開しました"
+title: "NEXT EMPEROR 公式サイトを公開しました｜夜職から昼職へのキャリアチェンジを応援"
 date: "2026-10-22"
 category: "お知らせ"
-excerpt: "夜の経験を、明日の可能性へ。NEXT EMPERORの公式サイトを公開しました。"
+excerpt: "夜職から昼職へのキャリアチェンジを応援するNEXT EMPEROR（ネクストエンペラー）の公式サイトを公開しました。求人情報や企業様向けの採用マーケティング支援をご案内しています。"
 draft: false
 ---
 

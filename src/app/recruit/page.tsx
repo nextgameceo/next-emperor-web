@@ -13,9 +13,9 @@ import { Container, PageHero, Section, SectionHeading, delay } from "@/component
 import { getOpenJobs, getPublishedJobs } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "求人情報｜昼職という選択肢",
+  title: "夜職から昼職への求人情報｜営業・採用マーケターなど",
   description:
-    "夜職から昼職へ。営業や採用マーケターなど、夜の仕事で磨いた会話力・観察力・発信力が活きる昼職の選択肢と、提携企業の求人情報をご紹介します。",
+    "夜職から昼職へ。営業や採用マーケターなど、夜の仕事で磨いた会話力・観察力・発信力が活きる昼職の選択肢と、提携企業の求人情報を掲載しています。",
   alternates: { canonical: "/recruit" },
 };
 
