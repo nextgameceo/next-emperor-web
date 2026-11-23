@@ -4,8 +4,8 @@ import { Container, PageHero, Section } from "@/components/ui";
 import { getAllPosts, getCategories } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "ニュース",
-  description: "NEXT EMPERORのニュース。お知らせや、夜職から昼職へのキャリアチェンジに役立つ情報を発信しています。",
+  title: "ニュース・コラム｜夜職から昼職へのキャリアチェンジ情報",
+  description: "NEXT EMPERORのニュース・コラム一覧。お知らせのほか、夜職から昼職へのキャリアチェンジを考える方や、採用に取り組む企業様に役立つ情報を発信しています。",
   alternates: { canonical: "/news" },
 };
 
